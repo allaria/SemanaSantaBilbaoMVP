@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Semana Santa Bilbao</string>
+
+    <!-- Etiquetas descripciones de imagenes -->
+    <string name="imagen_cofradia">Imagen Cofradía</string>
+    <string name="escudo_cofradia">Escudo Cofradía</string>
+
+    <!-- Etiquetas elementos del menu de la aplicación -->
+    <string name="app_navigation_view_name">Cofradías de Bilbao</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="menu_calendario_eventos">Calendario de Eventos</string>
+    <string name="menu_galeria">Galería de Imágenes</string>
+    <string name="menu_pasos">Galería de Pasos</string>
+    <string name="menu_procesiones">Procesiones</string>
+    <string name="menu_contacto">Contactos</string>
+    <string name="menu_museo">Museo de Pasos</string>
+    <string name="menu_login_usuarios">Usuarios</string>
+    <string name="menu_share_app">Compartir Aplicación</string>
+    <string name="texto_share_app">\nDeja que te recomiende esta aplicación\n\n</string>
+    <string name="texto_compartir_app">Compartir aplicación</string>
+
+</resources>
