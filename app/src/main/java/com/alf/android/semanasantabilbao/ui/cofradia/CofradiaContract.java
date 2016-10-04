@@ -1,8 +1,8 @@
 package com.alf.android.semanasantabilbao.ui.cofradia;
 
-import com.alf.android.semanasantabilbao.data.entities.Cofradia;
+import android.databinding.ObservableArrayList;
 
-import java.util.List;
+import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 
 /**
  * Created by alaria on 22/09/2016.
@@ -14,7 +14,7 @@ public interface CofradiaContract {
 
         void setSpinner(boolean loadingSpinner);
 
-        void printCofradias(List<Cofradia> listaCofradias);
+        void printCofradias(ObservableArrayList<Cofradia> listaCofradias);
 
     }
 

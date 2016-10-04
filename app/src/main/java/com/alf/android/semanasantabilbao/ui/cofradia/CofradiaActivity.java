@@ -1,5 +1,6 @@
 package com.alf.android.semanasantabilbao.ui.cofradia;
 
+import android.databinding.ObservableArrayList;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -18,8 +19,6 @@ import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.ui.cofradia.adapter.CofradiaAdapter;
 import com.firebase.client.Firebase;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,7 +76,7 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
     }
 
     @Override
-    public void printCofradias(List<Cofradia> mCofradias) {
+    public void printCofradias(ObservableArrayList<Cofradia> mCofradias) {
         Log.d(LOG_TAG, "PINTANDO COFRADIAS (printCofradias): "+mCofradias.size()+" ELEMENTOS");
         ((CofradiaAdapter) mRecyclerView.getAdapter()).addCofradias(mCofradias);
     }
@@ -101,6 +100,8 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
 
     @Override
     public void onClick(int position) {
+
+
         //Cofradia selectedCofradia = mCofradiaAdapter.getSelectedCofradia(position);
         //Intent intent = new Intent(CofradiaActivity.this, DetailCofradiaActivity.class);
         //intent.putExtra(Constants.REFERENCE.COFRADIA, selectedCofradia);

@@ -1,8 +1,7 @@
 package com.alf.android.semanasantabilbao.business;
 
-import com.alf.android.semanasantabilbao.data.entities.Cofradia;
-
-import java.util.List;
+import com.firebase.client.DataSnapshot;
+import rx.Observable;
 
 /**
  * Created by alaria on 26/09/2016.
@@ -10,5 +9,5 @@ import java.util.List;
 
 public interface GetCofradiasInteractor {
 
-    List<Cofradia> getCofradias();
+    Observable<DataSnapshot> getCofradias();
 }

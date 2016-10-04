@@ -1,8 +1,6 @@
 package com.alf.android.semanasantabilbao.data;
 
-import com.alf.android.semanasantabilbao.data.entities.Cofradia;
-
-import java.util.List;
+import com.firebase.client.Firebase;
 
 /**
  * Created by alaria on 27/09/2016.
@@ -10,6 +8,5 @@ import java.util.List;
 
 public interface FirebaseAccess {
 
-    List<Cofradia> getListCofradias();
-
+    Firebase getFirebaseConection();
 }

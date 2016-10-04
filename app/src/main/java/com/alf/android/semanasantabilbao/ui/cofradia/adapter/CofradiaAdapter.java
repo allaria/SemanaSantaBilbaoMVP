@@ -65,8 +65,8 @@ public class CofradiaAdapter extends RecyclerView.Adapter<CofradiaAdapter.Holder
     }
 
     public void addCofradias(List<Cofradia> listaCofradia) {
+        mCofradias.clear();
         mCofradias.addAll(listaCofradia);
-        //mCofradias.add(cofradia);
         notifyDataSetChanged();
     }
 
