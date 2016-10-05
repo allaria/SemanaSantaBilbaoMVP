@@ -1,6 +1,7 @@
 package com.alf.android.semanasantabilbao.ui.cofradia;
 
 import android.databinding.ObservableArrayList;
+import android.databinding.ObservableField;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
@@ -58,7 +60,10 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
+        Log.d(LOG_TAG, "initRecyclerViewCofradias");
         initRecyclerViewCofradias();
+
+        Log.d(LOG_TAG, "initPresenter");
         initPresenter();
     }
 
@@ -66,7 +71,11 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
     protected void onPause() {
         super.onPause();
         if (isFinishing()) {
+            //Liberamos la vista
             cofradiaPresenter.detachCofradiaView();
+
+            //Eliminamos la suscripción
+            cofradiaPresenter.unsuscribeCofradiaSuspciption();
         }
     }
 
@@ -79,6 +88,12 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
     public void printCofradias(ObservableArrayList<Cofradia> mCofradias) {
         Log.d(LOG_TAG, "PINTANDO COFRADIAS (printCofradias): "+mCofradias.size()+" ELEMENTOS");
         ((CofradiaAdapter) mRecyclerView.getAdapter()).addCofradias(mCofradias);
+    }
+
+    @Override
+    public void mostrarErrorRecuperarCofradias(ObservableField<String> mensajeError) {
+        Log.d(LOG_TAG, "ERROR AL RECUPERAR LAS COFRADIAS (mostrarErrorRecuperarCofradias)");
+        Toast.makeText(this, mensajeError.get(), Toast.LENGTH_SHORT).show();
     }
 
     private void initRecyclerViewCofradias() {
@@ -100,8 +115,6 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
 
     @Override
     public void onClick(int position) {
-
-
         //Cofradia selectedCofradia = mCofradiaAdapter.getSelectedCofradia(position);
         //Intent intent = new Intent(CofradiaActivity.this, DetailCofradiaActivity.class);
         //intent.putExtra(Constants.REFERENCE.COFRADIA, selectedCofradia);

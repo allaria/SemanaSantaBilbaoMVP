@@ -1,5 +1,7 @@
 package com.alf.android.semanasantabilbao.business;
 
+import android.util.Log;
+
 import com.alf.android.semanasantabilbao.data.FirebaseAccess;
 import com.alf.android.semanasantabilbao.data.FirebaseDataAccess;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
@@ -23,6 +25,7 @@ public class GetCofradiasInteractorImpl implements GetCofradiasInteractor {
 
     private static final String LOG_TAG = CofradiaActivity.class.getSimpleName();
     private FirebaseAccess firebaseAccess;
+    private String mensajeErrorFirebase;
 
     private List<Cofradia> listaCofradias;
 
@@ -40,13 +43,16 @@ public class GetCofradiasInteractorImpl implements GetCofradiasInteractor {
                 final ValueEventListener listener = firebaseAccess.getFirebaseConection().addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.d(LOG_TAG, "onDataChange");
                         subscriber.onNext(dataSnapshot);
-                        //subscriber.onCompleted();
                     }
 
                     @Override
                     public void onCancelled(FirebaseError error) {
+                        Log.d(LOG_TAG, "onCancelled");
+                        subscriber.onError(error.toException().getCause());
                     }
+
                 });
             }
         });
