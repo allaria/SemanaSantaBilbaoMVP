@@ -1,6 +1,8 @@
 package com.alf.android.semanasantabilbao.data;
 
-import com.firebase.client.Firebase;
+import com.firebase.client.DataSnapshot;
+
+import rx.Observable;
 
 /**
  * Created by alaria on 27/09/2016.
@@ -8,5 +10,5 @@ import com.firebase.client.Firebase;
 
 public interface FirebaseAccess {
 
-    Firebase getFirebaseConection();
+    Observable<DataSnapshot> getFirebaseDataSnapshot();
 }

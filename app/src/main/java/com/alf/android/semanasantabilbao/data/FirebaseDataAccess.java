@@ -1,7 +1,15 @@
 package com.alf.android.semanasantabilbao.data;
 
+import android.util.Log;
+
 import com.alf.android.semanasantabilbao.ui.cofradia.Constants.Constants;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
+import rx.Observable;
+import rx.Subscriber;
 
 
 /**
@@ -11,51 +19,37 @@ import com.firebase.client.Firebase;
 public class FirebaseDataAccess implements FirebaseAccess {
 
     private static final String LOG_TAG = FirebaseDataAccess.class.getSimpleName();
+    private Firebase myFirebaseRef;
 
 
-    public Firebase getFirebaseConection () {
+    public Observable<DataSnapshot> getFirebaseDataSnapshot () {
 
-        Firebase myFirebaseRef = new Firebase(Constants.ConfigFireBase.FIREBASE_URL + Constants.ConfigFireBase.FIREBASE_CHILD_COFRADIAS);
-        return myFirebaseRef;
+        myFirebaseRef = new Firebase(Constants.ConfigFireBase.FIREBASE_URL + Constants.ConfigFireBase.FIREBASE_CHILD_COFRADIAS);
+
+        return Observable.create(new Observable.OnSubscribe<DataSnapshot>() {
+            @Override
+            public void call(final Subscriber subscriber) {
+                //final ValueEventListener listener = myFirebaseRef.addValueEventListener(new ValueEventListener() {
+                myFirebaseRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.d(LOG_TAG, "onDataChange");
+                        subscriber.onNext(dataSnapshot);
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError error) {
+                        Log.d(LOG_TAG, "onCancelled");
+                        subscriber.onError(error.toException().getCause());
+                    }
+
+                });
+            }
+        });
+
+
+
+
+        //return myFirebaseRef;
     }
 }
-
-/*    public Observable<List<Cofradia>> getListCofradias() {
-        return Observable.just(getmCofradias())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    public List<Cofradia> getmCofradias() {
-
-        Firebase myFirebaseRef = new Firebase(Constants.ConfigFireBase.FIREBASE_URL + Constants.ConfigFireBase.FIREBASE_CHILD_COFRADIAS);
-        myFirebaseRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-
-                    Log.d(LOG_TAG, "RECUPERANDO COFRADIAS");
-                    mCofradias.add(dataSnapshot.getValue(Cofradia.class));
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError error) {
-            }
-        });*/
-
-        //return mCofradias;
-
-        //do{
-        //    Log.d(LOG_TAG, "COMPROBANDO RETURN COFRADIAS: "+mCofradias.size()+" ELEMENTOS");
-        //}while(!listo);
-        //Log.d(LOG_TAG, "COMPROBANDO RETURN COFRADIAS: "+mCofradias.size()+" ELEMENTOS");
-
-//        return Observable.just(mCofradias)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread());
-//    }
-//}
