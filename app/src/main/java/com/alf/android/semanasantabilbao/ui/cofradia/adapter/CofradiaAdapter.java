@@ -15,6 +15,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by alaria on 25/04/2016.
  */
@@ -76,14 +79,14 @@ public class CofradiaAdapter extends RecyclerView.Adapter<CofradiaAdapter.Holder
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private ImageView mCofradiaImagen, mCofradiaEscudo;
-        private TextView mCofradiaName;
+        @BindView(R.id.card_cofradia_imagen) ImageView mCofradiaImagen;
+        @BindView(R.id.card_cofradia_escudo) ImageView mCofradiaEscudo;
+        @BindView(R.id.card_cofradia_nombre) TextView mCofradiaName;
+
 
         public Holder(View itemView) {
             super(itemView);
-            mCofradiaImagen = (ImageView) itemView.findViewById(R.id.card_cofradia_imagen);
-            mCofradiaEscudo = (ImageView) itemView.findViewById(R.id.card_cofradia_escudo);
-            mCofradiaName = (TextView) itemView.findViewById(R.id.card_cofradia_nombre);
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
         }
 
