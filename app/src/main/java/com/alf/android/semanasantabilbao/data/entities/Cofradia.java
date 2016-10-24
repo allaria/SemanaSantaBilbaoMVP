@@ -143,4 +143,11 @@ public class Cofradia implements Serializable {
 
     public Cofradia() {
     }
+
+    public Cofradia(String id_cofradia, String nombreCofradia, String imagenEscudo, String imagenDetalle) {
+        this.id_cofradia = id_cofradia;
+        this.nombreCofradia = nombreCofradia;
+        this.imagenEscudo = imagenEscudo;
+        this.imagenDetalle = imagenDetalle;
+    }
 }

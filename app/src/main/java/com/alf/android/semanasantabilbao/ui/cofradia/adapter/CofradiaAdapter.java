@@ -15,6 +15,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -23,13 +25,14 @@ import butterknife.ButterKnife;
  */
 public class CofradiaAdapter extends RecyclerView.Adapter<CofradiaAdapter.Holder>{
 
-    private static final String TAG = CofradiaAdapter.class.getSimpleName();
-    private final CofradiaClickListener mListener;
+    private static final String LOG_TAG = CofradiaAdapter.class.getSimpleName();
+    private CofradiaClickListener cofradiaClickListener;
     private List<Cofradia> mCofradias;
 
-    public CofradiaAdapter(CofradiaClickListener listener) {
+    @Inject
+    public CofradiaAdapter() {
         mCofradias = new ArrayList<>();
-        mListener = listener;
+        //cofradiaClickListener = listener;
     }
 
     @Override
@@ -77,6 +80,14 @@ public class CofradiaAdapter extends RecyclerView.Adapter<CofradiaAdapter.Holder
         return mCofradias.get(position);
     }
 
+    public CofradiaClickListener getCofradiaClickListener() {
+        return cofradiaClickListener;
+    }
+
+    public void setCofradiaClickListener(CofradiaClickListener cofradiaClickListener) {
+        this.cofradiaClickListener = cofradiaClickListener;
+    }
+
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.card_cofradia_imagen) ImageView mCofradiaImagen;
@@ -92,7 +103,7 @@ public class CofradiaAdapter extends RecyclerView.Adapter<CofradiaAdapter.Holder
 
         @Override
         public void onClick(View v) {
-            mListener.onClick(getLayoutPosition());
+            getCofradiaClickListener().onClick(getLayoutPosition());
         }
     }
 

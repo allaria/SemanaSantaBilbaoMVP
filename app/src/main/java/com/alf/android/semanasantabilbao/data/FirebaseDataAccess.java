@@ -39,8 +39,10 @@ public class FirebaseDataAccess implements FirebaseAccess {
 
                     @Override
                     public void onCancelled(FirebaseError error) {
-                        Log.d(LOG_TAG, "onCancelled");
-                        subscriber.onError(error.toException().getCause());
+                        Log.d(LOG_TAG, "onCancelled ERROR: " + error.getMessage());
+
+                        Throwable fireBaseError = new Throwable(error.getMessage());
+                        subscriber.onError(fireBaseError);
                     }
 
                 });

@@ -3,6 +3,9 @@ package com.alf.android.semanasantabilbao.ui.cofradia;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 
 /**
@@ -17,7 +20,11 @@ public interface CofradiaContract {
 
         void printCofradias(ObservableArrayList<Cofradia> listaCofradias);
 
-        void mostrarErrorRecuperarCofradias(ObservableField<String> mensajeError);
+        void printCofradiasWithoutConnection(ArrayList<Cofradia> listaCofradias);
+
+        Field[] getDrawablesList();
+
+        void showErrorGettingCofradias(ObservableField<String> mensajeError);
 
     }
 
@@ -29,6 +36,7 @@ public interface CofradiaContract {
 
         void unsuscribeCofradiaSuspciption();
 
-        void initPresenter();
+        void initPresenter(boolean conexion, Field[] fields);
+
     }
 }
