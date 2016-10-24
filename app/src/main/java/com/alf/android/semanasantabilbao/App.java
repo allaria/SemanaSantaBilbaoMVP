@@ -8,7 +8,7 @@ import com.alf.android.semanasantabilbao.di.DaggerApplicationComponent;
 
 
 /**
- * Created by epelde on 22/9/16.
+ * Created by alaria on 17/10/2016.
  */
 public class App extends Application {
 

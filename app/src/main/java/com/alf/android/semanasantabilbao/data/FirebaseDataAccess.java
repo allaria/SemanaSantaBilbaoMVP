@@ -2,7 +2,8 @@ package com.alf.android.semanasantabilbao.data;
 
 import android.util.Log;
 
-import com.alf.android.semanasantabilbao.ui.cofradia.Constants.Constants;
+import com.alf.android.semanasantabilbao.ui.constants.Constants;
+
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -20,7 +21,6 @@ public class FirebaseDataAccess implements FirebaseAccess {
 
     private static final String LOG_TAG = FirebaseDataAccess.class.getSimpleName();
     private Firebase myFirebaseRef;
-
 
     public Observable<DataSnapshot> getFirebaseDataSnapshot () {
 
@@ -48,10 +48,5 @@ public class FirebaseDataAccess implements FirebaseAccess {
                 });
             }
         });
-
-
-
-
-        //return myFirebaseRef;
     }
 }

@@ -1,4 +1,4 @@
-package com.alf.android.semanasantabilbao.ui.cofradia.adapter;
+package com.alf.android.semanasantabilbao.ui.cofradias.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
-import com.alf.android.semanasantabilbao.ui.cofradia.Constants.Constants;
+import com.alf.android.semanasantabilbao.ui.constants.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

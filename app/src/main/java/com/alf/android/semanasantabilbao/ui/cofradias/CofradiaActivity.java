@@ -1,5 +1,6 @@
-package com.alf.android.semanasantabilbao.ui.cofradia;
+package com.alf.android.semanasantabilbao.ui.cofradias;
 
+import android.content.Intent;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.net.ConnectivityManager;
@@ -21,7 +22,9 @@ import android.widget.Toast;
 import com.alf.android.semanasantabilbao.App;
 import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
-import com.alf.android.semanasantabilbao.ui.cofradia.adapter.CofradiaAdapter;
+import com.alf.android.semanasantabilbao.ui.constants.Constants;
+import com.alf.android.semanasantabilbao.ui.cofradias.adapter.CofradiaAdapter;
+import com.alf.android.semanasantabilbao.ui.detailcofradia.DetailCofradiaActivity;
 import com.firebase.client.Firebase;
 
 import java.lang.reflect.Field;
@@ -54,8 +57,6 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
     RecyclerView.RecycledViewPool recycledViewPool;
     @Inject
     RecyclerView.LayoutManager layoutManager;
-//    @Inject
-//    ActionBarDrawerToggle actionBarDrawerToggle;
 
     @BindView(R.id.cofradia_progress_bar) ProgressBar spinner;
     @BindView(R.id.cofradia_toolbar) Toolbar toolbar;
@@ -75,7 +76,6 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
         setSupportActionBar(toolbar);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        //ActionBarDrawerToggle toggle = actionBarDrawerToggle;
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -100,17 +100,6 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
 
         //cofradiaAdapter.setCofradiaClickListener(this);
     }
-
-
-    public DrawerLayout getDrawer() {
-        return drawer;
-    }
-
-    public void setDrawer(DrawerLayout drawer) {
-        this.drawer = drawer;
-    }
-
-
 
     @Override
     protected void onPause() {
@@ -184,11 +173,11 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
 
     @Override
     public void onClick(int position) {
-        //Cofradia selectedCofradia = mCofradiaAdapter.getSelectedCofradia(position);
-        //Intent intent = new Intent(CofradiaActivity.this, DetailCofradiaActivity.class);
-        //intent.putExtra(Constants.REFERENCE.COFRADIA, selectedCofradia);
-        //startActivity(intent);
-        Toast.makeText(getApplicationContext(), "CLICK", Toast.LENGTH_SHORT).show();
+        Cofradia selectedCofradia = cofradiaAdapter.getSelectedCofradia(position);
+        Intent intent = new Intent(CofradiaActivity.this, DetailCofradiaActivity.class);
+        intent.putExtra(Constants.REFERENCE.COFRADIA, selectedCofradia);
+        startActivity(intent);
+        //Toast.makeText(getApplicationContext(), "CLICK", Toast.LENGTH_SHORT).show();
     }
 
     @Override

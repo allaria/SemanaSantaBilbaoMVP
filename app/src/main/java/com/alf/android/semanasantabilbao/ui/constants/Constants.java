@@ -1,4 +1,4 @@
-package com.alf.android.semanasantabilbao.ui.cofradia.Constants;
+package com.alf.android.semanasantabilbao.ui.constants;
 
 /**
  * Created by alaria on 20/04/2016.

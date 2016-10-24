@@ -1,21 +1,16 @@
 package com.alf.android.semanasantabilbao.di;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
-import com.alf.android.semanasantabilbao.R;
-import com.alf.android.semanasantabilbao.ui.cofradia.CofradiaActivity;
-import com.alf.android.semanasantabilbao.ui.cofradia.CofradiaContract;
-import com.alf.android.semanasantabilbao.ui.cofradia.CofradiaPresenter;
-import com.alf.android.semanasantabilbao.ui.cofradia.adapter.CofradiaAdapter;
+import com.alf.android.semanasantabilbao.business.GetCofradiasInteractorImpl;
+import com.alf.android.semanasantabilbao.data.FirebaseAccess;
+import com.alf.android.semanasantabilbao.data.FirebaseDataAccess;
+import com.alf.android.semanasantabilbao.ui.cofradias.CofradiaContract;
+import com.alf.android.semanasantabilbao.ui.cofradias.CofradiaPresenter;
+import com.alf.android.semanasantabilbao.ui.cofradias.adapter.CofradiaAdapter;
 
 import javax.inject.Singleton;
 
@@ -24,7 +19,7 @@ import dagger.Provides;
 
 
 /**
- * Created by epelde on 22/9/16.
+ * Created by alaria on 17/10/2016.
  */
 @Module
 public class ApplicationModule {
@@ -45,8 +40,8 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    public CofradiaContract.CofradiaPresenter provideMainPresenter() {
-        return new CofradiaPresenter();
+    public CofradiaContract.CofradiaPresenter provideMainPresenter(GetCofradiasInteractorImpl getCofradiasInteractor) {
+        return new CofradiaPresenter(getCofradiasInteractor);
     }
 
     @Provides
@@ -67,10 +62,16 @@ public class ApplicationModule {
         return new RecyclerView.RecycledViewPool();
     }
 
-/*    @Singleton
+    @Singleton
     @Provides
-    public ActionBarDrawerToggle provideActionBarDrawerToggle(Context context, DrawerLayout drawer, Toolbar toolbar) {
-        return new ActionBarDrawerToggle((Activity) context, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-    }*/
+    public GetCofradiasInteractorImpl provideGetCofradiasInteractorImpl(FirebaseAccess firebaseAccess) {
+        return new GetCofradiasInteractorImpl(firebaseAccess);
+    }
+
+    @Singleton
+    @Provides
+    public FirebaseAccess provideFirebaseDataAccess() {
+        return new FirebaseDataAccess();
+    }
 }
 

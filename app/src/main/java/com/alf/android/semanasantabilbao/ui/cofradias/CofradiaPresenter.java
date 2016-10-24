@@ -1,4 +1,4 @@
-package com.alf.android.semanasantabilbao.ui.cofradia;
+package com.alf.android.semanasantabilbao.ui.cofradias;
 
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
@@ -27,9 +27,11 @@ public class CofradiaPresenter implements CofradiaContract.CofradiaPresenter {
     private ObservableArrayList<Cofradia> listaCofradias;
     private ObservableField<String> errorMessage;
 
-    public CofradiaPresenter() {
+    public CofradiaPresenter(GetCofradiasInteractorImpl getCofradiasInteractor) {
 
-        getCofradiasInteractor = new GetCofradiasInteractorImpl();
+        //getCofradiasInteractor = new GetCofradiasInteractorImpl();
+        this.getCofradiasInteractor = getCofradiasInteractor;
+
         listaCofradias = new ObservableArrayList();
         errorMessage = new ObservableField();
     }
@@ -85,7 +87,7 @@ public class CofradiaPresenter implements CofradiaContract.CofradiaPresenter {
                     nombreCofradia = replaceCharacters(fields[i].getName().substring(7,fields[i].getName().length()));
                     nombreCofradia = capitalizeString(nombreCofradia.replace("_", " "));
 
-                    idCofradia = "100"+String.valueOf(fields[i].getName().charAt(5))+"-COF";
+                    idCofradia = "00"+String.valueOf(fields[i].getName().charAt(5))+"-COF";
                     idCofradia = checkIdCofradia (idCofradia);
 
                     //Log.d(LOG_TAG, "getCofradiasSinConexion:" + idCofradia + ":" + nombreCofradia + ":" + homeResourceName + ":" + escudoResourceName);

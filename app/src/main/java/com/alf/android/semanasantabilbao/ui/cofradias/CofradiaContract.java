@@ -1,4 +1,4 @@
-package com.alf.android.semanasantabilbao.ui.cofradia;
+package com.alf.android.semanasantabilbao.ui.cofradias;
 
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;

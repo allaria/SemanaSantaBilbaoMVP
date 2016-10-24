@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorViewBackground"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ui.cofradia.CofradiaActivity"
+    tools:context=".ui.cofradias.main.CofradiaActivity"
     tools:showIn="@layout/cofradia_activity">
 
     <ProgressBar
