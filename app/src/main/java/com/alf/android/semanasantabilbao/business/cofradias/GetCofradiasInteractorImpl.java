@@ -1,4 +1,4 @@
-package com.alf.android.semanasantabilbao.business;
+package com.alf.android.semanasantabilbao.business.cofradias;
 
 import com.alf.android.semanasantabilbao.data.FirebaseAccess;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;

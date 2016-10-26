@@ -4,7 +4,7 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.util.Log;
 
-import com.alf.android.semanasantabilbao.business.GetCofradiasInteractorImpl;
+import com.alf.android.semanasantabilbao.business.cofradias.GetCofradiasInteractorImpl;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.firebase.client.DataSnapshot;
 

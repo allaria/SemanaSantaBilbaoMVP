@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Semana Santa Bilbao</string>
+    <string name="app_name">Semana Santa</string>
 
     <!-- Etiquetas descripciones de imagenes -->
     <string name="imagen_cofradia">Imagen Cofradía</string>

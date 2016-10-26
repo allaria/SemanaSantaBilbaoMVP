@@ -14,8 +14,7 @@
         android:theme="@style/SemanaSantaBilbaoAppTheme">
 
     <activity android:name=".ui.cofradias.CofradiaActivity"
-        android:label="@string/app_name"
-        android:screenOrientation="portrait">
+        android:label="@string/app_name">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 

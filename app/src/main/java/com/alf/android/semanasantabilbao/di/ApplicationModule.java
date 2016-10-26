@@ -5,7 +5,7 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.alf.android.semanasantabilbao.business.GetCofradiasInteractorImpl;
+import com.alf.android.semanasantabilbao.business.cofradias.GetCofradiasInteractorImpl;
 import com.alf.android.semanasantabilbao.data.FirebaseAccess;
 import com.alf.android.semanasantabilbao.data.FirebaseDataAccess;
 import com.alf.android.semanasantabilbao.ui.cofradias.CofradiaContract;
@@ -26,18 +26,6 @@ public class ApplicationModule {
 
     private static final String LOG_TAG = ApplicationModule.class.getSimpleName();
 
-    private Application application;
-
-    public ApplicationModule(Application app) {
-        this.application = app;
-    }
-
-    @Provides
-    @Singleton
-    public Context provideContext() {
-        return this.application;
-    }
-
     @Provides
     @Singleton
     public CofradiaContract.CofradiaPresenter provideMainPresenter(GetCofradiasInteractorImpl getCofradiasInteractor) {
@@ -48,12 +36,6 @@ public class ApplicationModule {
     @Singleton
     public CofradiaAdapter provideCofradiaAdapter() {
         return new CofradiaAdapter();
-    }
-
-    @Singleton
-    @Provides
-    public RecyclerView.LayoutManager provideLayoutManager(Context context) {
-        return new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
     }
 
     @Singleton

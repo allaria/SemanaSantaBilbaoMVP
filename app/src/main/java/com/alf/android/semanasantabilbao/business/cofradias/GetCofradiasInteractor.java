@@ -1,4 +1,4 @@
-package com.alf.android.semanasantabilbao.business;
+package com.alf.android.semanasantabilbao.business.cofradias;
 
 import com.firebase.client.DataSnapshot;
 import rx.Observable;

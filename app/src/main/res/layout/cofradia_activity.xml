@@ -31,7 +31,7 @@
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimary"
-                app:expandedTitleTextAppearance="@style/GreyText"
+                app:expandedTitleTextAppearance="@style/HomeTitleText"
                 app:expandedTitleGravity="bottom|right"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 

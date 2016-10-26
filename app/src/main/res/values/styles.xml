@@ -10,8 +10,8 @@
     </style>
 
 
-    <style name="GreyText" parent="@android:style/TextAppearance">
-        <item name="android:textSize">30sp</item>
+    <style name="HomeTitleText" parent="@android:style/TextAppearance">
+        <item name="android:textSize">28sp</item>
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 

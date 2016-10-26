@@ -1,6 +1,7 @@
 package com.alf.android.semanasantabilbao.ui.cofradias;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.net.ConnectivityManager;
@@ -10,8 +11,11 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +30,7 @@ import com.alf.android.semanasantabilbao.ui.constants.Constants;
 import com.alf.android.semanasantabilbao.ui.cofradias.adapter.CofradiaAdapter;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.DetailCofradiaActivity;
 import com.firebase.client.Firebase;
+import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -55,8 +60,6 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
     CofradiaAdapter cofradiaAdapter;
     @Inject
     RecyclerView.RecycledViewPool recycledViewPool;
-    @Inject
-    RecyclerView.LayoutManager layoutManager;
 
     @BindView(R.id.cofradia_progress_bar) ProgressBar spinner;
     @BindView(R.id.cofradia_toolbar) Toolbar toolbar;
@@ -81,6 +84,13 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
 
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
+
+        int idDrawableNoImage = this.getResources().getIdentifier(Constants.NoImage.NO_IMAGE, "drawable", this.getPackageName());
+        Picasso.with(this)
+                .load(R.drawable.intro_photo)
+                .placeholder(idDrawableNoImage)
+                .error(idDrawableNoImage)
+                .into(mTopImagen);
 
         //setting the recyclerview
         initRecyclerViewCofradias();
@@ -136,28 +146,44 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
 
     private void initRecyclerViewCofradias() {
         mRecyclerView.setHasFixedSize(true);
+        if (getScreenOrientation().equals("Landscrape")) {
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+        }else{
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        }
         //mRecyclerView.setRecycledViewPool(new RecyclerView.RecycledViewPool());
-        //mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setRecycledViewPool(recycledViewPool);
-        mRecyclerView.setLayoutManager(layoutManager);
 
         //cofradiaAdapter = new CofradiaAdapter(this);
         cofradiaAdapter.setCofradiaClickListener(this);
         mRecyclerView.setAdapter(cofradiaAdapter);
     }
-    
+
+
     private boolean checkNetworkStatus() {
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(getApplication().CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if(networkInfo != null && networkInfo.isConnected() == true) {
-            Toast.makeText(this, "Network Available", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Network Available", Toast.LENGTH_SHORT).show();
             return true;
         }else{
-            Toast.makeText(this, "Network Not Available", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Network Not Available", Toast.LENGTH_SHORT).show();
             return false;
         }
     }
-    
+
+    private String getScreenOrientation() {
+        int orientation = getResources().getConfiguration().orientation;
+        String screenOrientation = "";
+        switch (orientation) {
+            case Configuration.ORIENTATION_UNDEFINED: screenOrientation = "Undefined"; break;
+            case Configuration.ORIENTATION_LANDSCAPE: screenOrientation = "Landscrape"; break;
+            case Configuration.ORIENTATION_PORTRAIT:  screenOrientation = "Portrait"; break;
+        }
+
+        return screenOrientation;
+    }
+
     private void initPresenter(boolean connectionAvailable, Field[] fields) {
         //cofradiaPresenter = new CofradiaPresenter();
         cofradiaPresenter.attachCofradiaView(this);
