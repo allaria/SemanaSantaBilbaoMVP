@@ -20,8 +20,9 @@ public class ViewPagerCofradiaDetailAdpter extends PagerAdapter {
 
     private final String LOG_TAG = DetailCofradiaActivity.class.getSimpleName();
 
-    public Context context;
-    public Cofradia cofradia;
+    private Context context;
+    private Cofradia cofradia;
+    private View contentView;
     private String tab1, tab2, tab3, tab4;
     private String[] tabtitlearray = new String[4];
     private TextView mNombreCofradia, mFundacion, mSede, mPasos, mTexto, mHernamoAbad, mTunica, mNumeroProcesiones, mProcesion;
@@ -44,14 +45,46 @@ public class ViewPagerCofradiaDetailAdpter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup collection, int position) {
+
         Log.d(LOG_TAG, ""+tabtitlearray[position]);
 
         DetailCofradiaModelObject detailCofradiaModelObject = DetailCofradiaModelObject.values()[position];
         LayoutInflater inflater = LayoutInflater.from(context);
-        ViewGroup layout = (ViewGroup) inflater.inflate(detailCofradiaModelObject.getLayoutResId(), collection, false);
-        collection.addView(layout);
+        //ViewGroup layout = (ViewGroup) inflater.inflate(detailCofradiaModelObject.getLayoutResId(), collection, false);
 
-        return layout;
+        switch (position){
+
+            case 0: {
+                contentView = inflater.inflate(R.layout.detail_cofradia_content, collection, false);
+
+                mFundacion = (TextView) contentView.findViewById(R.id.cofradia_fundacion);
+                mFundacion.setText(String.valueOf(cofradia.getFundacion()));
+
+                collection.addView(contentView);
+                return contentView;
+            }
+            case 1: {
+                contentView = inflater.inflate(R.layout.detail_cofradia_content, collection, false);
+
+                collection.addView(contentView);
+                return contentView;
+            }
+            case 2: {
+                contentView = inflater.inflate(R.layout.detail_cofradia_content, collection, false);
+
+                collection.addView(contentView);
+                return contentView;
+            }
+            case 3: {
+                contentView = inflater.inflate(R.layout.detail_cofradia_content, collection, false);
+
+                collection.addView(contentView);
+                return contentView;
+            }
+
+        }
+
+        return null;
     }
 
     @Override
