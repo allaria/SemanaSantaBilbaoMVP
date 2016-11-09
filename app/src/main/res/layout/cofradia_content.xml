@@ -9,13 +9,22 @@
     tools:context=".ui.cofradias.CofradiaActivity"
     tools:showIn="@layout/cofradia_activity">
 
+    <TextView
+        android:id="@+id/cofradia_loading_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="@string/cargando_cofradias" />
+
     <ProgressBar
         android:id="@+id/cofradia_progress_bar"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/cofradia_loading_text" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cofradia_recycler_view"

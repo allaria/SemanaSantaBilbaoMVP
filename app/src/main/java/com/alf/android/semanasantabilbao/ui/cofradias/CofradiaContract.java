@@ -16,7 +16,7 @@ public interface CofradiaContract {
 
     interface CofradiaView {
 
-        void setSpinner(boolean loadingSpinner);
+        void setSpinnerAndLoadingText(boolean loadingSpinner);
 
         void printCofradias(ObservableArrayList<Cofradia> listaCofradias);
 
@@ -25,7 +25,6 @@ public interface CofradiaContract {
         Field[] getDrawablesList();
 
         void showErrorGettingCofradias(ObservableField<String> mensajeError);
-
     }
 
     interface CofradiaPresenter {
@@ -34,9 +33,10 @@ public interface CofradiaContract {
 
         void detachCofradiaView();
 
-        void unsuscribeCofradiaSuspciption();
+        void unsuscribeCofradiaSuscription();
 
         void initPresenter(boolean conexion, Field[] fields);
 
+        void setLoading(boolean loading);
     }
 }

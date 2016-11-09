@@ -18,7 +18,7 @@ import rx.Observable;
 
 public class GetCofradiasInteractorImpl implements GetCofradiasInteractor {
 
-    private static final String LOG_TAG = CofradiaActivity.class.getSimpleName();
+    private static final String LOG_TAG = GetCofradiasInteractorImpl.class.getSimpleName();
     private FirebaseAccess firebaseAccess;
     private String mensajeErrorFirebase;
     private List<Cofradia> listaCofradias;

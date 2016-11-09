@@ -49,4 +49,32 @@ public class FirebaseDataAccess implements FirebaseAccess {
             }
         });
     }
+
+    public Observable<DataSnapshot> getFirebaseDataSnapshotPasos() {
+
+        myFirebaseRef = new Firebase(Constants.ConfigFireBase.FIREBASE_URL + Constants.ConfigFireBase.FIREBASE_CHILD_PASOS);
+
+        return Observable.create(new Observable.OnSubscribe<DataSnapshot>() {
+            @Override
+            public void call(final Subscriber subscriber) {
+                //final ValueEventListener listener = myFirebaseRef.addValueEventListener(new ValueEventListener() {
+                myFirebaseRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.d(LOG_TAG, "onDataChange");
+                        subscriber.onNext(dataSnapshot);
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError error) {
+                        Log.d(LOG_TAG, "onCancelled ERROR: " + error.getMessage());
+
+                        Throwable fireBaseError = new Throwable(error.getMessage());
+                        subscriber.onError(fireBaseError);
+                    }
+
+                });
+            }
+        });
+    }
 }

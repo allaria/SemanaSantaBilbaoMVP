@@ -11,6 +11,9 @@ import com.alf.android.semanasantabilbao.data.FirebaseDataAccess;
 import com.alf.android.semanasantabilbao.ui.cofradias.CofradiaContract;
 import com.alf.android.semanasantabilbao.ui.cofradias.CofradiaPresenter;
 import com.alf.android.semanasantabilbao.ui.cofradias.adapter.CofradiaAdapter;
+import com.alf.android.semanasantabilbao.ui.detailcofradia.DetailCofradiaViewPagerPasos;
+import com.alf.android.semanasantabilbao.ui.detailcofradia.DetailCofradiaViewPagerPasosContract;
+import com.alf.android.semanasantabilbao.ui.detailcofradia.DetailCofradiaViewPagerPasosPresenter;
 
 import javax.inject.Singleton;
 
@@ -55,5 +58,6 @@ public class ApplicationModule {
     public FirebaseAccess provideFirebaseDataAccess() {
         return new FirebaseDataAccess();
     }
+
 }
 

@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Semana Santa</string>
 
+    <!-- Etiquetas texto spinner de carga -->
+    <string name="cargando_cofradias">Cargando Cofradias</string>
+
     <!-- Etiquetas descripciones de imagenes -->
     <string name="imagen_cofradia">Imagen Cofradía</string>
     <string name="escudo_cofradia">Escudo Cofradía</string>
