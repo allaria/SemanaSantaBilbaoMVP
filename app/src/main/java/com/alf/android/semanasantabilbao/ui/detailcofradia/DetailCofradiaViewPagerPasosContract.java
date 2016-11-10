@@ -34,7 +34,5 @@ public interface DetailCofradiaViewPagerPasosContract {
         void unsuscribePasosSuscription();
 
         void initPresenter();
-
-        void setLoading(boolean loading);
     }
 }

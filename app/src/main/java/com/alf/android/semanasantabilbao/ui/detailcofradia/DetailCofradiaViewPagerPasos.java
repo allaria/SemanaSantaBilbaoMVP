@@ -42,10 +42,6 @@ public class DetailCofradiaViewPagerPasos extends View implements DetailCofradia
     @BindView(R.id.paso_loading_text) TextView loadingText;
     @BindView(R.id.paso_recycler_view) RecyclerView mRecyclerView;
 
-    public DetailCofradiaViewPagerPasos(Context context) {
-        super(context);
-    }
-
     public DetailCofradiaViewPagerPasos(Context context, View view) {
         super(context);
 
@@ -60,7 +56,6 @@ public class DetailCofradiaViewPagerPasos extends View implements DetailCofradia
         pasoPresenter = new DetailCofradiaViewPagerPasosPresenter();
 
         pasoPresenter.attachPasoView(this);
-        pasoPresenter.setLoading(false);
         pasoPresenter.initPresenter();
     }
 

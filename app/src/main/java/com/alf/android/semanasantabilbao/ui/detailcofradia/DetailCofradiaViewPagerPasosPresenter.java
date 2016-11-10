@@ -36,11 +36,6 @@ public class DetailCofradiaViewPagerPasosPresenter implements DetailCofradiaView
     }
 
     @Override
-    public void setLoading(boolean loading) {
-        this.loading = loading;
-    }
-
-    @Override
     public void attachPasoView(DetailCofradiaViewPagerPasosContract.DetailCofradiaView detailCofradiaView) {
         this.detailCofradiaView = detailCofradiaView;
     }

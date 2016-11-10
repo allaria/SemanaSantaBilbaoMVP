@@ -74,7 +74,7 @@ public class DetailCofradiaActivity extends AppCompatActivity {
 
                 //detach vista
                 Log.d(LOG_TAG, "XXXliberarVistaPaso"+tab.getPosition());
-                viewPagerDetailAdpter.liberarVistaPaso();
+                viewPagerDetailAdpter.liberarVistaPaso(tab.getPosition());
             }
 
             @Override

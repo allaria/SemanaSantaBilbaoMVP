@@ -26,6 +26,10 @@ public class ViewPagerCofradiaDetailAdpter extends PagerAdapter {
     private Context context;
     private Cofradia cofradia;
     private String[] tabtitlearray = new String[4];
+    private DetailCofradiaViewPagerCofradia detailCofradiaViewPagerCofradia;
+    private DetailCofradiaViewPagerDetalle detailCofradiaViewPagerDetalle;
+    private DetailCofradiaViewPagerPasos detailCofradiaViewPagerPasos;
+    private DetailCofradiaViewPagerGaleria detailCofradiaViewPagerGaleria;
 
     public ViewPagerCofradiaDetailAdpter(Application application, Context context, Cofradia cofradia){
         final String tab1, tab2, tab3, tab4;
@@ -58,25 +62,29 @@ public class ViewPagerCofradiaDetailAdpter extends PagerAdapter {
 
             case 0: {
                 contentView = inflater.inflate(R.layout.detail_cofradia_content, collection, false);
-                new DetailCofradiaViewPagerCofradia(context, contentView).showDetailCofradiaInformation (cofradia);
+                detailCofradiaViewPagerCofradia = new DetailCofradiaViewPagerCofradia(context, contentView);
+                detailCofradiaViewPagerCofradia.showDetailCofradiaInformation (cofradia);
                 collection.addView(contentView);
                 return contentView;
             }
             case 1: {
                 contentView = inflater.inflate(R.layout.detail_cofradia_detalle_content, collection, false);
-                new DetailCofradiaViewPagerDetalle(context, contentView).showDetailCofradiaInformationDetalle(cofradia);
+                detailCofradiaViewPagerDetalle = new DetailCofradiaViewPagerDetalle(context, contentView);
+                detailCofradiaViewPagerDetalle.showDetailCofradiaInformationDetalle(cofradia);
                 collection.addView(contentView);
                 return contentView;
             }
             case 2: {
                 contentView = inflater.inflate(R.layout.detail_cofradia_paso_content, collection, false);
-                new DetailCofradiaViewPagerPasos(context, contentView).showDetailCofradiaInformationPasos(cofradia);
+                detailCofradiaViewPagerPasos = new DetailCofradiaViewPagerPasos(context, contentView);
+                detailCofradiaViewPagerPasos.showDetailCofradiaInformationPasos(cofradia);
                 collection.addView(contentView);
                 return contentView;
             }
             case 3: {
                 contentView = inflater.inflate(R.layout.detail_cofradia_content, collection, false);
-                new DetailCofradiaViewPagerGaleria(context, contentView).showDetailCofradiaInformationGaleria(cofradia);
+                detailCofradiaViewPagerGaleria = new DetailCofradiaViewPagerGaleria(context, contentView);
+                detailCofradiaViewPagerGaleria.showDetailCofradiaInformationGaleria(cofradia);
                 collection.addView(contentView);
                 return contentView;
             }
@@ -110,7 +118,9 @@ public class ViewPagerCofradiaDetailAdpter extends PagerAdapter {
     }
 
 
-    public void liberarVistaPaso() {
-        new DetailCofradiaViewPagerPasos(context).liberarVistaPaso();
+    public void liberarVistaPaso(int position) {
+        switch (position){
+            case 2: detailCofradiaViewPagerPasos.liberarVistaPaso();
+        }
     }
 }
