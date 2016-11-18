@@ -1,8 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/detail_coordinator_layout" >
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/detail_cofradia_app_bar"
@@ -29,7 +31,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:id="@+id/detail_cofradia_escudo_toolbar" />
+                    android:id="@+id/detail_cofradia_logo_toolbar" />
 
                 <TextView
                     android:id="@+id/detail_cofradia_name_toolbar"
@@ -55,6 +57,34 @@
             app:tabGravity="fill"/>
 
     </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="3dp"
+        android:layout_alignParentBottom="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+
+        <TextView
+            android:id="@+id/cofradia_loading_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="@string/loading_detail_cofradia"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/cofradia_detail_progress_bar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/cofradia_loading_text"
+            android:visibility="gone" />
+    </RelativeLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager_detail"

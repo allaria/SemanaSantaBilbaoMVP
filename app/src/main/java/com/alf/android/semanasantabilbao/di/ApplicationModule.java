@@ -1,8 +1,5 @@
 package com.alf.android.semanasantabilbao.di;
 
-import android.app.Application;
-import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.alf.android.semanasantabilbao.business.cofradias.GetCofradiasInteractorImpl;
@@ -11,9 +8,6 @@ import com.alf.android.semanasantabilbao.data.FirebaseDataAccess;
 import com.alf.android.semanasantabilbao.ui.cofradias.CofradiaContract;
 import com.alf.android.semanasantabilbao.ui.cofradias.CofradiaPresenter;
 import com.alf.android.semanasantabilbao.ui.cofradias.adapter.CofradiaAdapter;
-import com.alf.android.semanasantabilbao.ui.detailcofradia.DetailCofradiaViewPagerPasos;
-import com.alf.android.semanasantabilbao.ui.detailcofradia.DetailCofradiaViewPagerPasosContract;
-import com.alf.android.semanasantabilbao.ui.detailcofradia.DetailCofradiaViewPagerPasosPresenter;
 
 import javax.inject.Singleton;
 

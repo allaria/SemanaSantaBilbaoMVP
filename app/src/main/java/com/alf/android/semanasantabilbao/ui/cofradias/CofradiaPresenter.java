@@ -9,7 +9,6 @@ import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.firebase.client.DataSnapshot;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 
 import rx.Subscriber;
 import rx.Subscription;
@@ -40,11 +39,6 @@ public class CofradiaPresenter implements CofradiaContract.CofradiaPresenter {
     }
 
     @Override
-    public void setLoading(boolean loading) {
-        this.loading = loading;
-    }
-
-    @Override
     public void attachCofradiaView(CofradiaContract.CofradiaView cofradiaView) {
         this.cofradiaView = cofradiaView;
     }
@@ -68,32 +62,33 @@ public class CofradiaPresenter implements CofradiaContract.CofradiaPresenter {
         }
 
         if (!loading && listaCofradias.isEmpty()) {
-            Log.d(LOG_TAG, "initPresenter - IF loading"+!loading+" - isEmpty: "+listaCofradias.isEmpty());
+            //Log.d(LOG_TAG, "Cofradias list is empty");
             loading = true;
             setSpinnerAndLoadindText(loading);
             if (connection) {
-                Log.d(LOG_TAG, "initPresenter - getCofradias Firebase");
+                Log.d(LOG_TAG, "Cofradias list is empty. Getting Cofradias from Firebase");
                 subscription = getCofradiasInteractor.getCofradias().subscribe(subscriber);
             } else{
-                Log.d(LOG_TAG, "initPresenter - getCofradiasSinConexion");
+                Log.d(LOG_TAG, "Cofradias list is empty. Getting Cofradias from Drawables");
+                loading = false;
+                setSpinnerAndLoadindText(loading);
                 getCofradiasSinConexion(fields);
             }
         } else {
             if (cofradiaView != null) {
-                Log.d(LOG_TAG, "initPresenter - printPasos CACHE");
-                Log.d(LOG_TAG, "initPresenter - ELSE loading"+!loading+" - isEmpty: "+listaCofradias.isEmpty());
+                Log.d(LOG_TAG, "Cofradias list not empty. Calling printCofradias.");
+                loading = false;
+                setSpinnerAndLoadindText(loading);
                 cofradiaView.printCofradias(listaCofradias);
             }
         }
     }
-
 
     private void setSpinnerAndLoadindText(boolean loadingSpinner) {
         if (cofradiaView != null) {
             this.cofradiaView.setSpinnerAndLoadingText(loadingSpinner);
         }
     }
-
 
     private void getCofradiasSinConexion(Field[] fields) {
         String idCofradia, nombreCofradia, homeResourceName, escudoResourceName;
@@ -111,25 +106,22 @@ public class CofradiaPresenter implements CofradiaContract.CofradiaPresenter {
                     idCofradia = "00"+String.valueOf(fields[i].getName().charAt(5))+"-COF";
                     idCofradia = checkIdCofradia (idCofradia);
 
-                    //Log.d(LOG_TAG, "getCofradiasSinConexion:" + idCofradia + ":" + nombreCofradia + ":" + homeResourceName + ":" + escudoResourceName);
-
                     Cofradia cofradia = new Cofradia(idCofradia, nombreCofradia, escudoResourceName, homeResourceName);
                     listaCofradias.add(cofradia);
                 }
             } catch (Exception e) {
-                Log.d(LOG_TAG, "getCofradiasSinConexion ERROR: " + e.getMessage());
+                Log.d(LOG_TAG, "Error while getting Cofradias from Drawables: " + e.getMessage());
                 continue;
             }
         }
 
-        cofradiaView.printCofradiasWithoutConnection(listaCofradias);
-
+        //Log.d(LOG_TAG, "Calling printCofradiasWhenError. ");
+        cofradiaView.printCofradiasWhenError(listaCofradias);
         setSpinnerAndLoadindText(false);
     }
 
-
     private String capitalizeString (String cadena) {
-        //Log.d(LOG_TAG, "CADENA capitalizeString:"+cadena);
+
         StringBuffer res = new StringBuffer();
 
         String[] strArr = cadena.split(" ");
@@ -137,7 +129,6 @@ public class CofradiaPresenter implements CofradiaContract.CofradiaPresenter {
             char[] stringArray = str.trim().toCharArray();
             stringArray[0] = Character.toUpperCase(stringArray[0]);
             str = new String(stringArray);
-
             res.append(str).append(" ");
         }
 
@@ -145,7 +136,6 @@ public class CofradiaPresenter implements CofradiaContract.CofradiaPresenter {
     }
 
     private String replaceCharacters(String cadena) {
-        //Log.d(LOG_TAG, "CADENA replaceCharacters:"+cadena);
         if (cadena.contains("__a__")) cadena = cadena.replace("__a__", "á");
         if (cadena.contains("__e__")) cadena = cadena.replace("__e__", "é");
         if (cadena.contains("__i__")) cadena = cadena.replace("__i__", "í");
@@ -156,49 +146,44 @@ public class CofradiaPresenter implements CofradiaContract.CofradiaPresenter {
         return cadena;
     }
 
-
     private String checkIdCofradia(String cadena) {
-        //Log.d(LOG_TAG, "CADENA checkIdCofradia:"+cadena);
         if (cadena.length() > 7) return cadena.substring(1, cadena.length());
 
         return cadena;
     }
 
-
     private Subscriber subscriber = new Subscriber<DataSnapshot>() {
         @Override
         public void onNext(DataSnapshot snapshot) {
-            Log.d(LOG_TAG, "onNext");
 
+            Log.d(LOG_TAG, "Suscriber Cofradias onNext. Adding Cofradias ("+ snapshot.getChildrenCount() +") to listaCofradias");
             listaCofradias.clear();
             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                //Log.d(LOG_TAG, "RECUPERANDO COFRADIAS");
                 listaCofradias.add(dataSnapshot.getValue(Cofradia.class));
             }
 
+            Log.d(LOG_TAG, "Cofradias list generated. Calling printCofradias.");
             cofradiaView.printCofradias(listaCofradias);
-
             loading = false;
             setSpinnerAndLoadindText(loading);
         }
 
         @Override
         public void onCompleted() {
-            Log.d(LOG_TAG, "onCompleted");
+            Log.d(LOG_TAG, "Suscriber Cofradias onCompleted.");
             loading = false;
             setSpinnerAndLoadindText(loading);
         }
 
         @Override
         public void onError(Throwable e) {
-            Log.d(LOG_TAG, "onError");
             setSpinnerAndLoadindText(false);
             errorMessage.set(e.getMessage());
+            Log.d(LOG_TAG, "Suscriber Cofradias onError. Error while getting Cofradias from Firebase. ("+ errorMessage.get() +")");
             cofradiaView.showErrorGettingCofradias(errorMessage);
 
-            //Generate the Cofradias list from local
+            Log.d(LOG_TAG, "Getting Cofradias from Drawables");
             getCofradiasSinConexion(cofradiaView.getDrawablesList());
         }
     };
-
 }

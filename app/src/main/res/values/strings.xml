@@ -2,11 +2,17 @@
     <string name="app_name">Semana Santa</string>
 
     <!-- Etiquetas texto spinner de carga -->
-    <string name="cargando_cofradias">Cargando Cofradias</string>
+    <string name="loading_cofradias">Cargando Cofradías</string>
+    <string name="loading_detail_cofradia">Cargando datos de la Cofradía</string>
+    <string name="loading_procesiones">Cargando Procesiones</string>
+    <string name="loading_pasos">Cargando Pasos</string>
+    <string name="loading_gallery">Cargando Imágenes de la Galería</string>
 
     <!-- Etiquetas descripciones de imagenes -->
-    <string name="imagen_cofradia">Imagen Cofradía</string>
-    <string name="escudo_cofradia">Escudo Cofradía</string>
+    <string name="image_cofradia">Imagen Cofradía</string>
+    <string name="logo_cofradia">Escudo Cofradía</string>
+    <string name="image_paso">Imagen Paso</string>
+    <string name="image_gallery">Imagen Galería</string>
 
     <!-- Etiquetas elementos del menu de la aplicación -->
     <string name="app_navigation_view_name">Cofradías de Bilbao</string>
@@ -36,10 +42,32 @@
     <string name="detail_cofradia_sede">Sede:&#x200A;</string>
     <string name="detail_cofradia_numero_procesiones">Número de Procesiones:&#x200A;</string>
     <string name="detail_cofradia_hermano_abad">Hermano Abad:&#x200A;</string>
-    <string name="detail_titulo_procesiones_view">PROCESIONES</string>
-    <string name="detail_titulo_contacto">CONTACTO</string>
-    <string name="detail_cofradia_direccion">Dirección:&#x200A;</string>
-    <string name="detail_cofradia_telefono">Teléfono:&#x200A;</string>
+    <string name="detail_procesiones_title_view">PROCESIONES</string>
+    <string name="detail_contacto_title">CONTACTO</string>
+    <string name="detail_cofradia_direction">Dirección:&#x200A;</string>
+    <string name="detail_cofradia_phone">Teléfono:&#x200A;</string>
     <string name="detail_cofradia_web">Web:&#x200A;</string>
+
+    <!-- Reference's name in intents -->
+    <string name="COFRADIA">"com.alf.android.semanasantabilbao.cofradia"</string>
+    <string name="COFRADIAERROR">"com.alf.android.semanasantabilbao.cofradiaerror"</string>
+    <string name="PROCESION">"com.alf.android.semanasantabilbao.procesion"</string>
+    <string name="PASO">"com.alf.android.semanasantabilbao.paso"</string>
+    <string name="IMAGENGALERIA">"com.alf.android.semanasantabilbao.galeria"</string>
+    <string name="ORIGEN">"com.alf.android.semanasantabilbao.origen"</string>
+    <string name="MENU">"com.alf.android.semanasantabilbao.menu"</string>
+
+    <!-- Reference's name whe no image is available -->
+    <string name="NO_IMAGE">"no_image"</string>
+
+    <!-- Detail Cofradia snackbar -->
+    <string name="no_connection">"Conexión a Internet necesaria para el funcionamiento de la aplicación"</string>
+    <string name="back_action">"VOLVER"</string>
+
+    <!-- Cofradia error message text -->
+    <string name="connection_error">"Compruebe la conexión a internet del dispositivo. Generando lista local."</string>
+    <string name="connection_error_detail">"Es necesaria la conexion a internet para el correcto funcionamiento de la aplicación"</string>
+    <string name="firebase_error">"Error al recuperar las Cofradias. Generando lista local."</string>
+    <string name="firebase_error_detail">"Se ha producido un error al recuperar las cofradias."</string>
 
 </resources>

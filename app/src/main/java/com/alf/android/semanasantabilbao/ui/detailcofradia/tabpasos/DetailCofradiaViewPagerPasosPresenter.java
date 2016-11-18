@@ -1,12 +1,11 @@
-package com.alf.android.semanasantabilbao.ui.detailcofradia;
+package com.alf.android.semanasantabilbao.ui.detailcofradia.tabpasos;
 
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.util.Log;
 
-import com.alf.android.semanasantabilbao.business.detailcofradia.GetPasosInteractorImpl;
+import com.alf.android.semanasantabilbao.business.detailcofradia.GetDetailCofradiaInteractorImpl;
 import com.alf.android.semanasantabilbao.data.entities.Paso;
-import com.alf.android.semanasantabilbao.ui.cofradias.CofradiaActivity;
 import com.firebase.client.DataSnapshot;
 
 import rx.Subscriber;
@@ -18,9 +17,9 @@ import rx.Subscription;
 
 public class DetailCofradiaViewPagerPasosPresenter implements DetailCofradiaViewPagerPasosContract.DetailCofradiaPresenter {
 
-    private static final String LOG_TAG = CofradiaActivity.class.getSimpleName();
+    private static final String LOG_TAG = DetailCofradiaViewPagerPasosPresenter.class.getSimpleName();
     private DetailCofradiaViewPagerPasosContract.DetailCofradiaView detailCofradiaView;
-    private GetPasosInteractorImpl getPasosInteractor;
+    private GetDetailCofradiaInteractorImpl getDetailCofradiaInteractor;
     private Subscription subscription;
     private ObservableArrayList<Paso> listaPasos;
     private ObservableField<String> errorMessage;
@@ -28,7 +27,7 @@ public class DetailCofradiaViewPagerPasosPresenter implements DetailCofradiaView
 
     public DetailCofradiaViewPagerPasosPresenter() {
 
-        getPasosInteractor = new GetPasosInteractorImpl();
+        getDetailCofradiaInteractor = new GetDetailCofradiaInteractorImpl();
         listaPasos = new ObservableArrayList();
         errorMessage = new ObservableField();
 
@@ -53,7 +52,7 @@ public class DetailCofradiaViewPagerPasosPresenter implements DetailCofradiaView
     }
 
     @Override
-    public void initPresenter() {
+    public void initPresenter(String idCofradia) {
         if (loading) {
             setSpinnerAndLoadindText(loading);
         }
@@ -62,8 +61,8 @@ public class DetailCofradiaViewPagerPasosPresenter implements DetailCofradiaView
             Log.d(LOG_TAG, "initPresenter - IF loading"+!loading+" - isEmpty: "+listaPasos.isEmpty());
             loading = true;
             setSpinnerAndLoadindText(loading);
-            Log.d(LOG_TAG, "initPresenter - getPasos Firebase");
-            subscription = getPasosInteractor.getPasos().subscribe(subscriber);
+            Log.d(LOG_TAG, "initPresenter - getImagenesGaleria Firebase");
+            subscription = getDetailCofradiaInteractor.getPasos(idCofradia).subscribe(subscriber);
         } else {
             if (detailCofradiaView != null) {
                 Log.d(LOG_TAG, "initPresenter - printPasos CACHE");

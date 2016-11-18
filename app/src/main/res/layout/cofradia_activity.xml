@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/cofradia_top_imagen"
+                        android:id="@+id/cofradia_top_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fitsSystemWindows="true"

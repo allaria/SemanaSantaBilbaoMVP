@@ -1,4 +1,4 @@
-package com.alf.android.semanasantabilbao.ui.detailcofradia;
+package com.alf.android.semanasantabilbao.ui.detailcofradia.tabdetalle;
 
 import android.content.Context;
 import android.view.View;
@@ -19,10 +19,10 @@ public class DetailCofradiaViewPagerDetalle extends View {
     private static String LOG_TAG = DetailCofradiaViewPagerDetalle.class.getSimpleName();
 
     @BindView(R.id.cofradia_pasos) TextView mPasos;
-    @BindView(R.id.cofradia_texto) TextView mTexto;
-    @BindView(R.id.texto_intro_paso) TextView mTextoPaso;
-    @BindView(R.id.cofradia_direccion) TextView mCofradiaDireccion;
-    @BindView(R.id.cofradia_telefono) TextView mCofradiaTelefono;
+    @BindView(R.id.cofradia_text) TextView mTexto;
+    @BindView(R.id.paso_intro_text) TextView mTextoPaso;
+    @BindView(R.id.cofradia_address) TextView mCofradiaDireccion;
+    @BindView(R.id.cofradia_phone) TextView mCofradiaTelefono;
     @BindView(R.id.cofradia_web) TextView mCofradiaWeb;
 
     public DetailCofradiaViewPagerDetalle(Context context, View view) {

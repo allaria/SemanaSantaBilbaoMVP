@@ -1,11 +1,10 @@
 package com.alf.android.semanasantabilbao.ui.cofradias;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -26,9 +25,9 @@ import android.widget.Toast;
 import com.alf.android.semanasantabilbao.App;
 import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
-import com.alf.android.semanasantabilbao.ui.constants.Constants;
 import com.alf.android.semanasantabilbao.ui.cofradias.adapter.CofradiaAdapter;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.DetailCofradiaActivity;
+import com.alf.android.semanasantabilbao.ui.utils.GlobalFunctions;
 import com.firebase.client.Firebase;
 import com.squareup.picasso.Picasso;
 
@@ -37,6 +36,8 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import butterknife.BindDrawable;
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -53,13 +54,11 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
     //private CofradiaContract.CofradiaPresenter cofradiaPresenter;
     private boolean connectionAvailable;
     private Field[] fields;
+    private Boolean withoutConnectionCofradiasList;
 
-    @Inject
-    CofradiaContract.CofradiaPresenter cofradiaPresenter;
-    @Inject
-    CofradiaAdapter cofradiaAdapter;
-    @Inject
-    RecyclerView.RecycledViewPool recycledViewPool;
+    @Inject CofradiaContract.CofradiaPresenter cofradiaPresenter;
+    @Inject CofradiaAdapter cofradiaAdapter;
+    @Inject RecyclerView.RecycledViewPool recycledViewPool;
 
     @BindView(R.id.cofradia_progress_bar) ProgressBar spinner;
     @BindView(R.id.cofradia_loading_text) TextView loadingText;
@@ -67,7 +66,12 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
     @BindView(R.id.cofradia_drawer_layout) DrawerLayout drawer;
     @BindView(R.id.cofradia_navigation_view) NavigationView navigationView;
     @BindView(R.id.cofradia_recycler_view) RecyclerView mRecyclerView;
-    @BindView(R.id.cofradia_top_imagen) ImageView mTopImagen;
+    @BindView(R.id.cofradia_top_image) ImageView mTopImage;
+    //@BindString(R.string.NO_IMAGE) String no_image;
+    @BindString(R.string.firebase_error) String firebaseError;
+    @BindString(R.string.COFRADIA) String cofradiaIntent;
+    @BindString(R.string.COFRADIAERROR) String cofradiaIntentError;
+    @BindDrawable (R.drawable.no_image) Drawable idDrawableNoImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +81,9 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
         ButterKnife.bind(this);
         Firebase.setAndroidContext(this);
 
-        setSupportActionBar(toolbar);
+        withoutConnectionCofradiasList = false;
 
+        setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
@@ -86,23 +91,25 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
-        int idDrawableNoImage = this.getResources().getIdentifier(Constants.NoImage.NO_IMAGE, "drawable", this.getPackageName());
+        //int idDrawableNoImage = this.getResources().getIdentifier(getResources().getString(R.string.NO_IMAGE), "drawable", this.getPackageName());
+        //int idDrawableNoImage = this.getResources().getIdentifier(no_image, "drawable", this.getPackageName());
         Picasso.with(this)
                 .load(R.drawable.intro_photo)
                 .placeholder(idDrawableNoImage)
                 .error(idDrawableNoImage)
-                .into(mTopImagen);
+                .into(mTopImage);
 
         setSpinnerAndLoadingText(false);
         initRecyclerViewCofradias();
 
         //check network status. false without connection, true with connection
-        connectionAvailable = checkNetworkStatus();
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(getApplication().CONNECTIVITY_SERVICE);
+        connectionAvailable = new GlobalFunctions().checkNetworkStatus(connectivityManager);
         if (connectionAvailable){
-            //if conection no fields necessary
+            Log.d(LOG_TAG, "Internet connection available.");
             fields = null;
         }else{
-            //getting the list of Drawable elements in the app
+            Log.d(LOG_TAG, "No internet connection available. Getting Drawables list.");
             fields = getDrawablesList();
         }
 
@@ -110,20 +117,9 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
         //initPresenter(connectionAvailable, fields);
 
         cofradiaPresenter.attachCofradiaView(this);
-        //variable loading must be initialiced to false before callling the initPresenter;
-        cofradiaPresenter.setLoading(false);
         cofradiaPresenter.initPresenter(connectionAvailable, fields);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        if (isFinishing()) {
-            cofradiaPresenter.unsuscribeCofradiaSuscription();
-            cofradiaPresenter.detachCofradiaView();
-        }
-    }
 
     @Override
     public void setSpinnerAndLoadingText(boolean loadingSpinner) {
@@ -133,25 +129,25 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
 
     @Override
     public void printCofradias(ObservableArrayList<Cofradia> mCofradias) {
-        Log.d(LOG_TAG, "printCofradias: "+mCofradias.size()+" elementos");
+        Log.d(LOG_TAG, "Number of Cofradias in the recyclerView: " + mCofradias.size() + " (printCofradias)");
         ((CofradiaAdapter) mRecyclerView.getAdapter()).addCofradias(mCofradias);
     }
 
     @Override
-    public void printCofradiasWithoutConnection(ArrayList<Cofradia> mCofradias) {
-        Log.d(LOG_TAG, "printCofradiasWithoutConnection: "+mCofradias.size()+" elementos");
+    public void printCofradiasWhenError(ArrayList<Cofradia> mCofradias) {
+        Log.d(LOG_TAG, "Number of Cofradias in the recyclerView: " + mCofradias.size() + " (printCofradiasWhenError)");
         ((CofradiaAdapter) mRecyclerView.getAdapter()).addCofradias(mCofradias);
     }
 
     @Override
     public void showErrorGettingCofradias(ObservableField<String> mensajeError) {
-        Log.d(LOG_TAG, "showErrorGettingPasos");
-        Toast.makeText(this, mensajeError.get(), Toast.LENGTH_SHORT).show();
+        Log.d(LOG_TAG, "Toast. Error getting Cofradias from Firebase. (" + firebaseError + ")");
+        Toast.makeText(this, firebaseError + "(" + mensajeError.get() + ")", Toast.LENGTH_LONG).show();
     }
 
     private void initRecyclerViewCofradias() {
         mRecyclerView.setHasFixedSize(true);
-        if (getScreenOrientation().equals("Landscrape")) {
+        if (new GlobalFunctions().getScreenOrientation(getResources().getConfiguration().orientation).equals("Landscrape")) {
             mRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
         }else{
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
@@ -165,7 +161,7 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
     }
 
 
-    private boolean checkNetworkStatus() {
+/*    private boolean checkNetworkStatus() {
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(getApplication().CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if(networkInfo != null && networkInfo.isConnected() == true) {
@@ -175,9 +171,9 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
             //Toast.makeText(this, "Network Not Available", Toast.LENGTH_SHORT).show();
             return false;
         }
-    }
+    }*/
 
-    private String getScreenOrientation() {
+/*    private String getScreenOrientation() {
         int orientation = getResources().getConfiguration().orientation;
         String screenOrientation = "";
         switch (orientation) {
@@ -187,7 +183,7 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
         }
 
         return screenOrientation;
-    }
+    }*/
 
 /*    private void initPresenter(boolean connectionAvailable, Field[] fields) {
         //cofradiaPresenter = new CofradiaPresenter();
@@ -199,6 +195,8 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
         final R.drawable drawableResources = new R.drawable();
         final Class<R.drawable> c = R.drawable.class;
 
+        withoutConnectionCofradiasList = true;
+
         return c.getDeclaredFields();
     }
 
@@ -206,9 +204,20 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
     public void onClick(int position) {
         Cofradia selectedCofradia = cofradiaAdapter.getSelectedCofradia(position);
         Intent intent = new Intent(CofradiaActivity.this, DetailCofradiaActivity.class);
-        intent.putExtra(Constants.REFERENCE.COFRADIA, selectedCofradia);
+        //intent.putExtra(getResources().getString(R.string.COFRADIA), selectedCofradia);
+        intent.putExtra(cofradiaIntent, selectedCofradia);
+        intent.putExtra(cofradiaIntentError, withoutConnectionCofradiasList);
         startActivity(intent);
         //Toast.makeText(getApplicationContext(), "CLICK", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (isFinishing() && cofradiaPresenter != null) {
+            cofradiaPresenter.unsuscribeCofradiaSuscription();
+            cofradiaPresenter.detachCofradiaView();
+        }
     }
 
     @Override

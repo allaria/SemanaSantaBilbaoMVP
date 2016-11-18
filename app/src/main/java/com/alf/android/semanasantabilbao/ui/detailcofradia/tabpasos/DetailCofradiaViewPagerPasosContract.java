@@ -1,14 +1,9 @@
-package com.alf.android.semanasantabilbao.ui.detailcofradia;
+package com.alf.android.semanasantabilbao.ui.detailcofradia.tabpasos;
 
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 
-import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.data.entities.Paso;
-import com.alf.android.semanasantabilbao.ui.cofradias.CofradiaContract;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 
 /**
  * Created by Alberto on 02/11/2016.
@@ -33,6 +28,6 @@ public interface DetailCofradiaViewPagerPasosContract {
 
         void unsuscribePasosSuscription();
 
-        void initPresenter();
+        void initPresenter(String idCofradia);
     }
 }

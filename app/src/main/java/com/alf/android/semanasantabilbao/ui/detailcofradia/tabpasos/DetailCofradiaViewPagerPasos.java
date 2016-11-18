@@ -1,11 +1,9 @@
-package com.alf.android.semanasantabilbao.ui.detailcofradia;
+package com.alf.android.semanasantabilbao.ui.detailcofradia.tabpasos;
 
-import android.app.Application;
 import android.content.Context;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -13,16 +11,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alf.android.semanasantabilbao.App;
 import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.data.entities.Paso;
-import com.alf.android.semanasantabilbao.ui.cofradias.CofradiaContract;
-import com.alf.android.semanasantabilbao.ui.detailcofradia.DetailCofradiaViewPagerPasosContract;
-import com.alf.android.semanasantabilbao.ui.cofradias.adapter.CofradiaAdapter;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.adapter.PasoAdapter;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +29,7 @@ public class DetailCofradiaViewPagerPasos extends View implements DetailCofradia
     private static String LOG_TAG = DetailCofradiaViewPagerPasos.class.getSimpleName();
     private PasoAdapter pasoAdapter;
     private DetailCofradiaViewPagerPasosContract.DetailCofradiaPresenter pasoPresenter;
+    private String idCofradia;
 
     @BindView(R.id.paso_detail_progress_bar) ProgressBar spinner;
     @BindView(R.id.paso_loading_text) TextView loadingText;
@@ -44,19 +37,19 @@ public class DetailCofradiaViewPagerPasos extends View implements DetailCofradia
 
     public DetailCofradiaViewPagerPasos(Context context, View view) {
         super(context);
-
         ButterKnife.bind(this, view);
     }
 
     public void showDetailCofradiaInformationPasos(Cofradia cofradia) {
 
+        idCofradia = cofradia.getId_cofradia();
+
         setSpinnerAndLoadingText(false);
         initRecyclerViewPasos();
 
         pasoPresenter = new DetailCofradiaViewPagerPasosPresenter();
-
         pasoPresenter.attachPasoView(this);
-        pasoPresenter.initPresenter();
+        pasoPresenter.initPresenter(idCofradia);
     }
 
     private void initRecyclerViewPasos() {
@@ -78,7 +71,7 @@ public class DetailCofradiaViewPagerPasos extends View implements DetailCofradia
 
     @Override
     public void printPasos(ObservableArrayList<Paso> mPasos) {
-        Log.d(LOG_TAG, "printPasos: "+mPasos.size()+" elementos");
+        Log.d(LOG_TAG, "Number of Pasos in the recyclerView:"+mPasos.size());
         ((PasoAdapter) mRecyclerView.getAdapter()).addPaso(mPasos);
     }
 
@@ -87,8 +80,9 @@ public class DetailCofradiaViewPagerPasos extends View implements DetailCofradia
 
     }
 
-    public void liberarVistaPaso(){
-        //pasoPresenter.detachPasoView();
+    public void detachViewUnsuscribeSuscriptionPaso(){
+        pasoPresenter.detachPasoView();
+        pasoPresenter.unsuscribePasosSuscription();
     }
 
 

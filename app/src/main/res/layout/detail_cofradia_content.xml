@@ -20,14 +20,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Etiqueta"
+                style="@style/TextLabel"
                 android:text="@string/detail_cofradia_fundacion" />
 
             <TextView
                 android:id="@+id/cofradia_fundacion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Texto"
+                style="@style/Text"
                 android:text="Medium Text" />
         </LinearLayout>
 
@@ -40,14 +40,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Etiqueta"
+                style="@style/TextLabel"
                 android:text="@string/detail_cofradia_sede" />
 
             <TextView
                 android:id="@+id/cofradia_sede"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Texto"
+                style="@style/Text"
                 android:text="Medium Text" />
         </LinearLayout>
 
@@ -60,14 +60,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Etiqueta"
+                style="@style/TextLabel"
                 android:text="@string/detail_cofradia_numero_procesiones" />
 
             <TextView
                 android:id="@+id/cofradia_procesiones"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Texto"
+                style="@style/Text"
                 android:text="Medium Text" />
         </LinearLayout>
 
@@ -80,14 +80,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Etiqueta"
+                style="@style/TextLabel"
                 android:text="@string/detail_cofradia_hermano_abad" />
 
             <TextView
                 android:id="@+id/cofradia_abad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Texto"
+                style="@style/Text"
                 android:text="Medium Text" />
         </LinearLayout>
 
@@ -101,46 +101,58 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Etiqueta"
+                style="@style/TextLabel"
                 android:text="@string/detail_cofradia_vestimenta" />
 
             <TextView
                 android:id="@+id/cofradia_vestimenta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Texto"
+                style="@style/Text"
                 android:text="Medium Text" />
         </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tituloRecyclerView"
             android:padding="3dp"
-            android:text="@string/detail_titulo_procesiones_view"
+            android:text="@string/detail_procesiones_title_view"
             style="@style/TitleBlack" />
 
         <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:focusableInTouchMode="true">
+            android:background="@android:color/white"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:context=".ui.detailcofradia.DetailCofradiaActivity"
+            tools:showIn="@layout/detail_cofradia_activity" >
 
-        <ProgressBar
-            android:id="@+id/cofradia_detail_progress_bar"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true" />
+            <TextView
+                android:id="@+id/procesiones_loading_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:text="@string/loading_procesiones"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerViewDetail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none"
-            android:layout_below="@+id/cofradia_detail_progress_bar" />
+            <ProgressBar
+                android:id="@+id/cofradia_detail_procesiones_progress_bar"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/procesiones_loading_text" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/detail_cofradia_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:layout_below="@+id/cofradia_detail_progress_bar" />
         </RelativeLayout>
     </LinearLayout>
 

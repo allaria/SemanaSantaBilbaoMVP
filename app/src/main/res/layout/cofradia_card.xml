@@ -21,11 +21,11 @@
             android:padding="3dp">
 
             <ImageView
-                android:id="@+id/card_cofradia_imagen"
+                android:id="@+id/card_cofradia_image"
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
                 android:scaleType="centerCrop"
-                android:contentDescription="@string/imagen_cofradia" />
+                android:contentDescription="@string/image_cofradia" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -37,15 +37,15 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/card_cofradia_escudo"
-                    android:contentDescription="@string/escudo_cofradia" />
+                    android:id="@+id/card_cofradia_logo"
+                    android:contentDescription="@string/logo_cofradia" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="Medium Text"
-                    android:id="@+id/card_cofradia_nombre"
+                    android:id="@+id/card_cofradia_name"
                     android:textSize="20sp"
                     android:textColor="@android:color/white"
                     android:textAlignment="center"

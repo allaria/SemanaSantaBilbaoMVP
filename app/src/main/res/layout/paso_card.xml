@@ -7,18 +7,19 @@
     android:padding="3dp">
 
     <ImageView
-        android:id="@+id/card_paso_imagen"
+        android:id="@+id/card_paso_image"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/image_paso" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:text="Medium Text"
-        android:id="@+id/card_paso_nombre"
+        android:id="@+id/card_paso_name"
         style="@style/TitleBlack"
         android:gravity="center_horizontal"
-        android:layout_below="@id/card_paso_imagen"/>
+        android:layout_below="@id/card_paso_image"/>
 </RelativeLayout>

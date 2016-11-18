@@ -2,7 +2,6 @@ package com.alf.android.semanasantabilbao.di;
 
 
 import com.alf.android.semanasantabilbao.ui.cofradias.CofradiaActivity;
-import com.alf.android.semanasantabilbao.ui.detailcofradia.DetailCofradiaViewPagerPasos;
 
 import javax.inject.Singleton;
 

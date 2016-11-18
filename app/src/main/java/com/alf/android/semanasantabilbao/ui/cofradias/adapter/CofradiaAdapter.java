@@ -1,5 +1,6 @@
 package com.alf.android.semanasantabilbao.ui.cofradias.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,6 @@ import android.widget.TextView;
 
 import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
-import com.alf.android.semanasantabilbao.ui.constants.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -28,6 +28,7 @@ public class CofradiaAdapter extends RecyclerView.Adapter<CofradiaAdapter.Holder
     private static final String LOG_TAG = CofradiaAdapter.class.getSimpleName();
     private CofradiaClickListener cofradiaClickListener;
     private List<Cofradia> mCofradias;
+    private Context context;
 
     @Inject
     public CofradiaAdapter() {
@@ -38,6 +39,7 @@ public class CofradiaAdapter extends RecyclerView.Adapter<CofradiaAdapter.Holder
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         View row = LayoutInflater.from(parent.getContext()).inflate(R.layout.cofradia_card, null, false);
+        context = parent.getContext();
         return new Holder(row);
     }
 
@@ -45,12 +47,11 @@ public class CofradiaAdapter extends RecyclerView.Adapter<CofradiaAdapter.Holder
     public void onBindViewHolder(Holder holder, int position) {
 
         Cofradia currCofradia = mCofradias.get(position);
-
         String escudoPhoto = currCofradia.getImagenEscudo();
         String homePhoto = currCofradia.getImagenDetalle();
         int idDrawableEscudo = holder.itemView.getContext().getResources().getIdentifier(escudoPhoto, "drawable", holder.itemView.getContext().getPackageName());
         int idDrawableHome = holder.itemView.getContext().getResources().getIdentifier(homePhoto, "drawable", holder.itemView.getContext().getPackageName());
-        int idDrawableNoImage = holder.itemView.getContext().getResources().getIdentifier(Constants.NoImage.NO_IMAGE, "drawable", holder.itemView.getContext().getPackageName());
+        int idDrawableNoImage = holder.itemView.getContext().getResources().getIdentifier(context.getResources().getString(R.string.NO_IMAGE), "drawable", holder.itemView.getContext().getPackageName());
         Picasso.with(holder.itemView.getContext())
                 .load(idDrawableEscudo)
                 .into(holder.mCofradiaEscudo);
@@ -90,10 +91,9 @@ public class CofradiaAdapter extends RecyclerView.Adapter<CofradiaAdapter.Holder
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.card_cofradia_imagen) ImageView mCofradiaImagen;
-        @BindView(R.id.card_cofradia_escudo) ImageView mCofradiaEscudo;
-        @BindView(R.id.card_cofradia_nombre) TextView mCofradiaName;
-
+        @BindView(R.id.card_cofradia_image) ImageView mCofradiaImagen;
+        @BindView(R.id.card_cofradia_logo) ImageView mCofradiaEscudo;
+        @BindView(R.id.card_cofradia_name) TextView mCofradiaName;
 
         public Holder(View itemView) {
             super(itemView);

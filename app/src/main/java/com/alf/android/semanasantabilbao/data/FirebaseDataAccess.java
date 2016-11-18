@@ -2,11 +2,12 @@ package com.alf.android.semanasantabilbao.data;
 
 import android.util.Log;
 
-import com.alf.android.semanasantabilbao.ui.constants.Constants;
+import com.alf.android.semanasantabilbao.data.utils.Constants;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
 import rx.Observable;
@@ -33,14 +34,13 @@ public class FirebaseDataAccess implements FirebaseAccess {
                 myFirebaseRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.d(LOG_TAG, "onDataChange");
+                        Log.d(LOG_TAG, "Firebase onDataChange. Sending datasnapshot to suscriber.");
                         subscriber.onNext(dataSnapshot);
                     }
 
                     @Override
                     public void onCancelled(FirebaseError error) {
-                        Log.d(LOG_TAG, "onCancelled ERROR: " + error.getMessage());
-
+                        Log.d(LOG_TAG, "Firebase onCancelled. Error getting datasnapshot (" + error.getMessage() + ")");
                         Throwable fireBaseError = new Throwable(error.getMessage());
                         subscriber.onError(fireBaseError);
                     }
@@ -50,25 +50,25 @@ public class FirebaseDataAccess implements FirebaseAccess {
         });
     }
 
-    public Observable<DataSnapshot> getFirebaseDataSnapshotPasos() {
+    public Observable<DataSnapshot> getFirebaseDataSnapshot(String idCofradia, String cadenaConexion) {
 
-        myFirebaseRef = new Firebase(Constants.ConfigFireBase.FIREBASE_URL + Constants.ConfigFireBase.FIREBASE_CHILD_PASOS);
+        myFirebaseRef = new Firebase(Constants.ConfigFireBase.FIREBASE_URL + cadenaConexion);
+        final Query queryRef = myFirebaseRef.orderByChild("id_cofradia").equalTo(idCofradia);
 
         return Observable.create(new Observable.OnSubscribe<DataSnapshot>() {
             @Override
             public void call(final Subscriber subscriber) {
                 //final ValueEventListener listener = myFirebaseRef.addValueEventListener(new ValueEventListener() {
-                myFirebaseRef.addValueEventListener(new ValueEventListener() {
+                queryRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.d(LOG_TAG, "onDataChange");
+                        Log.d(LOG_TAG, "Firebase onDataChange. Sending datasnapshot to suscriber.");
                         subscriber.onNext(dataSnapshot);
                     }
 
                     @Override
                     public void onCancelled(FirebaseError error) {
-                        Log.d(LOG_TAG, "onCancelled ERROR: " + error.getMessage());
-
+                        Log.d(LOG_TAG, "Firebase onCancelled. Error getting datasnapshot (" + error.getMessage() + ")");
                         Throwable fireBaseError = new Throwable(error.getMessage());
                         subscriber.onError(fireBaseError);
                     }

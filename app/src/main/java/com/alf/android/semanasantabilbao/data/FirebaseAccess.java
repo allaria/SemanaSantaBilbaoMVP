@@ -12,5 +12,5 @@ public interface FirebaseAccess {
 
     Observable<DataSnapshot> getFirebaseDataSnapshot();
 
-    Observable<DataSnapshot> getFirebaseDataSnapshotPasos();
+    Observable<DataSnapshot> getFirebaseDataSnapshot(String idCofradia, String cadenaConexion);
 }
