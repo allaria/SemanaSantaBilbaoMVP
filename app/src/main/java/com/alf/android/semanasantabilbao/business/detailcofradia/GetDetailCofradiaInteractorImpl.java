@@ -1,7 +1,6 @@
 package com.alf.android.semanasantabilbao.business.detailcofradia;
 
 import com.alf.android.semanasantabilbao.data.FirebaseAccess;
-import com.alf.android.semanasantabilbao.data.FirebaseDataAccess;
 import com.alf.android.semanasantabilbao.data.entities.ImagenGaleria;
 import com.alf.android.semanasantabilbao.data.entities.Paso;
 import com.alf.android.semanasantabilbao.data.entities.Procesion;
@@ -26,10 +25,10 @@ public class GetDetailCofradiaInteractorImpl {
     private List<Paso> listaPasos;
     private List<ImagenGaleria> listaImagenesGaleria;
 
-    public GetDetailCofradiaInteractorImpl() {
+    public GetDetailCofradiaInteractorImpl(FirebaseAccess firebaseAccess) {
 
-        this.firebaseAccess = new FirebaseDataAccess();
-        //this.firebaseAccess = firebaseAccess;
+        //this.firebaseAccess = new FirebaseDataAccess();
+        this.firebaseAccess = firebaseAccess;
         listaProcesiones = new ArrayList();
         listaPasos = new ArrayList();
         listaImagenesGaleria = new ArrayList();

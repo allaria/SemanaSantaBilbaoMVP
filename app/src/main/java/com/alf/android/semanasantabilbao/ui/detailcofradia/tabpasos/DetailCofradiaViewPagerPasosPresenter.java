@@ -15,19 +15,20 @@ import rx.Subscription;
  * Created by Alberto on 02/11/2016.
  */
 
-public class DetailCofradiaViewPagerPasosPresenter implements DetailCofradiaViewPagerPasosContract.DetailCofradiaPresenter {
+public class DetailCofradiaViewPagerPasosPresenter implements DetailCofradiaViewPagerPasosContract.DetailPasosPresenter {
 
     private static final String LOG_TAG = DetailCofradiaViewPagerPasosPresenter.class.getSimpleName();
-    private DetailCofradiaViewPagerPasosContract.DetailCofradiaView detailCofradiaView;
+    private DetailCofradiaViewPagerPasosContract.DetailGaleriaView detailCofradiaView;
     private GetDetailCofradiaInteractorImpl getDetailCofradiaInteractor;
     private Subscription subscription;
     private ObservableArrayList<Paso> listaPasos;
     private ObservableField<String> errorMessage;
     private boolean loading;
 
-    public DetailCofradiaViewPagerPasosPresenter() {
+    public DetailCofradiaViewPagerPasosPresenter(GetDetailCofradiaInteractorImpl getDetailCofradiaInteractor) {
 
-        getDetailCofradiaInteractor = new GetDetailCofradiaInteractorImpl();
+        //getDetailCofradiaInteractor = new GetDetailCofradiaInteractorImpl();
+        this.getDetailCofradiaInteractor = getDetailCofradiaInteractor;
         listaPasos = new ObservableArrayList();
         errorMessage = new ObservableField();
 
@@ -35,7 +36,7 @@ public class DetailCofradiaViewPagerPasosPresenter implements DetailCofradiaView
     }
 
     @Override
-    public void attachPasoView(DetailCofradiaViewPagerPasosContract.DetailCofradiaView detailCofradiaView) {
+    public void attachPasoView(DetailCofradiaViewPagerPasosContract.DetailGaleriaView detailCofradiaView) {
         this.detailCofradiaView = detailCofradiaView;
     }
 

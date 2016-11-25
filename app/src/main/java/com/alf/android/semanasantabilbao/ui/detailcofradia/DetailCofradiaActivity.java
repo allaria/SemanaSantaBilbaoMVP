@@ -19,11 +19,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alf.android.semanasantabilbao.App;
 import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.adapter.ViewPagerCofradiaDetailAdapter;
 import com.alf.android.semanasantabilbao.ui.utils.GlobalFunctions;
 import com.squareup.picasso.Picasso;
+
+import javax.inject.Inject;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -39,8 +42,9 @@ public class DetailCofradiaActivity extends AppCompatActivity implements DetailC
     private Cofradia cofradia;
     private Boolean cofradiaError;
     private boolean connectionAvailable;
+    //private DetailCofradiaContract.DetailPasosPresenter detailCofradiaPresenter;
 
-    private DetailCofradiaContract.DetailCofradiaPresenter detailCofradiaPresenter;
+    @Inject DetailCofradiaContract.DetailCofradiaPresenter detailCofradiaPresenter;
 
     @BindView(R.id.detail_cofradia_toolbar) Toolbar toolbar;
     @BindView(R.id.detail_cofradia_tablayout) TabLayout tabLayout;
@@ -60,12 +64,13 @@ public class DetailCofradiaActivity extends AppCompatActivity implements DetailC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_cofradia_activity);
+        ((App) getApplication()).getApplicationComponent().inject(this);
         ButterKnife.bind(this);
         Intent intent = getIntent();
         //cofradia = (Cofradia) intent.getSerializableExtra(getResources().getString(R.string.COFRADIA));
         cofradia = (Cofradia) intent.getSerializableExtra(intentCofradia);
         cofradiaError = (Boolean) intent.getSerializableExtra(intentCofradiaError);
-        Log.d(LOG_TAG, "cofradiaError: "+cofradiaError);
+        Log.d(LOG_TAG, "Object Cofradia not completely created: "+cofradiaError);
         ButterKnife.bind(this);
 
         //toolbar.setLogo(R.drawable.logo);
@@ -81,12 +86,10 @@ public class DetailCofradiaActivity extends AppCompatActivity implements DetailC
 
         if(cofradiaError) {
             Log.d(LOG_TAG, "Cofradias list generated form Drawables. Cofradia is incomplete");
-            //Comprobamos conexión e intentamos recuperar la cofradia
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(getApplication().CONNECTIVITY_SERVICE);
             connectionAvailable = new GlobalFunctions().checkNetworkStatus(connectivityManager);
             if (connectionAvailable) {
                 Log.d(LOG_TAG, "Internet connection. Getting Cofradia from Firebase");
-                detailCofradiaPresenter = new DetailCofradiaPresenter();
                 detailCofradiaPresenter.attachDetailCofradiaView(this);
                 detailCofradiaPresenter.initPresenter(cofradia.getId_cofradia());
             } else {
@@ -103,33 +106,7 @@ public class DetailCofradiaActivity extends AppCompatActivity implements DetailC
             }
         } else {
             Log.d(LOG_TAG, "Cofradias list generated form Firebase. Cofradia is complete");
-            continueDetailCofradia();
-
-/*            final ViewPagerCofradiaDetailAdapter viewPagerDetailAdpter = new ViewPagerCofradiaDetailAdapter(this.getApplicationContext(), cofradia);
-            viewPager.setAdapter(viewPagerDetailAdpter);
-
-            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-            tabLayout.setupWithViewPager(viewPager);
-            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                @Override
-                public void onTabSelected(TabLayout.Tab tab) {
-
-                    //Log.d(LOG_TAG, "XXXsetCurrentItem"+tab.getPosition());
-                    viewPager.setCurrentItem(tab.getPosition());
-                }
-
-                @Override
-                public void onTabUnselected(TabLayout.Tab tab) {
-
-                    Log.d(LOG_TAG, "Detach View & Unsuscribe Suscription. Tab Unselected:" + tab.getPosition());
-                    viewPagerDetailAdpter.detachViewUnsuscribeSuscription(tab.getPosition());
-                }
-
-                @Override
-                public void onTabReselected(TabLayout.Tab tab) {
-
-                }
-            });*/
+            loadDetailCofradia();
         }
     }
 
@@ -147,7 +124,7 @@ public class DetailCofradiaActivity extends AppCompatActivity implements DetailC
     @Override
     public void setCofradiaValue (ObservableArrayList<Cofradia> listaCofradias){
         this.cofradia = listaCofradias.get(0);
-        continueDetailCofradia();
+        loadDetailCofradia();
     }
 
     @Override
@@ -162,7 +139,7 @@ public class DetailCofradiaActivity extends AppCompatActivity implements DetailC
         Toast.makeText(this, firebaseError + "(" + mensajeError.get() + ")", Toast.LENGTH_LONG).show();
     }
 
-    private void continueDetailCofradia() {
+    private void loadDetailCofradia() {
         final ViewPagerCofradiaDetailAdapter viewPagerDetailAdpter = new ViewPagerCofradiaDetailAdapter(this.getApplicationContext(), cofradia);
         viewPager.setAdapter(viewPagerDetailAdpter);
 
@@ -171,7 +148,6 @@ public class DetailCofradiaActivity extends AppCompatActivity implements DetailC
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                //Log.d(LOG_TAG, "XXXsetCurrentItem"+tab.getPosition());
                 viewPager.setCurrentItem(tab.getPosition());
             }
 

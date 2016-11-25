@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -25,6 +26,8 @@ public class DetailCofradiaViewPagerDetalle extends View {
     @BindView(R.id.cofradia_phone) TextView mCofradiaTelefono;
     @BindView(R.id.cofradia_web) TextView mCofradiaWeb;
 
+    @BindString(R.string.detail_cofradia_pasos_title) String pasosTitle;
+
     public DetailCofradiaViewPagerDetalle(Context context, View view) {
         super(context);
 
@@ -33,7 +36,7 @@ public class DetailCofradiaViewPagerDetalle extends View {
 
     public void showDetailCofradiaInformationDetalle(Cofradia cofradia) {
 
-        mPasos.setText("\nPasos (" + String.valueOf(cofradia.getNumeroPasos()) + "):");
+        mPasos.setText("\n" + pasosTitle + " (" + String.valueOf(cofradia.getNumeroPasos()) + "):");
         mTexto.setText(cofradia.getTextoDetalle());
         mTextoPaso.setText(cofradia.getTextoIntroPasos());
         mCofradiaDireccion.setText(cofradia.getDireccion());

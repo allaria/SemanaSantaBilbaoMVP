@@ -15,6 +15,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -25,14 +27,13 @@ import butterknife.ButterKnife;
 public class PasoAdapter extends RecyclerView.Adapter<PasoAdapter.Holder>{
 
     private static final String TAG = PasoAdapter.class.getSimpleName();
-    //private final PasoClickListener mListener;
     private PasoAdapter.PasoClickListener pasoClickListener;
     private List<Paso> mPasos;
     private Context context;
 
-    public PasoAdapter(PasoClickListener listener) {
+    @Inject
+    public PasoAdapter() {
         mPasos = new ArrayList<>();
-        pasoClickListener = listener;
     }
 
     @Override

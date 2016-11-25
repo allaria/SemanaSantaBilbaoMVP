@@ -11,10 +11,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alf.android.semanasantabilbao.App;
 import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.data.entities.Paso;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.adapter.PasoAdapter;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,13 +26,15 @@ import butterknife.ButterKnife;
  * Created by Alberto on 27/10/2016.
  */
 
-public class DetailCofradiaViewPagerPasos extends View implements DetailCofradiaViewPagerPasosContract.DetailCofradiaView,
+public class DetailCofradiaViewPagerPasos extends View implements DetailCofradiaViewPagerPasosContract.DetailGaleriaView,
         PasoAdapter.PasoClickListener{
 
     private static String LOG_TAG = DetailCofradiaViewPagerPasos.class.getSimpleName();
-    private PasoAdapter pasoAdapter;
-    private DetailCofradiaViewPagerPasosContract.DetailCofradiaPresenter pasoPresenter;
     private String idCofradia;
+
+    @Inject DetailCofradiaViewPagerPasosContract.DetailPasosPresenter pasoPresenter;
+    @Inject PasoAdapter pasoAdapter;
+    @Inject RecyclerView.RecycledViewPool recycledViewPool;
 
     @BindView(R.id.paso_detail_progress_bar) ProgressBar spinner;
     @BindView(R.id.paso_loading_text) TextView loadingText;
@@ -37,6 +42,7 @@ public class DetailCofradiaViewPagerPasos extends View implements DetailCofradia
 
     public DetailCofradiaViewPagerPasos(Context context, View view) {
         super(context);
+        ((App) context).getApplicationComponent().inject(this);
         ButterKnife.bind(this, view);
     }
 
@@ -47,7 +53,6 @@ public class DetailCofradiaViewPagerPasos extends View implements DetailCofradia
         setSpinnerAndLoadingText(false);
         initRecyclerViewPasos();
 
-        pasoPresenter = new DetailCofradiaViewPagerPasosPresenter();
         pasoPresenter.attachPasoView(this);
         pasoPresenter.initPresenter(idCofradia);
     }
@@ -55,10 +60,8 @@ public class DetailCofradiaViewPagerPasos extends View implements DetailCofradia
     private void initRecyclerViewPasos() {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-        mRecyclerView.setRecycledViewPool(new RecyclerView.RecycledViewPool());
-        //mRecyclerView.setRecycledViewPool(recycledViewPool);
+        mRecyclerView.setRecycledViewPool(recycledViewPool);
 
-        pasoAdapter = new PasoAdapter(this);
         pasoAdapter.setPasoClickListener(this);
         mRecyclerView.setAdapter(pasoAdapter);
     }
@@ -71,7 +74,7 @@ public class DetailCofradiaViewPagerPasos extends View implements DetailCofradia
 
     @Override
     public void printPasos(ObservableArrayList<Paso> mPasos) {
-        Log.d(LOG_TAG, "Number of Pasos in the recyclerView:"+mPasos.size());
+        Log.d(LOG_TAG, "Number of Pasos in the recyclerView: "+mPasos.size());
         ((PasoAdapter) mRecyclerView.getAdapter()).addPaso(mPasos);
     }
 

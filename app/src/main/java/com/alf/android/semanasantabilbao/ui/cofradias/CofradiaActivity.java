@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.ui.cofradias.adapter.CofradiaAdapter;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.DetailCofradiaActivity;
+import com.alf.android.semanasantabilbao.ui.museopasos.MuseoPasosActivity;
 import com.alf.android.semanasantabilbao.ui.utils.GlobalFunctions;
 import com.firebase.client.Firebase;
 import com.squareup.picasso.Picasso;
@@ -40,6 +42,8 @@ import butterknife.BindDrawable;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.alf.android.semanasantabilbao.R.string.texto_compartir_app;
 
 /**
  * Created by alaria on 22/09/2016.
@@ -55,6 +59,7 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
     private boolean connectionAvailable;
     private Field[] fields;
     private Boolean withoutConnectionCofradiasList;
+    private String Url;
 
     @Inject CofradiaContract.CofradiaPresenter cofradiaPresenter;
     @Inject CofradiaAdapter cofradiaAdapter;
@@ -71,6 +76,10 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
     @BindString(R.string.firebase_error) String firebaseError;
     @BindString(R.string.COFRADIA) String cofradiaIntent;
     @BindString(R.string.COFRADIAERROR) String cofradiaIntentError;
+    @BindString(R.string.app_name) String subject;
+    @BindString(R.string.texto_share_app) String body;
+    @BindString(texto_compartir_app) String shareText;
+    @BindString(R.string.share_app_error) String shareAppError;
     @BindDrawable (R.drawable.no_image) Drawable idDrawableNoImage;
 
     @Override
@@ -118,8 +127,9 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
 
         cofradiaPresenter.attachCofradiaView(this);
         cofradiaPresenter.initPresenter(connectionAvailable, fields);
-    }
 
+        //cofradiaPresenter.getGooglePlayUrl(connectionAvailable);
+    }
 
     @Override
     public void setSpinnerAndLoadingText(boolean loadingSpinner) {
@@ -160,31 +170,6 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
         mRecyclerView.setAdapter(cofradiaAdapter);
     }
 
-
-/*    private boolean checkNetworkStatus() {
-        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(getApplication().CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if(networkInfo != null && networkInfo.isConnected() == true) {
-            //Toast.makeText(this, "Network Available", Toast.LENGTH_SHORT).show();
-            return true;
-        }else{
-            //Toast.makeText(this, "Network Not Available", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-    }*/
-
-/*    private String getScreenOrientation() {
-        int orientation = getResources().getConfiguration().orientation;
-        String screenOrientation = "";
-        switch (orientation) {
-            case Configuration.ORIENTATION_UNDEFINED: screenOrientation = "Undefined"; break;
-            case Configuration.ORIENTATION_LANDSCAPE: screenOrientation = "Landscrape"; break;
-            case Configuration.ORIENTATION_PORTRAIT:  screenOrientation = "Portrait"; break;
-        }
-
-        return screenOrientation;
-    }*/
-
 /*    private void initPresenter(boolean connectionAvailable, Field[] fields) {
         //cofradiaPresenter = new CofradiaPresenter();
         cofradiaPresenter.attachCofradiaView(this);
@@ -198,6 +183,11 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
         withoutConnectionCofradiasList = true;
 
         return c.getDeclaredFields();
+    }
+
+    @Override
+    public void setUrl(String url) {
+        Url = url;
     }
 
     @Override
@@ -222,6 +212,27 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        return false;
+        int id = item.getItemId();
+
+        if (id == R.id.nav_museo_pasos) {
+            Intent intentMenu = new Intent(CofradiaActivity.this, MuseoPasosActivity.class);
+            intentMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intentMenu);
+        } else if (id == R.id.nav_share_app) {
+            if (Url != null) {
+                Intent intentMenu = new Intent(Intent.ACTION_SEND);
+                intentMenu.setType("text/plain");
+                intentMenu.putExtra(Intent.EXTRA_SUBJECT, subject);
+                intentMenu.putExtra(Intent.EXTRA_TEXT, body + Url + "\n");
+                startActivity(Intent.createChooser(intentMenu, shareText));
+            } else {
+                Log.d(LOG_TAG, "No App Url available");
+                Toast.makeText(getApplicationContext(), shareAppError, Toast.LENGTH_LONG).show();
+            }
+        }
+
+        drawer.closeDrawer(GravityCompat.START);
+
+        return true;
     }
 }

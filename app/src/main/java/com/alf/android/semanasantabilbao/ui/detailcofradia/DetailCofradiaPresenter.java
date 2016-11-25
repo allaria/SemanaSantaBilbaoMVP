@@ -25,10 +25,9 @@ public class DetailCofradiaPresenter  implements DetailCofradiaContract.DetailCo
     private ObservableField<String> errorMessage;
     private boolean loading;
 
-    public DetailCofradiaPresenter() {
+    public DetailCofradiaPresenter(GetDetailCofradiaInteractorImpl getDetailCofradiaInteractor) {
 
-        getDetailCofradiaInteractor = new GetDetailCofradiaInteractorImpl();
-
+        this.getDetailCofradiaInteractor = getDetailCofradiaInteractor;
         listaCofradias = new ObservableArrayList();
         errorMessage = new ObservableField();
 
@@ -52,9 +51,6 @@ public class DetailCofradiaPresenter  implements DetailCofradiaContract.DetailCo
 
     @Override
     public void initPresenter(String idCofradia) {
-//        if (loading) {
-//            setSpinnerAndLoadindText(loading);
-//        }
         loading = true;
         setSpinnerAndLoadindText(loading);
         if (listaCofradias.isEmpty()) {

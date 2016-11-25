@@ -11,10 +11,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alf.android.semanasantabilbao.App;
 import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.data.entities.ImagenGaleria;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.adapter.GaleriaAdapter;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,9 +30,11 @@ public class DetailCofradiaViewPagerGaleria extends View implements DetailCofrad
         GaleriaAdapter.ImagenGaleriaClickListener{
 
     private static String LOG_TAG = DetailCofradiaViewPagerGaleria.class.getSimpleName();
-    private GaleriaAdapter galeriaAdapter;
-    private DetailCofradiaViewPagerGaleriaContract.DetailGaleriaPresenter galeriaPresenter;
     private String idCofradia;
+
+    @Inject DetailCofradiaViewPagerGaleriaContract.DetailGaleriaPresenter galeriaPresenter;
+    @Inject GaleriaAdapter galeriaAdapter;
+    @Inject RecyclerView.RecycledViewPool recycledViewPool;
 
     @BindView(R.id.gallery_detail_progress_bar) ProgressBar spinner;
     @BindView(R.id.gallery_loading_text) TextView loadingText;
@@ -38,6 +43,7 @@ public class DetailCofradiaViewPagerGaleria extends View implements DetailCofrad
     public DetailCofradiaViewPagerGaleria(Context context, View view) {
         super(context);
         ButterKnife.bind(this, view);
+        ((App) context).getApplicationComponent().inject(this);
     }
 
     public void showDetailCofradiaInformationGaleria(Cofradia cofradia) {
@@ -47,7 +53,6 @@ public class DetailCofradiaViewPagerGaleria extends View implements DetailCofrad
         setSpinnerAndLoadingText(false);
         initRecyclerViewPasos();
 
-        galeriaPresenter = new DetailCofradiaViewPagerGaleriaPresenter();
         galeriaPresenter.attachGaleriaView(this);
         galeriaPresenter.initPresenter(idCofradia);
     }
@@ -55,10 +60,8 @@ public class DetailCofradiaViewPagerGaleria extends View implements DetailCofrad
     private void initRecyclerViewPasos() {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-        mRecyclerView.setRecycledViewPool(new RecyclerView.RecycledViewPool());
-        //mRecyclerView.setRecycledViewPool(recycledViewPool);
+        mRecyclerView.setRecycledViewPool(recycledViewPool);
 
-        galeriaAdapter = new GaleriaAdapter(this);
         galeriaAdapter.setImagenGaleriaClickListener(this);
         mRecyclerView.setAdapter(galeriaAdapter);
     }
@@ -71,7 +74,7 @@ public class DetailCofradiaViewPagerGaleria extends View implements DetailCofrad
 
     @Override
     public void printImagenGaleria(ObservableArrayList<ImagenGaleria> mImagenesGaleria) {
-        Log.d(LOG_TAG, "Number of Pasos in the recyclerView:"+mImagenesGaleria.size());
+        Log.d(LOG_TAG, "Number of Gallery Images in the recyclerView: "+mImagenesGaleria.size());
         ((GaleriaAdapter) mRecyclerView.getAdapter()).addImagenGaleria(mImagenesGaleria);
     }
 

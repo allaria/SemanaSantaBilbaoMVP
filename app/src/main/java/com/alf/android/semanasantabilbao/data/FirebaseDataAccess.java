@@ -23,9 +23,9 @@ public class FirebaseDataAccess implements FirebaseAccess {
     private static final String LOG_TAG = FirebaseDataAccess.class.getSimpleName();
     private Firebase myFirebaseRef;
 
-    public Observable<DataSnapshot> getFirebaseDataSnapshot () {
+    public Observable<DataSnapshot> getFirebaseDataSnapshot (String cadenaConexion) {
 
-        myFirebaseRef = new Firebase(Constants.ConfigFireBase.FIREBASE_URL + Constants.ConfigFireBase.FIREBASE_CHILD_COFRADIAS);
+        myFirebaseRef = new Firebase(Constants.ConfigFireBase.FIREBASE_URL + cadenaConexion);
 
         return Observable.create(new Observable.OnSubscribe<DataSnapshot>() {
             @Override

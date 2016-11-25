@@ -2,6 +2,7 @@ package com.alf.android.semanasantabilbao.business.cofradias;
 
 import com.alf.android.semanasantabilbao.data.FirebaseAccess;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
+import com.alf.android.semanasantabilbao.data.utils.Constants;
 import com.firebase.client.DataSnapshot;
 
 import java.util.ArrayList;
@@ -28,10 +29,15 @@ public class GetCofradiasInteractorImpl implements GetCofradiasInteractor {
         listaCofradias = new ArrayList();
     }
 
-
+    @Override
     public Observable<DataSnapshot> getCofradias() {
 
-    return firebaseAccess.getFirebaseDataSnapshot();
+    return firebaseAccess.getFirebaseDataSnapshot(Constants.ConfigFireBase.FIREBASE_CHILD_COFRADIAS);
+    }
+
+    @Override
+    public Observable<DataSnapshot> getGooglePlayUrl() {
+        return firebaseAccess.getFirebaseDataSnapshot(Constants.ConfigFireBase.FIREBASE_CHILD_CONFIGURACION);
     }
 }
 

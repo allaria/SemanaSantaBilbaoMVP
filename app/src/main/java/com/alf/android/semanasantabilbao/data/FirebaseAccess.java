@@ -10,7 +10,7 @@ import rx.Observable;
 
 public interface FirebaseAccess {
 
-    Observable<DataSnapshot> getFirebaseDataSnapshot();
+    Observable<DataSnapshot> getFirebaseDataSnapshot(String cadenaConexion);
 
     Observable<DataSnapshot> getFirebaseDataSnapshot(String idCofradia, String cadenaConexion);
 }

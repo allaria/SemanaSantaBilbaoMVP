@@ -22,10 +22,12 @@ public class CofradiaPresenter implements CofradiaContract.CofradiaPresenter {
     private static final String LOG_TAG = CofradiaActivity.class.getSimpleName();
     private CofradiaContract.CofradiaView cofradiaView;
     private GetCofradiasInteractorImpl getCofradiasInteractor;
-    private Subscription subscription;
+    private Subscription subscriptionCofradias;
+    private Subscription subscriptionGooglePlayUrl;
     private ObservableArrayList<Cofradia> listaCofradias;
     private ObservableField<String> errorMessage;
     private boolean loading;
+    private String googlePlayUrl;
 
     public CofradiaPresenter(GetCofradiasInteractorImpl getCofradiasInteractor) {
 
@@ -50,8 +52,12 @@ public class CofradiaPresenter implements CofradiaContract.CofradiaPresenter {
 
     @Override
     public void unsuscribeCofradiaSuscription() {
-        if (!subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
+        if (!subscriptionCofradias.isUnsubscribed()) {
+            subscriptionCofradias.unsubscribe();
+        }
+
+        if (!subscriptionGooglePlayUrl.isUnsubscribed()) {
+            subscriptionGooglePlayUrl.unsubscribe();
         }
     }
 
@@ -67,7 +73,8 @@ public class CofradiaPresenter implements CofradiaContract.CofradiaPresenter {
             setSpinnerAndLoadindText(loading);
             if (connection) {
                 Log.d(LOG_TAG, "Cofradias list is empty. Getting Cofradias from Firebase");
-                subscription = getCofradiasInteractor.getCofradias().subscribe(subscriber);
+                subscriptionCofradias = getCofradiasInteractor.getCofradias().subscribe(subscriberCofradias);
+                subscriptionGooglePlayUrl = getCofradiasInteractor.getGooglePlayUrl().subscribe(subscriberGooglePlayUrl);
             } else{
                 Log.d(LOG_TAG, "Cofradias list is empty. Getting Cofradias from Drawables");
                 loading = false;
@@ -152,7 +159,35 @@ public class CofradiaPresenter implements CofradiaContract.CofradiaPresenter {
         return cadena;
     }
 
-    private Subscriber subscriber = new Subscriber<DataSnapshot>() {
+    private Subscriber subscriberGooglePlayUrl = new Subscriber<DataSnapshot>() {
+
+        @Override
+        public void onNext(DataSnapshot snapshot) {
+
+            Log.d(LOG_TAG, "Suscriber Google Play Url onNext. Url: "+ snapshot.child("urlgoogleplay").getValue());
+            listaCofradias.clear();
+            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                googlePlayUrl = snapshot.child("urlgoogleplay").getValue().toString();
+            }
+
+            cofradiaView.setUrl(googlePlayUrl);
+        }
+
+        @Override
+        public void onCompleted() {
+            Log.d(LOG_TAG, "Suscriber Google Play Url onCompleted.");
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            setSpinnerAndLoadindText(false);
+            errorMessage.set(e.getMessage());
+            Log.d(LOG_TAG, "Suscriber Google Play Url onError. Error while getting Google Play Url from Firebase. ("+ errorMessage.get() +")");
+            cofradiaView.showErrorGettingCofradias(errorMessage);
+        }
+    };
+
+    private Subscriber subscriberCofradias = new Subscriber<DataSnapshot>() {
         @Override
         public void onNext(DataSnapshot snapshot) {
 

@@ -25,9 +25,10 @@ public class DetailCofradiaViewPagerCofradiaPresenter implements DetailCofradiaV
     private ObservableField<String> errorMessage;
     private boolean loading;
 
-    public DetailCofradiaViewPagerCofradiaPresenter() {
+    public DetailCofradiaViewPagerCofradiaPresenter(GetDetailCofradiaInteractorImpl getDetailCofradiaInteractor) {
 
-        getDetailCofradiaInteractor = new GetDetailCofradiaInteractorImpl();
+        //getDetailCofradiaInteractor = new GetDetailCofradiaInteractorImpl();
+        this.getDetailCofradiaInteractor = getDetailCofradiaInteractor;
         listaProcesiones = new ObservableArrayList();
         errorMessage = new ObservableField();
 

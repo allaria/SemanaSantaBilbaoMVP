@@ -10,4 +10,6 @@ import rx.Observable;
 public interface GetCofradiasInteractor {
 
     Observable<DataSnapshot> getCofradias();
+
+    Observable<DataSnapshot> getGooglePlayUrl();
 }

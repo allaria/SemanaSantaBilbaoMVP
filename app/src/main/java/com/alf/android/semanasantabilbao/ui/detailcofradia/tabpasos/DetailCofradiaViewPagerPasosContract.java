@@ -11,7 +11,7 @@ import com.alf.android.semanasantabilbao.data.entities.Paso;
 
 public interface DetailCofradiaViewPagerPasosContract {
 
-    interface DetailCofradiaView {
+    interface DetailGaleriaView {
 
         void setSpinnerAndLoadingText(boolean loadingSpinner);
 
@@ -20,9 +20,9 @@ public interface DetailCofradiaViewPagerPasosContract {
         void showErrorGettingPasos(ObservableField<String> mensajeError);
     }
 
-    interface DetailCofradiaPresenter {
+    interface DetailPasosPresenter {
 
-        void attachPasoView(DetailCofradiaViewPagerPasosContract.DetailCofradiaView view);
+        void attachPasoView(DetailGaleriaView view);
 
         void detachPasoView();
 

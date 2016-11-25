@@ -3,7 +3,6 @@ package com.alf.android.semanasantabilbao;
 import android.app.Application;
 
 import com.alf.android.semanasantabilbao.di.ApplicationComponent;
-import com.alf.android.semanasantabilbao.di.ApplicationModule;
 import com.alf.android.semanasantabilbao.di.DaggerApplicationComponent;
 
 

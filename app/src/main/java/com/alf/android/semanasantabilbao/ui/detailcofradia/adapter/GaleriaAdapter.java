@@ -14,6 +14,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -23,14 +25,13 @@ import butterknife.ButterKnife;
 public class GaleriaAdapter extends RecyclerView.Adapter<GaleriaAdapter.Holder>{
 
     private static final String TAG = GaleriaAdapter.class.getSimpleName();
-    //private final ImagenGaleriaClickListener mListener;
     private GaleriaAdapter.ImagenGaleriaClickListener imagenGaleriaClickListener;
     private List<ImagenGaleria> mImagenes;
     private Context context;
 
-    public GaleriaAdapter(ImagenGaleriaClickListener listener) {
+    @Inject
+    public GaleriaAdapter() {
         mImagenes = new ArrayList<>();
-        imagenGaleriaClickListener = listener;
     }
 
     @Override

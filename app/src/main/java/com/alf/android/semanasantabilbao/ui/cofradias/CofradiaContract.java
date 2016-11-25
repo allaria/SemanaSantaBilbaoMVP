@@ -25,6 +25,8 @@ public interface CofradiaContract {
         Field[] getDrawablesList();
 
         void showErrorGettingCofradias(ObservableField<String> mensajeError);
+
+        void setUrl (String urlGooglePlayUrl);
     }
 
     interface CofradiaPresenter {

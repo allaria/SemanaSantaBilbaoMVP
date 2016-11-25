@@ -11,10 +11,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alf.android.semanasantabilbao.App;
 import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.data.entities.Procesion;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.adapter.ProcesionAdapter;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,17 +30,18 @@ public class DetailCofradiaViewPagerCofradia extends View implements DetailCofra
         ProcesionAdapter.ProcesionClickListener{
 
     private static String LOG_TAG = DetailCofradiaViewPagerCofradia.class.getSimpleName();
-    private ProcesionAdapter procesionAdapter;
-    private DetailCofradiaViewPagerCofradiaContract.DetailCofradiaPresenter procesionPresenter;
     private Context context;
     private String idCofradia;
+
+    @Inject DetailCofradiaViewPagerCofradiaContract.DetailCofradiaPresenter procesionPresenter;
+    @Inject ProcesionAdapter procesionAdapter;
+    @Inject RecyclerView.RecycledViewPool recycledViewPool;
 
     @BindView(R.id.cofradia_fundacion) TextView mFundacion;
     @BindView(R.id.cofradia_sede) TextView mSede;
     @BindView(R.id.cofradia_abad) TextView mHernamoAbad;
     @BindView(R.id.cofradia_vestimenta) TextView mVestimenta;
     @BindView(R.id.cofradia_procesiones) TextView mNumeroProcesiones;
-
     @BindView(R.id.cofradia_detail_procesiones_progress_bar) ProgressBar spinner;
     @BindView(R.id.procesiones_loading_text) TextView loadingText;
     @BindView(R.id.detail_cofradia_recycler_view) RecyclerView mRecyclerView;
@@ -45,6 +49,7 @@ public class DetailCofradiaViewPagerCofradia extends View implements DetailCofra
     public DetailCofradiaViewPagerCofradia(Context context, View view) {
         super(context);
         this.context = context;
+        ((App) context).getApplicationComponent().inject(this);
         ButterKnife.bind(this, view);
     }
 
@@ -61,18 +66,15 @@ public class DetailCofradiaViewPagerCofradia extends View implements DetailCofra
         setSpinnerAndLoadingText(false);
         initRecyclerViewProcesiones();
 
-        procesionPresenter = new DetailCofradiaViewPagerCofradiaPresenter();
         procesionPresenter.attachProcesionesView(this);
         procesionPresenter.initPresenter(idCofradia);
     }
 
     private void initRecyclerViewProcesiones() {
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-        mRecyclerView.setRecycledViewPool(new RecyclerView.RecycledViewPool());
-        //mRecyclerView.setRecycledViewPool(recycledViewPool);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(context,2));
+        mRecyclerView.setRecycledViewPool(recycledViewPool);
 
-        procesionAdapter = new ProcesionAdapter(this);
         procesionAdapter.setProcesionClickListener(this);
         mRecyclerView.setAdapter(procesionAdapter);
     }
@@ -85,7 +87,7 @@ public class DetailCofradiaViewPagerCofradia extends View implements DetailCofra
 
     @Override
     public void printProcesiones(ObservableArrayList<Procesion> mProcesiones) {
-        Log.d(LOG_TAG, "Number of Procesiones in the recyclerView:"+mProcesiones.size());
+        Log.d(LOG_TAG, "Number of Procesiones in the recyclerView: "+mProcesiones.size());
         ((ProcesionAdapter) mRecyclerView.getAdapter()).addProcesiones(mProcesiones);
     }
 
@@ -100,9 +102,8 @@ public class DetailCofradiaViewPagerCofradia extends View implements DetailCofra
         procesionPresenter.unsuscribeProcesionesSuscription();
     }
 
-
     @Override
     public void onClickProcesion(int position) {
-        Toast.makeText(getContext(), "CLICK", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "CLICK", Toast.LENGTH_SHORT).show();
     }
 }

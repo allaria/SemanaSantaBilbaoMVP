@@ -108,15 +108,21 @@ public class ViewPagerCofradiaDetailAdapter extends PagerAdapter {
 
     public void detachViewUnsuscribeSuscription(int position) {
         switch (position){
-            //case 0:
-            //case 1:
+            case 0: {
+                Log.d(LOG_TAG, "Detach Pasos View & Unsuscribe Procesiones Suscription. "+position);
+                detailCofradiaViewPagerCofradia.detachViewUnsuscribeSuscriptionProcesiones();
+                break;
+            }
+            case 1: {
+                //No View or Suscription must be detach or unsuscribe from.
+            }
             case 2: {
-                Log.d(LOG_TAG, "Detach Pasos View & Unsuscribe Pasos Suscription."+position);
+                Log.d(LOG_TAG, "Detach Pasos View & Unsuscribe Pasos Suscription. "+position);
                 detailCofradiaViewPagerPasos.detachViewUnsuscribeSuscriptionPaso();
                 break;
             }
             case 3: {
-                Log.d(LOG_TAG, "Detach Galeria View & Unsuscribe Galeria Suscription."+position);
+                Log.d(LOG_TAG, "Detach Galeria View & Unsuscribe Galeria Suscription. "+position);
                 detailCofradiaViewPagerGaleria.detachViewUnsuscribeSuscriptionImagenesGaleria();
                 break;
             }

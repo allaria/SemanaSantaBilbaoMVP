@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Semana Santa</string>
+    <string name="app_name_large">Semana Santa Bilbao</string>
 
     <!-- Etiquetas texto spinner de carga -->
     <string name="loading_cofradias">Cargando Cofradías</string>
@@ -27,7 +28,7 @@
     <string name="menu_museo">Museo de Pasos</string>
     <string name="menu_login_usuarios">Usuarios</string>
     <string name="menu_share_app">Compartir Aplicación</string>
-    <string name="texto_share_app">\nDeja que te recomiende esta aplicación\n\n</string>
+    <string name="texto_share_app">Deja que te recomiende esta aplicación\n\n</string>
     <string name="texto_compartir_app">Compartir aplicación</string>
 
     <!-- Nombre pestañas detalle cofradias -->
@@ -42,11 +43,12 @@
     <string name="detail_cofradia_sede">Sede:&#x200A;</string>
     <string name="detail_cofradia_numero_procesiones">Número de Procesiones:&#x200A;</string>
     <string name="detail_cofradia_hermano_abad">Hermano Abad:&#x200A;</string>
-    <string name="detail_procesiones_title_view">PROCESIONES</string>
+    <string name="detail_cofradia_procesiones_title_view">PROCESIONES</string>
     <string name="detail_contacto_title">CONTACTO</string>
     <string name="detail_cofradia_direction">Dirección:&#x200A;</string>
     <string name="detail_cofradia_phone">Teléfono:&#x200A;</string>
     <string name="detail_cofradia_web">Web:&#x200A;</string>
+    <string name="detail_cofradia_pasos_title">Pasos</string>
 
     <!-- Reference's name in intents -->
     <string name="COFRADIA">"com.alf.android.semanasantabilbao.cofradia"</string>
@@ -69,5 +71,10 @@
     <string name="connection_error_detail">"Es necesaria la conexion a internet para el correcto funcionamiento de la aplicación"</string>
     <string name="firebase_error">"Error al recuperar las Cofradias. Generando lista local."</string>
     <string name="firebase_error_detail">"Se ha producido un error al recuperar las cofradias."</string>
+    <string name="share_app_error">"Se ha producido un error al compartir la aplicación."</string>
+
+    <!-- Museo de Pasos -->
+    <string name="url_museo_pasos">"http://www.museodepasosbilbao.com"</string>
+    <string name="loading_museo_pasos_text">"Cargando la página..."</string>
 
 </resources>
