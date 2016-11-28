@@ -13,29 +13,28 @@
     card_view:cardUseCompatPadding="true"
     card_view:cardPreventCornerOverlap="false" >
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorSecondaryText">
-
-    <ImageView
-        android:id="@+id/card_image_pasos"
+    <RelativeLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:scaleType="centerCrop"
-        android:contentDescription="@string/image_paso_description" />
+        android:layout_height="match_parent"
+        android:background="@color/colorSecondaryText">
 
-    <TextView
-        android:id="@+id/card_text_pasos"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:gravity="center_horizontal|center_vertical"
-        android:background="@color/colorPrimaryLight"
-        style="@style/TitleWhite"
-        android:layout_below="@+id/card_image_pasos" />
+        <ImageView
+            android:id="@+id/card_image_pasos"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/image_paso_description" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/card_text_pasos"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:background="@color/colorPrimaryLight"
+            style="@style/CardTitleWhite"
+            android:layout_below="@+id/card_image_pasos" />
+
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>
