@@ -3,7 +3,7 @@ package com.alf.android.semanasantabilbao.ui.detailcofradia.tabgaleria;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 
-import com.alf.android.semanasantabilbao.data.entities.ImagenGaleria;
+import com.alf.android.semanasantabilbao.data.entities.GalleryImage;
 
 /**
  * Created by Alberto on 02/11/2016.
@@ -15,7 +15,7 @@ public interface DetailCofradiaViewPagerGaleriaContract {
 
         void setSpinnerAndLoadingText(boolean loadingSpinner);
 
-        void printImagenGaleria(ObservableArrayList<ImagenGaleria> listaImagenGaleria);
+        void printImagenGaleria(ObservableArrayList<GalleryImage> listaGalleryImage);
 
         void showErrorGettingImagenesGaleria(ObservableField<String> mensajeError);
     }

@@ -34,7 +34,6 @@ public class DetailCofradiaViewPagerPasos extends View implements DetailCofradia
 
     @Inject DetailCofradiaViewPagerPasosContract.DetailPasosPresenter pasoPresenter;
     @Inject PasoAdapter pasoAdapter;
-    @Inject RecyclerView.RecycledViewPool recycledViewPool;
 
     @BindView(R.id.paso_detail_progress_bar) ProgressBar spinner;
     @BindView(R.id.paso_loading_text) TextView loadingText;
@@ -60,7 +59,6 @@ public class DetailCofradiaViewPagerPasos extends View implements DetailCofradia
     private void initRecyclerViewPasos() {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-        mRecyclerView.setRecycledViewPool(recycledViewPool);
 
         pasoAdapter.setPasoClickListener(this);
         mRecyclerView.setAdapter(pasoAdapter);

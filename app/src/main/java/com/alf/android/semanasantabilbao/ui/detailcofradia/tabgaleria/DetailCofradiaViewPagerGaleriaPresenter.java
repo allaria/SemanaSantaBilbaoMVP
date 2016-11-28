@@ -5,7 +5,7 @@ import android.databinding.ObservableField;
 import android.util.Log;
 
 import com.alf.android.semanasantabilbao.business.detailcofradia.GetDetailCofradiaInteractorImpl;
-import com.alf.android.semanasantabilbao.data.entities.ImagenGaleria;
+import com.alf.android.semanasantabilbao.data.entities.GalleryImage;
 import com.firebase.client.DataSnapshot;
 
 import rx.Subscriber;
@@ -21,7 +21,7 @@ public class DetailCofradiaViewPagerGaleriaPresenter implements DetailCofradiaVi
     private DetailCofradiaViewPagerGaleriaContract.DetailGaleriaView detailGaleriaView;
     private GetDetailCofradiaInteractorImpl getDetailCofradiaInteractor;
     private Subscription subscription;
-    private ObservableArrayList<ImagenGaleria> listaImagenGaleria;
+    private ObservableArrayList<GalleryImage> listaGalleryImage;
     private ObservableField<String> errorMessage;
     private boolean loading;
 
@@ -29,7 +29,7 @@ public class DetailCofradiaViewPagerGaleriaPresenter implements DetailCofradiaVi
 
         //getDetailCofradiaInteractor = new GetDetailCofradiaInteractorImpl();
         this.getDetailCofradiaInteractor = getDetailCofradiaInteractor;
-        listaImagenGaleria = new ObservableArrayList();
+        listaGalleryImage = new ObservableArrayList();
         errorMessage = new ObservableField();
 
         loading = false;
@@ -58,8 +58,8 @@ public class DetailCofradiaViewPagerGaleriaPresenter implements DetailCofradiaVi
             setSpinnerAndLoadindText(loading);
         }
 
-        if (!loading && listaImagenGaleria.isEmpty()) {
-            Log.d(LOG_TAG, "initPresenter - IF loading"+!loading+" - isEmpty: "+listaImagenGaleria.isEmpty());
+        if (!loading && listaGalleryImage.isEmpty()) {
+            Log.d(LOG_TAG, "initPresenter - IF loading"+!loading+" - isEmpty: "+ listaGalleryImage.isEmpty());
             loading = true;
             setSpinnerAndLoadindText(loading);
             Log.d(LOG_TAG, "initPresenter - getImagenesGaleria Firebase");
@@ -67,8 +67,8 @@ public class DetailCofradiaViewPagerGaleriaPresenter implements DetailCofradiaVi
         } else {
             if (detailGaleriaView != null) {
                 Log.d(LOG_TAG, "initPresenter - printImagenGaleria CACHE");
-                Log.d(LOG_TAG, "initPresenter - ELSE loading"+!loading+" - isEmpty: "+listaImagenGaleria.isEmpty());
-                detailGaleriaView.printImagenGaleria(listaImagenGaleria);
+                Log.d(LOG_TAG, "initPresenter - ELSE loading"+!loading+" - isEmpty: "+ listaGalleryImage.isEmpty());
+                detailGaleriaView.printImagenGaleria(listaGalleryImage);
             }
         }
     }
@@ -84,14 +84,14 @@ public class DetailCofradiaViewPagerGaleriaPresenter implements DetailCofradiaVi
         public void onNext(DataSnapshot snapshot) {
             Log.d(LOG_TAG, "onNext");
 
-            listaImagenGaleria.clear();
+            listaGalleryImage.clear();
             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                 //Log.d(LOG_TAG, "RECUPERANDO PASOS");
-                listaImagenGaleria.add(dataSnapshot.getValue(ImagenGaleria.class));
+                listaGalleryImage.add(dataSnapshot.getValue(GalleryImage.class));
             }
 
             Log.d(LOG_TAG, "Subscriber llamada printImagenGaleria");
-            detailGaleriaView.printImagenGaleria(listaImagenGaleria);
+            detailGaleriaView.printImagenGaleria(listaGalleryImage);
 
             Log.d(LOG_TAG, "Subscriber llamada setSpinnerAndLoadindText");
             loading = false;

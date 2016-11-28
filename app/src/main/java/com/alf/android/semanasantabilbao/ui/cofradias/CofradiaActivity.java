@@ -28,6 +28,8 @@ import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.ui.cofradias.adapter.CofradiaAdapter;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.DetailCofradiaActivity;
+import com.alf.android.semanasantabilbao.ui.galleryimages.GalleryImagesActivity;
+import com.alf.android.semanasantabilbao.ui.gallerypasos.GalleryPasosActivity;
 import com.alf.android.semanasantabilbao.ui.museopasos.MuseoPasosActivity;
 import com.alf.android.semanasantabilbao.ui.utils.GlobalFunctions;
 import com.firebase.client.Firebase;
@@ -63,7 +65,6 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
 
     @Inject CofradiaContract.CofradiaPresenter cofradiaPresenter;
     @Inject CofradiaAdapter cofradiaAdapter;
-    @Inject RecyclerView.RecycledViewPool recycledViewPool;
 
     @BindView(R.id.cofradia_progress_bar) ProgressBar spinner;
     @BindView(R.id.cofradia_loading_text) TextView loadingText;
@@ -73,7 +74,7 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
     @BindView(R.id.cofradia_recycler_view) RecyclerView mRecyclerView;
     @BindView(R.id.cofradia_top_image) ImageView mTopImage;
     //@BindString(R.string.NO_IMAGE) String no_image;
-    @BindString(R.string.firebase_error) String firebaseError;
+    @BindString(R.string.firebase_error_cofradias) String firebaseErrorCofradias;
     @BindString(R.string.COFRADIA) String cofradiaIntent;
     @BindString(R.string.COFRADIAERROR) String cofradiaIntentError;
     @BindString(R.string.app_name) String subject;
@@ -151,8 +152,8 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
 
     @Override
     public void showErrorGettingCofradias(ObservableField<String> mensajeError) {
-        Log.d(LOG_TAG, "Toast. Error getting Cofradias from Firebase. (" + firebaseError + ")");
-        Toast.makeText(this, firebaseError + "(" + mensajeError.get() + ")", Toast.LENGTH_LONG).show();
+        Log.d(LOG_TAG, "Toast. Error getting Cofradias from Firebase. (" + firebaseErrorCofradias + ")");
+        Toast.makeText(this, firebaseErrorCofradias + "(" + mensajeError.get() + ")", Toast.LENGTH_LONG).show();
     }
 
     private void initRecyclerViewCofradias() {
@@ -162,8 +163,6 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
         }else{
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         }
-        //mRecyclerView.setRecycledViewPool(new RecyclerView.RecycledViewPool());
-        mRecyclerView.setRecycledViewPool(recycledViewPool);
 
         //cofradiaAdapter = new CofradiaAdapter(this);
         cofradiaAdapter.setCofradiaClickListener(this);
@@ -205,6 +204,7 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
     protected void onPause() {
         super.onPause();
         if (isFinishing() && cofradiaPresenter != null) {
+            Log.d(LOG_TAG, "Detach View & Unsuscribe Suscription.");
             cofradiaPresenter.unsuscribeCofradiaSuscription();
             cofradiaPresenter.detachCofradiaView();
         }
@@ -216,6 +216,14 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
 
         if (id == R.id.nav_museo_pasos) {
             Intent intentMenu = new Intent(CofradiaActivity.this, MuseoPasosActivity.class);
+            intentMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intentMenu);
+        } else if (id == R.id.nav_galeria) {
+            Intent intentMenu = new Intent(CofradiaActivity.this, GalleryImagesActivity.class);
+            intentMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intentMenu);
+        } else if (id == R.id.nav_pasos) {
+            Intent intentMenu = new Intent(CofradiaActivity.this, GalleryPasosActivity.class);
             intentMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intentMenu);
         } else if (id == R.id.nav_share_app) {

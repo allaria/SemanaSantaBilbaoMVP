@@ -7,13 +7,15 @@
     <string name="loading_detail_cofradia">Cargando datos de la Cofradía</string>
     <string name="loading_procesiones">Cargando Procesiones</string>
     <string name="loading_pasos">Cargando Pasos</string>
-    <string name="loading_gallery">Cargando Imágenes de la Galería</string>
+    <string name="loading_gallery_images">Cargando Imágenes de la Galería</string>
+    <string name="loading_gallery_pasos">Cargando Pasos de la Galería</string>
 
     <!-- Etiquetas descripciones de imagenes -->
-    <string name="image_cofradia">Imagen Cofradía</string>
-    <string name="logo_cofradia">Escudo Cofradía</string>
-    <string name="image_paso">Imagen Paso</string>
-    <string name="image_gallery">Imagen Galería</string>
+    <string name="image_cofradia_description">Imagen Cofradía</string>
+    <string name="logo_cofradia_description">Escudo Cofradía</string>
+    <string name="image_paso_description">Imagen Paso</string>
+    <string name="image_gallery_description">Imagen Galería</string>
+    <string name="image_pasos_description">Imagen Paso</string>
 
     <!-- Etiquetas elementos del menu de la aplicación -->
     <string name="app_navigation_view_name">Cofradías de Bilbao</string>
@@ -66,12 +68,17 @@
     <string name="no_connection">"Conexión a Internet necesaria para el funcionamiento de la aplicación"</string>
     <string name="back_action">"VOLVER"</string>
 
-    <!-- Cofradia error message text -->
+    <!-- Cofradia error messages text -->
     <string name="connection_error">"Compruebe la conexión a internet del dispositivo. Generando lista local."</string>
     <string name="connection_error_detail">"Es necesaria la conexion a internet para el correcto funcionamiento de la aplicación"</string>
-    <string name="firebase_error">"Error al recuperar las Cofradias. Generando lista local."</string>
-    <string name="firebase_error_detail">"Se ha producido un error al recuperar las cofradias."</string>
+    <string name="firebase_error_cofradias">"Error al recuperar las Cofradias. Generando lista local."</string>
     <string name="share_app_error">"Se ha producido un error al compartir la aplicación."</string>
+
+    <!-- Gallery Images error mmessages text -->
+    <string name="firebase_error_gallery_images">"Error al recuperar las imágenes de la galería."</string>
+
+    <!-- Gallery Pasos error mmessages text -->
+    <string name="firebase_error_gallery_pasos">"Error al recuperar las imágenes de Pasos de la galería."</string>
 
     <!-- Museo de Pasos -->
     <string name="url_museo_pasos">"http://www.museodepasosbilbao.com"</string>

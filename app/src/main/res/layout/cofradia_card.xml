@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
                 android:scaleType="centerCrop"
-                android:contentDescription="@string/image_cofradia" />
+                android:contentDescription="@string/image_cofradia_description" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -38,7 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/card_cofradia_logo"
-                    android:contentDescription="@string/logo_cofradia" />
+                    android:contentDescription="@string/logo_cofradia_description" />
 
                 <TextView
                     android:layout_width="match_parent"

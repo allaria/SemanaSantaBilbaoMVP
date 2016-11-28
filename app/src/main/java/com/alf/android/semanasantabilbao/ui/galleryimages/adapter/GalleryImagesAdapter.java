@@ -1,4 +1,4 @@
-package com.alf.android.semanasantabilbao.ui.detailcofradia.adapter;
+package com.alf.android.semanasantabilbao.ui.galleryimages.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alf.android.semanasantabilbao.R;
+import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.data.entities.GalleryImage;
 import com.squareup.picasso.Picasso;
 
@@ -20,17 +22,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by alaria on 27/04/2016.
+ * Created by alaria on 25/04/2016.
  */
-public class GaleriaAdapter extends RecyclerView.Adapter<GaleriaAdapter.Holder>{
+public class GalleryImagesAdapter extends RecyclerView.Adapter<GalleryImagesAdapter.Holder>{
 
-    private static final String TAG = GaleriaAdapter.class.getSimpleName();
-    private GaleriaAdapter.ImagenGaleriaClickListener imagenGaleriaClickListener;
+    private static final String LOG_TAG = GalleryImagesAdapter.class.getSimpleName();
+    private GalleryImagesClickListener galleryImagesClickListener;
     private List<GalleryImage> mGalleryImages;
     private Context context;
 
     @Inject
-    public GaleriaAdapter() {
+    public GalleryImagesAdapter() {
         mGalleryImages = new ArrayList<>();
     }
 
@@ -44,14 +46,17 @@ public class GaleriaAdapter extends RecyclerView.Adapter<GaleriaAdapter.Holder>{
     @Override
     public void onBindViewHolder(Holder holder, int position) {
 
-        GalleryImage currImagen = mGalleryImages.get(position);
-        String imgGaleria = currImagen.getThumbnail();
+        GalleryImage currGalleryImage = mGalleryImages.get(position);
+        String imgGaleria = currGalleryImage.getThumbnail();
         int idDrawableNoImage = holder.itemView.getContext().getResources().getIdentifier(context.getResources().getString(R.string.NO_IMAGE), "drawable", holder.itemView.getContext().getPackageName());
         Picasso.with(holder.itemView.getContext())
                 .load(imgGaleria)
                 .placeholder(idDrawableNoImage)
                 .error(idDrawableNoImage)
-                .into(holder.mPhotoGaleria);
+                .into(holder.mGalleryImage);
+
+        //Picasso.with(holder.itemView.getContext()).load("https://raw.githubusercontent.com/allaria/CofradiasBilbao/master/app/src/main/res/imagenes/verMapa.png").into(holder.mPhoto);
+        //Picasso.with(holder.itemView.getContext()).load(R.drawable.e_santa_vera_cruz).into(holder.mPhoto);
     }
 
     @Override
@@ -59,27 +64,27 @@ public class GaleriaAdapter extends RecyclerView.Adapter<GaleriaAdapter.Holder>{
         return mGalleryImages.size();
     }
 
-    public void addImagenGaleria(List<GalleryImage> listaGalleryImage) {
+    public void addGalleryImages(List<GalleryImage> listaGalleryImages) {
         mGalleryImages.clear();
-        mGalleryImages.addAll(listaGalleryImage);
+        mGalleryImages.addAll(listaGalleryImages);
         notifyDataSetChanged();
     }
 
-    public GalleryImage getSelectedImagenGaleria(int position) {
+    public GalleryImage getSelectedGalleryImage(int position) {
         return mGalleryImages.get(position);
     }
 
-    public GaleriaAdapter.ImagenGaleriaClickListener getImagenGaleriaClickListener() {
-        return imagenGaleriaClickListener;
+    public GalleryImagesClickListener getGalleryImagesClickListener() {
+        return galleryImagesClickListener;
     }
 
-    public void setImagenGaleriaClickListener(GaleriaAdapter.ImagenGaleriaClickListener imagenGaleriaClickListener) {
-        this.imagenGaleriaClickListener = imagenGaleriaClickListener;
+    public void setGalleryImagesClickListener(GalleryImagesClickListener galleryImagesClickListener) {
+        this.galleryImagesClickListener = galleryImagesClickListener;
     }
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.card_image_gallery) ImageView mPhotoGaleria;
+        @BindView(R.id.card_image_gallery) ImageView mGalleryImage;
 
         public Holder(View itemView) {
             super(itemView);
@@ -89,11 +94,11 @@ public class GaleriaAdapter extends RecyclerView.Adapter<GaleriaAdapter.Holder>{
 
         @Override
         public void onClick(View v) {
-            imagenGaleriaClickListener.onClickImagenGaleria(getLayoutPosition());
+            getGalleryImagesClickListener().onClick(getLayoutPosition());
         }
     }
 
-    public interface ImagenGaleriaClickListener {
-        void onClickImagenGaleria(int position);
+    public interface GalleryImagesClickListener {
+        void onClick(int position);
     }
 }

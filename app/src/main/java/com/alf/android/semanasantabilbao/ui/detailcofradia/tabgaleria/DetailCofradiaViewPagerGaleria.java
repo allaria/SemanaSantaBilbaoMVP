@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.alf.android.semanasantabilbao.App;
 import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
-import com.alf.android.semanasantabilbao.data.entities.ImagenGaleria;
+import com.alf.android.semanasantabilbao.data.entities.GalleryImage;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.adapter.GaleriaAdapter;
 
 import javax.inject.Inject;
@@ -34,7 +34,6 @@ public class DetailCofradiaViewPagerGaleria extends View implements DetailCofrad
 
     @Inject DetailCofradiaViewPagerGaleriaContract.DetailGaleriaPresenter galeriaPresenter;
     @Inject GaleriaAdapter galeriaAdapter;
-    @Inject RecyclerView.RecycledViewPool recycledViewPool;
 
     @BindView(R.id.gallery_detail_progress_bar) ProgressBar spinner;
     @BindView(R.id.gallery_loading_text) TextView loadingText;
@@ -60,7 +59,6 @@ public class DetailCofradiaViewPagerGaleria extends View implements DetailCofrad
     private void initRecyclerViewPasos() {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-        mRecyclerView.setRecycledViewPool(recycledViewPool);
 
         galeriaAdapter.setImagenGaleriaClickListener(this);
         mRecyclerView.setAdapter(galeriaAdapter);
@@ -73,7 +71,7 @@ public class DetailCofradiaViewPagerGaleria extends View implements DetailCofrad
     }
 
     @Override
-    public void printImagenGaleria(ObservableArrayList<ImagenGaleria> mImagenesGaleria) {
+    public void printImagenGaleria(ObservableArrayList<GalleryImage> mImagenesGaleria) {
         Log.d(LOG_TAG, "Number of Gallery Images in the recyclerView: "+mImagenesGaleria.size());
         ((GaleriaAdapter) mRecyclerView.getAdapter()).addImagenGaleria(mImagenesGaleria);
     }

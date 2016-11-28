@@ -27,6 +27,12 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="TitleAccent">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="TextLabel">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/colorPrimaryText</item>

@@ -58,7 +58,7 @@ public class DetailCofradiaActivity extends AppCompatActivity implements DetailC
     @BindString(R.string.no_connection) String noConnection;
     @BindString(R.string.back_action) String backAction;
     @BindString(R.string.COFRADIAERROR) String intentCofradiaError;
-    @BindString(R.string.firebase_error) String firebaseError;
+    @BindString(R.string.firebase_error_cofradias) String firebaseErrorCofradia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,8 +135,8 @@ public class DetailCofradiaActivity extends AppCompatActivity implements DetailC
 
     @Override
     public void showErrorGettingCofradias(ObservableField<String> mensajeError) {
-        Log.d(LOG_TAG, "Toast. Error getting Cofradias from Firebase. (" + firebaseError + ")");
-        Toast.makeText(this, firebaseError + "(" + mensajeError.get() + ")", Toast.LENGTH_LONG).show();
+        Log.d(LOG_TAG, "Toast. Error getting Cofradias from Firebase. (" + firebaseErrorCofradia + ")");
+        Toast.makeText(this, firebaseErrorCofradia + "(" + mensajeError.get() + ")", Toast.LENGTH_LONG).show();
     }
 
     private void loadDetailCofradia() {

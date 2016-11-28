@@ -12,4 +12,5 @@
     <dimen name="card_top_margin">5dp</dimen>
     <dimen name="card_radius_cofradia">5dp</dimen>
     <dimen name="card_padding_cofradia">5dp</dimen>
+    <dimen name="card_padding_gallery">2dp</dimen>
 </resources>

@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by alaria on 27/04/2016.
  */
-public class ImagenGaleria implements Serializable {
+public class GalleryImage implements Serializable {
 
     private String caption, id_cofradia, image, thumbnail;
 
@@ -43,7 +43,7 @@ public class ImagenGaleria implements Serializable {
     }
 
 
-    public ImagenGaleria() {
+    public GalleryImage() {
     }
 
 }

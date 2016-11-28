@@ -35,7 +35,6 @@ public class DetailCofradiaViewPagerCofradia extends View implements DetailCofra
 
     @Inject DetailCofradiaViewPagerCofradiaContract.DetailCofradiaPresenter procesionPresenter;
     @Inject ProcesionAdapter procesionAdapter;
-    @Inject RecyclerView.RecycledViewPool recycledViewPool;
 
     @BindView(R.id.cofradia_fundacion) TextView mFundacion;
     @BindView(R.id.cofradia_sede) TextView mSede;
@@ -73,7 +72,6 @@ public class DetailCofradiaViewPagerCofradia extends View implements DetailCofra
     private void initRecyclerViewProcesiones() {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new GridLayoutManager(context,2));
-        mRecyclerView.setRecycledViewPool(recycledViewPool);
 
         procesionAdapter.setProcesionClickListener(this);
         mRecyclerView.setAdapter(procesionAdapter);

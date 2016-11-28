@@ -1,7 +1,7 @@
 package com.alf.android.semanasantabilbao.business.detailcofradia;
 
 import com.alf.android.semanasantabilbao.data.FirebaseAccess;
-import com.alf.android.semanasantabilbao.data.entities.ImagenGaleria;
+import com.alf.android.semanasantabilbao.data.entities.GalleryImage;
 import com.alf.android.semanasantabilbao.data.entities.Paso;
 import com.alf.android.semanasantabilbao.data.entities.Procesion;
 import com.alf.android.semanasantabilbao.data.utils.Constants;
@@ -23,7 +23,7 @@ public class GetDetailCofradiaInteractorImpl {
     private String mensajeErrorFirebase;
     private List<Procesion> listaProcesiones;
     private List<Paso> listaPasos;
-    private List<ImagenGaleria> listaImagenesGaleria;
+    private List<GalleryImage> listaImagenesGaleria;
 
     public GetDetailCofradiaInteractorImpl(FirebaseAccess firebaseAccess) {
 
