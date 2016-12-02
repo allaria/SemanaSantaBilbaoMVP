@@ -21,8 +21,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by alaria on 25/04/2016.
+ * Created by Alberto Laría Fernández on 25/04/2016.
  */
+
 public class CofradiaAdapter extends RecyclerView.Adapter<CofradiaAdapter.Holder>{
 
     private static final String LOG_TAG = CofradiaAdapter.class.getSimpleName();

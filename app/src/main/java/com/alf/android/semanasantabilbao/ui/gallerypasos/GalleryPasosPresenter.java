@@ -12,7 +12,7 @@ import rx.Subscriber;
 import rx.Subscription;
 
 /**
- * Created by Alberto on 25/11/2016.
+ * Created by Alberto Laría Fernández on 25/11/2016.
  */
 
 public class GalleryPasosPresenter implements GalleryPasosContract.GalleryPasosPresenter {
@@ -58,7 +58,7 @@ public class GalleryPasosPresenter implements GalleryPasosContract.GalleryPasosP
         }
 
         if (!loading && listaGalleryPasos.isEmpty()) {
-            //Log.d(LOG_TAG, "Cofradias list is empty");
+            //Log.d(LOG_TAG, "Pasos list is empty");
             loading = true;
             setSpinnerAndLoadindText(loading);
             Log.d(LOG_TAG, "Gallery Pasos list is empty. Getting Gallery Pasos from Firebase");

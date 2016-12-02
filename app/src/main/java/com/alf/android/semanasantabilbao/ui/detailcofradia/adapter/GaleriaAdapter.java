@@ -20,8 +20,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by alaria on 27/04/2016.
+ * Created by Alberto Laría Fernández on 27/04/2016.
  */
+
 public class GaleriaAdapter extends RecyclerView.Adapter<GaleriaAdapter.Holder>{
 
     private static final String TAG = GaleriaAdapter.class.getSimpleName();

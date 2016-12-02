@@ -1,8 +1,9 @@
 package com.alf.android.semanasantabilbao.data.utils;
 
 /**
- * Created by alaria on 20/04/2016.
+ * Created by Alberto Laría Fernández on 20/04/2016.
  */
+
 public class Constants {
 
     public static final class HTTP {

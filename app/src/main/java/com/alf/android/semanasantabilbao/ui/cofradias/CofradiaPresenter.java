@@ -14,7 +14,7 @@ import rx.Subscriber;
 import rx.Subscription;
 
 /**
- * Created by alaria on 22/09/2016.
+ * Created by Alberto Laría Fernández on 22/09/2016.
  */
 
 public class CofradiaPresenter implements CofradiaContract.CofradiaPresenter {

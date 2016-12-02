@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
- * Created by alaria on 22/09/2016.
+ * Created by Alberto Laría Fernández on 22/09/2016.
  */
 
 public interface CofradiaContract {

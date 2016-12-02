@@ -13,9 +13,8 @@ import com.firebase.client.ValueEventListener;
 import rx.Observable;
 import rx.Subscriber;
 
-
 /**
- * Created by alaria on 27/09/2016.
+ * Created by Alberto Laría Fernández on 27/09/2016.
  */
 
 public class FirebaseDataAccess implements FirebaseAccess {

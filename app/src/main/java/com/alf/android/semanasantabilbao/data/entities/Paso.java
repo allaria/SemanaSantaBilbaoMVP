@@ -3,13 +3,12 @@ package com.alf.android.semanasantabilbao.data.entities;
 import java.io.Serializable;
 
 /**
- * Created by Alberto on 03/11/2016.
+ * Created by Alberto Laría Fernández on 03/11/2016.
  */
 
 public class Paso implements Serializable {
 
     private String id_cofradia, nombrePaso, imagenPaso, textoPaso;
-
 
     public String getId_cofradia() {
         return id_cofradia;

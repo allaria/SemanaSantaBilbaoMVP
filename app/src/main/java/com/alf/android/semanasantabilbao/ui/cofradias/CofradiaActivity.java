@@ -27,9 +27,11 @@ import com.alf.android.semanasantabilbao.App;
 import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.ui.cofradias.adapter.CofradiaAdapter;
+import com.alf.android.semanasantabilbao.ui.contactos.ContactoActivity;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.DetailCofradiaActivity;
 import com.alf.android.semanasantabilbao.ui.galleryimages.GalleryImagesActivity;
 import com.alf.android.semanasantabilbao.ui.gallerypasos.GalleryPasosActivity;
+import com.alf.android.semanasantabilbao.ui.galleryprocesiones.GalleryProcesionesActivity;
 import com.alf.android.semanasantabilbao.ui.museopasos.MuseoPasosActivity;
 import com.alf.android.semanasantabilbao.ui.utils.GlobalFunctions;
 import com.firebase.client.Firebase;
@@ -48,7 +50,7 @@ import butterknife.ButterKnife;
 import static com.alf.android.semanasantabilbao.R.string.texto_compartir_app;
 
 /**
- * Created by alaria on 22/09/2016.
+ * Created by Alberto Laría Fernández on 22/09/2016.
  */
 
 public class CofradiaActivity extends AppCompatActivity implements CofradiaContract.CofradiaView,
@@ -224,6 +226,14 @@ public class CofradiaActivity extends AppCompatActivity implements CofradiaContr
             startActivity(intentMenu);
         } else if (id == R.id.nav_pasos) {
             Intent intentMenu = new Intent(CofradiaActivity.this, GalleryPasosActivity.class);
+            intentMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intentMenu);
+        } else if (id == R.id.nav_procesiones) {
+            Intent intentMenu = new Intent(CofradiaActivity.this, GalleryProcesionesActivity.class);
+            intentMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intentMenu);
+        } else if (id == R.id.nav_contacto) {
+            Intent intentMenu = new Intent(CofradiaActivity.this, ContactoActivity.class);
             intentMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intentMenu);
         } else if (id == R.id.nav_share_app) {

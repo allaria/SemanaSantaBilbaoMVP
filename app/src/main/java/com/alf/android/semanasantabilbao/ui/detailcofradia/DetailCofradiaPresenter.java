@@ -12,7 +12,7 @@ import rx.Subscriber;
 import rx.Subscription;
 
 /**
- * Created by alaria on 16/11/2016.
+ * Created by Alberto Laría Fernández on 16/11/2016.
  */
 
 public class DetailCofradiaPresenter  implements DetailCofradiaContract.DetailCofradiaPresenter {
@@ -46,7 +46,13 @@ public class DetailCofradiaPresenter  implements DetailCofradiaContract.DetailCo
 
     @Override
     public void unsuscribeDetailCofradiaSuscription() {
-
+//COMPROBAR ESTA MIERDA
+        //COMPROBAR ESTA MIERDA
+        //COMPROBAR ESTA MIERDA
+        //COMPROBAR ESTA MIERDA
+        //COMPROBAR ESTA MIERDA
+        //COMPROBAR ESTA MIERDA
+        //COMPROBAR ESTA MIERDA
     }
 
     @Override

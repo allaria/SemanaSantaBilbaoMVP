@@ -3,14 +3,14 @@ package com.alf.android.semanasantabilbao.data.entities;
 import java.io.Serializable;
 
 /**
- * Created by alaria on 25/04/2016.
+ * Created by Alberto Laría Fernández on 25/04/2016.
  */
+
 public class Cofradia implements Serializable {
 
     private String id_cofradia, nombreCofradia, sede, direccion, telefono, web, email, imagenEscudo, imagenDetalle;
     private String textoDetalle, hermanoAbad, vestimenta, textoIntroPasos;
     private int fundacion, numeroPasos, numeroProcesiones;
-
 
     public String getId_cofradia() {
         return id_cofradia;

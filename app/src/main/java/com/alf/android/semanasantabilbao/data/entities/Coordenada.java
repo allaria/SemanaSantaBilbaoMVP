@@ -3,13 +3,13 @@ package com.alf.android.semanasantabilbao.data.entities;
 import java.io.Serializable;
 
 /**
- * Created by alaria on 29/04/2016.
+ * Created by Alberto Laría Fernández on 29/04/2016.
  */
+
 public class Coordenada implements Serializable {
 
     private String id_procesion;
     private Double latitud, longitud;
-
 
     public String getId_procesion() {
         return id_procesion;

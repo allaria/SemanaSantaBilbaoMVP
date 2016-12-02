@@ -5,10 +5,10 @@ import android.app.Application;
 import com.alf.android.semanasantabilbao.di.ApplicationComponent;
 import com.alf.android.semanasantabilbao.di.DaggerApplicationComponent;
 
-
 /**
- * Created by alaria on 17/10/2016.
+ * Created by Alberto Laría Fernández on 17/10/2016.
  */
+
 public class App extends Application {
 
     private ApplicationComponent applicationComponent;

@@ -14,8 +14,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by alaria on 16/06/2016.
+ * Created by Alberto Laría Fernández on 16/06/2016.
  */
+
 public class MuseoPasosActivity extends AppCompatActivity {
 
     private final String LOG_TAG = MuseoPasosActivity.class.getSimpleName();

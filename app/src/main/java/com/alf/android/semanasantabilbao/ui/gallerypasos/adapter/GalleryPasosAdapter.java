@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by alaria on 25/04/2016.
+ * Created by Alberto Laría Fernández on 25/04/2016.
  */
 public class GalleryPasosAdapter extends RecyclerView.Adapter<GalleryPasosAdapter.Holder>{
 

@@ -1,12 +1,17 @@
 package com.alf.android.semanasantabilbao.di;
 
 import com.alf.android.semanasantabilbao.business.cofradias.GetCofradiasInteractorImpl;
+import com.alf.android.semanasantabilbao.business.contacto.GetContactoInteractorImpl;
 import com.alf.android.semanasantabilbao.business.detailcofradia.GetDetailCofradiaInteractorImpl;
 import com.alf.android.semanasantabilbao.business.galleryimages.GetGalleryImagesInteractorImpl;
 import com.alf.android.semanasantabilbao.business.gallerypasos.GetGalleryPasosInteractorImpl;
+import com.alf.android.semanasantabilbao.business.galleryprocesiones.GetGalleryProcesionesInteractorImpl;
 import com.alf.android.semanasantabilbao.ui.cofradias.CofradiaContract;
 import com.alf.android.semanasantabilbao.ui.cofradias.CofradiaPresenter;
 import com.alf.android.semanasantabilbao.ui.cofradias.adapter.CofradiaAdapter;
+import com.alf.android.semanasantabilbao.ui.contactos.ContactoContract;
+import com.alf.android.semanasantabilbao.ui.contactos.ContactoPresenter;
+import com.alf.android.semanasantabilbao.ui.contactos.adapter.ContactoAdapter;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.DetailCofradiaContract;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.DetailCofradiaPresenter;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.adapter.GaleriaAdapter;
@@ -24,16 +29,19 @@ import com.alf.android.semanasantabilbao.ui.galleryimages.adapter.GalleryImagesA
 import com.alf.android.semanasantabilbao.ui.gallerypasos.GalleryPasosContract;
 import com.alf.android.semanasantabilbao.ui.gallerypasos.GalleryPasosPresenter;
 import com.alf.android.semanasantabilbao.ui.gallerypasos.adapter.GalleryPasosAdapter;
+import com.alf.android.semanasantabilbao.ui.galleryprocesiones.GalleryProcesionesContract;
+import com.alf.android.semanasantabilbao.ui.galleryprocesiones.GalleryProcesionesPresenter;
+import com.alf.android.semanasantabilbao.ui.galleryprocesiones.adapter.GalleryProcesionesAdapter;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 
-
 /**
- * Created by alaria on 17/10/2016.
+ * Created by Alberto Laría Fernández on 17/10/2016.
  */
+
 @Module
 public class UiApplicationModule {
 
@@ -127,6 +135,34 @@ public class UiApplicationModule {
     @Singleton
     public GalleryPasosAdapter provideGalleryPasosAdapter() {
         return new GalleryPasosAdapter();
+    }
+
+
+    //GalleryProcesiones Dependencies
+    @Provides
+    @Singleton
+    public GalleryProcesionesContract.GalleryProcesionesPresenter provideGalleryProcesionesPresenter(GetGalleryProcesionesInteractorImpl getGalleryProcesionesInteractor) {
+        return new GalleryProcesionesPresenter(getGalleryProcesionesInteractor);
+    }
+
+    @Provides
+    @Singleton
+    public GalleryProcesionesAdapter provideGalleryProcesionesAdapter() {
+        return new GalleryProcesionesAdapter();
+    }
+
+
+    //Contacto Dependencies
+    @Provides
+    @Singleton
+    public ContactoContract.ContactoPresenter provideContactoPresenter(GetContactoInteractorImpl getContactoInteractor) {
+        return new ContactoPresenter(getContactoInteractor);
+    }
+
+    @Provides
+    @Singleton
+    public ContactoAdapter provideContactoAdapter() {
+        return new ContactoAdapter();
     }
 }
 

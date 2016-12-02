@@ -8,10 +8,10 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
-
 /**
- * Created by alaria on 17/10/2016.
+ * Created by Alberto Laría Fernández on 17/10/2016.
  */
+
 @Module
 public class DataApplicationModule {
 

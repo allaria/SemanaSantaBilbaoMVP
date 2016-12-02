@@ -7,8 +7,11 @@
     <string name="loading_detail_cofradia">Cargando datos de la Cofradía</string>
     <string name="loading_procesiones">Cargando Procesiones</string>
     <string name="loading_pasos">Cargando Pasos</string>
+    <string name="loading_contactos">Cargando Contactos</string>
     <string name="loading_gallery_images">Cargando Imágenes de la Galería</string>
     <string name="loading_gallery_pasos">Cargando Pasos de la Galería</string>
+    <string name="loading_gallery_procesion">Cargando Procesiones</string>
+    <string name="loading_detail_image">Cargando Imágen</string>
 
     <!-- Etiquetas descripciones de imagenes -->
     <string name="image_cofradia_description">Imagen Cofradía</string>
@@ -79,6 +82,15 @@
 
     <!-- Gallery Pasos error mmessages text -->
     <string name="firebase_error_gallery_pasos">"Error al recuperar las imágenes de Pasos de la galería."</string>
+
+    <!-- Gallery Procesiones error mmessages text -->
+    <string name="firebase_error_gallery_procesiones">"Error al recuperar las imágenes de Procesiones de la galería."</string>
+
+    <!-- Contactos error mmessages text -->
+    <string name="firebase_error_contactos">"Error al recuperar los contactos de las Cofradías."</string>
+
+    <!-- Detail Iamge error mmessages text -->
+    <string name="firebase_error_detail_image">"Error al recuperar la imagen."</string>
 
     <!-- Museo de Pasos -->
     <string name="url_museo_pasos">"http://www.museodepasosbilbao.com"</string>

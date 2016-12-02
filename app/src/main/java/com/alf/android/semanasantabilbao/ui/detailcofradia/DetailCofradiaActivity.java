@@ -33,7 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Alberto on 24/10/2016.
+ * Created by Alberto Laría Fernández on 24/10/2016.
  */
 
 public class DetailCofradiaActivity extends AppCompatActivity implements DetailCofradiaContract.DetailCofradiaView{

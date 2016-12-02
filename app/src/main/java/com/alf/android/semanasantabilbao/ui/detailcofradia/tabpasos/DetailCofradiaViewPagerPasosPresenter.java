@@ -12,7 +12,7 @@ import rx.Subscriber;
 import rx.Subscription;
 
 /**
- * Created by Alberto on 02/11/2016.
+ * Created by Alberto Laría Fernández on 02/11/2016.
  */
 
 public class DetailCofradiaViewPagerPasosPresenter implements DetailCofradiaViewPagerPasosContract.DetailPasosPresenter {

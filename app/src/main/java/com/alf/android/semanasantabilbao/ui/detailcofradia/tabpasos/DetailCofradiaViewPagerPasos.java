@@ -23,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Alberto on 27/10/2016.
+ * Created by Alberto Laría Fernández on 27/10/2016.
  */
 
 public class DetailCofradiaViewPagerPasos extends View implements DetailCofradiaViewPagerPasosContract.DetailGaleriaView,

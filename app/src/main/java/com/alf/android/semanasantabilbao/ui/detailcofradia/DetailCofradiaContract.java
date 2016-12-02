@@ -6,7 +6,7 @@ import android.databinding.ObservableField;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 
 /**
- * Created by alaria on 16/11/2016.
+ * Created by Alberto Laría Fernández on 16/11/2016.
  */
 
 public interface DetailCofradiaContract {

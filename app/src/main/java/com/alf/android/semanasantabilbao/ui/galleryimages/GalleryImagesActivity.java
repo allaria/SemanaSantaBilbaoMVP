@@ -1,12 +1,12 @@
 package com.alf.android.semanasantabilbao.ui.galleryimages;
 
+import android.content.Intent;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -18,8 +18,11 @@ import android.widget.Toast;
 import com.alf.android.semanasantabilbao.App;
 import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.GalleryImage;
+import com.alf.android.semanasantabilbao.ui.detailimage.DetailImageActivity;
 import com.alf.android.semanasantabilbao.ui.galleryimages.adapter.GalleryImagesAdapter;
 import com.alf.android.semanasantabilbao.ui.utils.GlobalFunctions;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -29,13 +32,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Alberto on 25/11/2016.
+ * Created by Alberto Laría Fernández on 25/11/2016.
  */
 
 public class GalleryImagesActivity extends AppCompatActivity implements GalleryImagesContract.GalleryImagesView,
         GalleryImagesAdapter.GalleryImagesClickListener {
 
     private static final String LOG_TAG = GalleryImagesActivity.class.getSimpleName();
+    private ArrayList<String> listaGalleryImagesPaths;
     //private GalleryImagesAdapter galleryImagesAdapter;
     //private GalleryImagesContract.GalleryImagesPresenter galleryImagesPresenter;
 
@@ -82,6 +86,11 @@ public class GalleryImagesActivity extends AppCompatActivity implements GalleryI
     }
 
     @Override
+    public void setGalleryImagesPaths(ArrayList<String> listaGalleryImagesPaths) {
+        this.listaGalleryImagesPaths = listaGalleryImagesPaths;
+    }
+
+    @Override
     public void showErrorGettingGalleryImages(ObservableField<String> mensajeError) {
         Log.d(LOG_TAG, "Toast. Error getting Gallery Images from Firebase. (" + firebaseErrorGalleryImages + ")");
         Toast.makeText(this, firebaseErrorGalleryImages + "(" + mensajeError.get() + ")", Toast.LENGTH_LONG).show();
@@ -92,6 +101,7 @@ public class GalleryImagesActivity extends AppCompatActivity implements GalleryI
         if (new GlobalFunctions().getScreenOrientation(getResources().getConfiguration().orientation).equals("Landscrape")) {
             mRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 4));
         }else{
+            //mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
             mRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
         }
 
@@ -103,6 +113,11 @@ public class GalleryImagesActivity extends AppCompatActivity implements GalleryI
     @Override
     public void onClick(int position) {
         Toast.makeText(getApplicationContext(), "CLICK", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(getApplicationContext(), DetailImageActivity.class);
+        intent.putExtra("position", position);
+        intent.putExtra("imagesPath", listaGalleryImagesPaths);
+        startActivity(intent);
     }
 
     @Override

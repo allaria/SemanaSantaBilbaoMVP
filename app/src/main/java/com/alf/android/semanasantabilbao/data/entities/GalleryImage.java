@@ -3,12 +3,12 @@ package com.alf.android.semanasantabilbao.data.entities;
 import java.io.Serializable;
 
 /**
- * Created by alaria on 27/04/2016.
+ * Created by Alberto Laría Fernández on 27/04/2016.
  */
+
 public class GalleryImage implements Serializable {
 
     private String caption, id_cofradia, image, thumbnail;
-
 
     public String getCaption() {
         return caption;

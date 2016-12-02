@@ -9,9 +9,10 @@
     tools:context=".ui.museopasos.MuseoPasosActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/museo_pasos_app_bar"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:theme="@style/ThemeOverlay.AppCompat.Light">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/museo_pasos_toolbar"

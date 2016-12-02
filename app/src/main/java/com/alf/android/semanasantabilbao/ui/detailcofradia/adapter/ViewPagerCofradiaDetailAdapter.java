@@ -1,6 +1,5 @@
 package com.alf.android.semanasantabilbao.ui.detailcofradia.adapter;
 
-
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
@@ -16,6 +15,9 @@ import com.alf.android.semanasantabilbao.ui.detailcofradia.tabdetalle.DetailCofr
 import com.alf.android.semanasantabilbao.ui.detailcofradia.tabgaleria.DetailCofradiaViewPagerGaleria;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.tabpasos.DetailCofradiaViewPagerPasos;
 
+/**
+ * Created by Alberto Laría Fernández on 27/04/2016.
+ */
 
 public class ViewPagerCofradiaDetailAdapter extends PagerAdapter {
 

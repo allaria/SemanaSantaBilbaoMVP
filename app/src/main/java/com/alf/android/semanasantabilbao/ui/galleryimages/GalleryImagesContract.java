@@ -3,13 +3,12 @@ package com.alf.android.semanasantabilbao.ui.galleryimages;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 
-import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.data.entities.GalleryImage;
-import com.alf.android.semanasantabilbao.ui.cofradias.CofradiaContract;
-import com.alf.android.semanasantabilbao.ui.galleryimages.adapter.GalleryImagesAdapter;
+
+import java.util.ArrayList;
 
 /**
- * Created by Alberto on 25/11/2016.
+ * Created by Alberto Laría Fernández on 25/11/2016.
  */
 
 public interface GalleryImagesContract {
@@ -19,6 +18,8 @@ public interface GalleryImagesContract {
         void setSpinnerAndLoadingText(boolean loadingSpinner);
 
         void printGalleryImages(ObservableArrayList<GalleryImage> listaGalleryImages);
+
+        void setGalleryImagesPaths(ArrayList<String> listaGalleryImagesPaths);
 
         void showErrorGettingGalleryImages(ObservableField<String> mensajeError);
     }

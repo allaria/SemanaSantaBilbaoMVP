@@ -4,21 +4,18 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.util.Log;
 
-import com.alf.android.semanasantabilbao.business.cofradias.GetCofradiasInteractorImpl;
 import com.alf.android.semanasantabilbao.business.galleryimages.GetGalleryImagesInteractorImpl;
-import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.data.entities.GalleryImage;
 import com.alf.android.semanasantabilbao.ui.cofradias.CofradiaActivity;
-import com.alf.android.semanasantabilbao.ui.cofradias.CofradiaContract;
 import com.firebase.client.DataSnapshot;
 
-import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 import rx.Subscriber;
 import rx.Subscription;
 
 /**
- * Created by Alberto on 25/11/2016.
+ * Created by Alberto Laría Fernández on 25/11/2016.
  */
 
 public class GalleryImagesPresenter implements GalleryImagesContract.GalleryImagesPresenter {
@@ -28,6 +25,7 @@ public class GalleryImagesPresenter implements GalleryImagesContract.GalleryImag
     private GetGalleryImagesInteractorImpl getGalleryImagesInteractor;
     private Subscription subscriptionGalleryImages;
     private ObservableArrayList<GalleryImage> listaGalleryImages;
+    private ArrayList<String> listaImagesPaths;
     private ObservableField<String> errorMessage;
     private boolean loading;
 
@@ -64,7 +62,7 @@ public class GalleryImagesPresenter implements GalleryImagesContract.GalleryImag
         }
 
         if (!loading && listaGalleryImages.isEmpty()) {
-            //Log.d(LOG_TAG, "Cofradias list is empty");
+            //Log.d(LOG_TAG, "Imagenes list is empty");
             loading = true;
             setSpinnerAndLoadindText(loading);
             Log.d(LOG_TAG, "Gallery Images list is empty. Getting Gallery Images from Firebase");
@@ -93,10 +91,17 @@ public class GalleryImagesPresenter implements GalleryImagesContract.GalleryImag
             listaGalleryImages.clear();
             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                 listaGalleryImages.add(dataSnapshot.getValue(GalleryImage.class));
+
+                Log.d(LOG_TAG, "ANTES RECUPERAR PATH");
+                //List of the image paths for the DetailImage
+                String path = (String) dataSnapshot.child("image").getValue();
+                Log.d(LOG_TAG, "ANTES ASIGNAR PATH: " + path);
+                listaImagesPaths.add(path);
             }
 
             Log.d(LOG_TAG, "Gallery Images list generated. Calling printGalleryImages.");
             galleryImagesView.printGalleryImages(listaGalleryImages);
+            galleryImagesView.setGalleryImagesPaths(listaImagesPaths);
             loading = false;
             setSpinnerAndLoadindText(loading);
         }

@@ -16,9 +16,7 @@ import android.widget.Toast;
 
 import com.alf.android.semanasantabilbao.App;
 import com.alf.android.semanasantabilbao.R;
-import com.alf.android.semanasantabilbao.data.entities.GalleryImage;
 import com.alf.android.semanasantabilbao.data.entities.Paso;
-import com.alf.android.semanasantabilbao.ui.galleryimages.adapter.GalleryImagesAdapter;
 import com.alf.android.semanasantabilbao.ui.gallerypasos.adapter.GalleryPasosAdapter;
 import com.alf.android.semanasantabilbao.ui.utils.GlobalFunctions;
 
@@ -30,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Alberto on 25/11/2016.
+ * Created by Alberto Laría Fernández on 25/11/2016.
  */
 
 public class GalleryPasosActivity extends AppCompatActivity implements GalleryPasosContract.GalleryPasosView,

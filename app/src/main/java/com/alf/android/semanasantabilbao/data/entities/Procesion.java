@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by alaria on 27/04/2016.
+ * Created by Alberto Laría Fernández on 27/04/2016.
  */
+
 public class Procesion implements Serializable {
 
     private List<Coordenada> coordenadas;
@@ -125,6 +126,7 @@ public class Procesion implements Serializable {
     public void setLongitudActual(Double longitudActual) {
         this.longitudActual = longitudActual;
     }
+
 
     public Procesion() {
         this.coordenadas = new ArrayList<Coordenada>();

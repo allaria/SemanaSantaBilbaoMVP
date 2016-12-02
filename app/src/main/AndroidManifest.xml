@@ -34,7 +34,31 @@
         </activity>
 
         <activity
+            android:name=".ui.detailimage.DetailImageActivity"
+            android:label="@string/app_name">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.galleryimages.GalleryImagesActivity" />
+        </activity>
+
+        <activity
             android:name=".ui.gallerypasos.GalleryPasosActivity"
+            android:label="@string/app_name">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.cofradias.CofradiaActivity" />
+        </activity>
+
+        <activity
+            android:name=".ui.galleryprocesiones.GalleryProcesionesActivity"
+            android:label="@string/app_name">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.cofradias.CofradiaActivity" />
+        </activity>
+
+        <activity
+            android:name=".ui.contactos.ContactoActivity"
             android:label="@string/app_name">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

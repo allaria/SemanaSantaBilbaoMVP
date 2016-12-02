@@ -12,7 +12,9 @@
         android:layout_margin="@dimen/card_margin"
         card_view:cardBackgroundColor="@android:color/black"
         card_view:cardCornerRadius="@dimen/card_radius_cofradia"
-        card_view:contentPadding="@dimen/card_padding_cofradia">
+        card_view:contentPadding="@dimen/card_padding_cofradia"
+        card_view:cardUseCompatPadding="true"
+        card_view:cardPreventCornerOverlap="false" >
 
         <RelativeLayout
             android:orientation="horizontal"

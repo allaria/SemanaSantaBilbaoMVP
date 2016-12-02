@@ -21,12 +21,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Alberto on 03/11/2016.
+ * Created by Alberto Laría Fernández on 03/11/2016.
  */
 
 public class PasoAdapter extends RecyclerView.Adapter<PasoAdapter.Holder>{
 
-    private static final String TAG = PasoAdapter.class.getSimpleName();
+    private static final String LOG_TAG = PasoAdapter.class.getSimpleName();
     private PasoAdapter.PasoClickListener pasoClickListener;
     private List<Paso> mPasos;
     private Context context;
@@ -38,7 +38,7 @@ public class PasoAdapter extends RecyclerView.Adapter<PasoAdapter.Holder>{
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View row = LayoutInflater.from(parent.getContext()).inflate(R.layout.paso_card, null, false);
+        View row = LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery_pasos_card, null, false);
         context = parent.getContext();
         return new Holder(row);
     }
@@ -85,8 +85,8 @@ public class PasoAdapter extends RecyclerView.Adapter<PasoAdapter.Holder>{
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.card_paso_image) ImageView mPhotoPaso;
-        @BindView(R.id.card_paso_name) TextView mPasoName;
+        @BindView(R.id.card_image_pasos) ImageView mPhotoPaso;
+        @BindView(R.id.card_text_pasos) TextView mPasoName;
 
         public Holder(View itemView) {
             super(itemView);

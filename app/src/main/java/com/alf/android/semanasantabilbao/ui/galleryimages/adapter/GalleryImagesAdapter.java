@@ -6,10 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.alf.android.semanasantabilbao.R;
-import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.data.entities.GalleryImage;
 import com.squareup.picasso.Picasso;
 
@@ -22,8 +20,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by alaria on 25/04/2016.
+ * Created by Alberto Laría Fernández on 25/04/2016.
  */
+
 public class GalleryImagesAdapter extends RecyclerView.Adapter<GalleryImagesAdapter.Holder>{
 
     private static final String LOG_TAG = GalleryImagesAdapter.class.getSimpleName();

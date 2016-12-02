@@ -3,8 +3,9 @@ package com.alf.android.semanasantabilbao.data.entities;
 import java.io.Serializable;
 
 /**
- * Created by alaria on 07/06/2016.
+ * Created by Alberto Laría Fernández on 07/06/2016.
  */
+
 public class Ruta implements Serializable {
 
     private String calle, id_procesion, imagenRuta;
@@ -32,6 +33,7 @@ public class Ruta implements Serializable {
     public void setImagenRuta(String imagenRuta) {
         this.imagenRuta = imagenRuta;
     }
+
 
     public Ruta() {
     }

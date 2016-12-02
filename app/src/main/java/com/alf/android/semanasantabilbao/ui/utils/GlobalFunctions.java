@@ -5,7 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 /**
- * Created by alaria on 15/11/2016.
+ * Created by Alberto Laría Fernández on 15/11/2016.
  */
 
 public class GlobalFunctions {
