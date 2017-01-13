@@ -5,6 +5,7 @@ import android.databinding.ObservableField;
 import android.util.Log;
 
 import com.alf.android.semanasantabilbao.business.galleryprocesiones.GetGalleryProcesionesInteractorImpl;
+import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.data.entities.Procesion;
 import com.firebase.client.DataSnapshot;
 
@@ -21,9 +22,11 @@ public class GalleryProcesionesPresenter implements GalleryProcesionesContract.G
     private GalleryProcesionesContract.GalleryProcesionesView galleryProcesionesView;
     private GetGalleryProcesionesInteractorImpl getGalleryProcesionesInteractor;
     private Subscription subscriptionGalleryProcesiones;
+    private Subscription subscriptionGalleryCofradia;
     private ObservableArrayList<Procesion> listaGalleryProcesiones;
     private ObservableField<String> errorMessage;
     private boolean loading;
+    private Cofradia cofradia;
 
     public GalleryProcesionesPresenter(GetGalleryProcesionesInteractorImpl getGalleryProcesionesInteractor) {
 
@@ -63,6 +66,7 @@ public class GalleryProcesionesPresenter implements GalleryProcesionesContract.G
             setSpinnerAndLoadindText(loading);
             Log.d(LOG_TAG, "Gallery Procesiones list is empty. Getting Gallery Procesiones from Firebase");
             subscriptionGalleryProcesiones = getGalleryProcesionesInteractor.getGalleryProcesiones().subscribe(subscriberGalleryProcesiones);
+            subscriptionGalleryCofradia = getGalleryProcesionesInteractor.getCofradia().subscribe(subscriberGalleryCofradia);
         } else {
             if (galleryProcesionesView != null) {
                 Log.d(LOG_TAG, "Gallery Procesiones list not empty. Calling printGalleryProcesiones.");
@@ -108,6 +112,33 @@ public class GalleryProcesionesPresenter implements GalleryProcesionesContract.G
             errorMessage.set(e.getMessage());
             Log.d(LOG_TAG, "Suscriber Gallery Procesiones onError. Error while getting Gallery Procesiones from Firebase. ("+ errorMessage.get() +")");
             galleryProcesionesView.showErrorGettingGalleryProcesiones(errorMessage);
+        }
+    };
+
+    private Subscriber subscriberGalleryCofradia = new Subscriber<DataSnapshot>() {
+
+        @Override
+        public void onNext(DataSnapshot snapshot) {
+
+            Log.d(LOG_TAG, "Suscriber Gallery Cofradia");
+            //listaCofradias.clear();
+            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                cofradia = dataSnapshot.getValue(Cofradia.class);
+            }
+
+            galleryProcesionesView.setCofraciaFromProcesion(cofradia);
+        }
+
+        @Override
+        public void onCompleted() {
+            Log.d(LOG_TAG, "Suscriber Gallery Cofradia onCompleted.");
+        }
+        @Override
+        public void onError(Throwable e) {
+            setSpinnerAndLoadindText(false);
+            errorMessage.set(e.getMessage());
+            Log.d(LOG_TAG, "Suscriber Google Play Url onError. Error while getting Gallerry Cofradia from Firebase. ("+ errorMessage.get() +")");
+            galleryProcesionesView.showErrorGettingCofradia(errorMessage);
         }
     };
 }

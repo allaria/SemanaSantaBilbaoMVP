@@ -11,4 +11,6 @@ import rx.Observable;
 public interface GetGalleryProcesionesInteractor {
 
     Observable<DataSnapshot> getGalleryProcesiones();
+
+    Observable<DataSnapshot> getCofradia();
 }

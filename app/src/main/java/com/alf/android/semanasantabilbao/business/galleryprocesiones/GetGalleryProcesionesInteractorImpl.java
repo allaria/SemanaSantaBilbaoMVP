@@ -24,5 +24,10 @@ public class GetGalleryProcesionesInteractorImpl implements GetGalleryProcesione
         return firebaseAccess.getFirebaseDataSnapshot(Constants.ConfigFireBase.FIREBASE_CHILD_PROCESIONES);
     }
 
+    @Override
+    public Observable<DataSnapshot> getCofradia() {
+        return firebaseAccess.getFirebaseDataSnapshot(Constants.ConfigFireBase.FIREBASE_CHILD_COFRADIAS);
+    }
+
 }
 

@@ -3,6 +3,7 @@ package com.alf.android.semanasantabilbao.ui.galleryprocesiones;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 
+import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.data.entities.Procesion;
 
 /**
@@ -17,7 +18,11 @@ public interface GalleryProcesionesContract {
 
         void printGalleryProcesiones(ObservableArrayList<Procesion> listaGalleryProcesiones);
 
+        void setCofraciaFromProcesion (Cofradia cofradia);
+
         void showErrorGettingGalleryProcesiones(ObservableField<String> mensajeError);
+
+        void showErrorGettingCofradia(ObservableField<String> mensajeError);
     }
 
     interface GalleryProcesionesPresenter {

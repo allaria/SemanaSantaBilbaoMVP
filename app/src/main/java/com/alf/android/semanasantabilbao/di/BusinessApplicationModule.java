@@ -3,6 +3,7 @@ package com.alf.android.semanasantabilbao.di;
 import com.alf.android.semanasantabilbao.business.cofradias.GetCofradiasInteractorImpl;
 import com.alf.android.semanasantabilbao.business.contacto.GetContactoInteractorImpl;
 import com.alf.android.semanasantabilbao.business.detailcofradia.GetDetailCofradiaInteractorImpl;
+import com.alf.android.semanasantabilbao.business.detailprocesion.GetDetailProcesionInteractorImpl;
 import com.alf.android.semanasantabilbao.business.galleryimages.GetGalleryImagesInteractorImpl;
 import com.alf.android.semanasantabilbao.business.gallerypasos.GetGalleryPasosInteractorImpl;
 import com.alf.android.semanasantabilbao.business.galleryprocesiones.GetGalleryProcesionesInteractorImpl;
@@ -56,6 +57,12 @@ public class BusinessApplicationModule {
     @Provides
     public GetContactoInteractorImpl provideGetContactoInteractorImpl(FirebaseAccess firebaseAccess) {
         return new GetContactoInteractorImpl(firebaseAccess);
+    }
+
+    @Singleton
+    @Provides
+    public GetDetailProcesionInteractorImpl provideGetDetailProcesionInteractorImpl(FirebaseAccess firebaseAccess) {
+        return new GetDetailProcesionInteractorImpl(firebaseAccess);
     }
 }
 

@@ -52,6 +52,8 @@ public class GalleryImagesActivity extends AppCompatActivity implements GalleryI
     @BindView(R.id.gallery_images_recycler_view) RecyclerView mRecyclerView;
 
     @BindString(R.string.firebase_error_gallery_images) String firebaseErrorGalleryImages;
+    @BindString(R.string.POSITION) String intentPosition;
+    @BindString(R.string.IMAGESPATH) String intentImagesPath;
     @BindDrawable(R.drawable.no_image) Drawable idDrawableNoImage;
 
     @Override
@@ -101,7 +103,6 @@ public class GalleryImagesActivity extends AppCompatActivity implements GalleryI
         if (new GlobalFunctions().getScreenOrientation(getResources().getConfiguration().orientation).equals("Landscrape")) {
             mRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 4));
         }else{
-            //mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
             mRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
         }
 
@@ -112,11 +113,11 @@ public class GalleryImagesActivity extends AppCompatActivity implements GalleryI
 
     @Override
     public void onClick(int position) {
-        Toast.makeText(getApplicationContext(), "CLICK", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "CLICK - "+LOG_TAG, Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(getApplicationContext(), DetailImageActivity.class);
-        intent.putExtra("position", position);
-        intent.putExtra("imagesPath", listaGalleryImagesPaths);
+        intent.putExtra(intentPosition, position);
+        intent.putExtra(intentImagesPath, listaGalleryImagesPaths);
         startActivity(intent);
     }
 

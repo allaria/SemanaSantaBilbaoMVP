@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.alf.android.semanasantabilbao.business.galleryimages.GetGalleryImagesInteractorImpl;
 import com.alf.android.semanasantabilbao.data.entities.GalleryImage;
-import com.alf.android.semanasantabilbao.ui.cofradias.CofradiaActivity;
 import com.firebase.client.DataSnapshot;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ import rx.Subscription;
 
 public class GalleryImagesPresenter implements GalleryImagesContract.GalleryImagesPresenter {
 
-    private static final String LOG_TAG = CofradiaActivity.class.getSimpleName();
+    private static final String LOG_TAG = GalleryImagesPresenter.class.getSimpleName();
     private GalleryImagesContract.GalleryImagesView galleryImagesView;
     private GetGalleryImagesInteractorImpl getGalleryImagesInteractor;
     private Subscription subscriptionGalleryImages;
@@ -33,6 +32,7 @@ public class GalleryImagesPresenter implements GalleryImagesContract.GalleryImag
 
         this.getGalleryImagesInteractor = getGalleryImagesInteractor;
         listaGalleryImages = new ObservableArrayList();
+        listaImagesPaths = new ArrayList();
         errorMessage = new ObservableField();
 
         loading = false;
@@ -92,10 +92,8 @@ public class GalleryImagesPresenter implements GalleryImagesContract.GalleryImag
             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                 listaGalleryImages.add(dataSnapshot.getValue(GalleryImage.class));
 
-                Log.d(LOG_TAG, "ANTES RECUPERAR PATH");
                 //List of the image paths for the DetailImage
                 String path = (String) dataSnapshot.child("image").getValue();
-                Log.d(LOG_TAG, "ANTES ASIGNAR PATH: " + path);
                 listaImagesPaths.add(path);
             }
 

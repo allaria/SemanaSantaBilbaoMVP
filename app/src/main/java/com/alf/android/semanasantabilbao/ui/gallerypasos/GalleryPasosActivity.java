@@ -1,5 +1,6 @@
 package com.alf.android.semanasantabilbao.ui.gallerypasos;
 
+import android.content.Intent;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.graphics.drawable.Drawable;
@@ -17,8 +18,11 @@ import android.widget.Toast;
 import com.alf.android.semanasantabilbao.App;
 import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Paso;
+import com.alf.android.semanasantabilbao.ui.detailimage.DetailImageActivity;
 import com.alf.android.semanasantabilbao.ui.gallerypasos.adapter.GalleryPasosAdapter;
 import com.alf.android.semanasantabilbao.ui.utils.GlobalFunctions;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -35,6 +39,7 @@ public class GalleryPasosActivity extends AppCompatActivity implements GalleryPa
         GalleryPasosAdapter.GalleryPasosClickListener {
 
     private static final String LOG_TAG = GalleryPasosActivity.class.getSimpleName();
+    private ArrayList<String> listaPasosPaths;
     //private GalleryImagesAdapter galleryImagesAdapter;
     //private GalleryImagesContract.GalleryImagesPresenter galleryImagesPresenter;
 
@@ -47,6 +52,8 @@ public class GalleryPasosActivity extends AppCompatActivity implements GalleryPa
     @BindView(R.id.gallery_pasos_recycler_view) RecyclerView mRecyclerView;
 
     @BindString(R.string.firebase_error_gallery_pasos) String firebaseErrorGalleryPasos;
+    @BindString(R.string.POSITION) String intentPosition;
+    @BindString(R.string.IMAGESPATH) String intentImagesPath;
     @BindDrawable(R.drawable.no_image) Drawable idDrawableNoImage;
 
     @Override
@@ -81,6 +88,11 @@ public class GalleryPasosActivity extends AppCompatActivity implements GalleryPa
     }
 
     @Override
+    public void setPasosPaths(ArrayList<String> listaPasosPaths) {
+        this.listaPasosPaths = listaPasosPaths;
+    }
+
+    @Override
     public void showErrorGettingGalleryPasos(ObservableField<String> mensajeError) {
         Log.d(LOG_TAG, "Toast. Error getting Gallery Pasos from Firebase. (" + firebaseErrorGalleryPasos + ")");
         Toast.makeText(this, firebaseErrorGalleryPasos + "(" + mensajeError.get() + ")", Toast.LENGTH_LONG).show();
@@ -101,7 +113,12 @@ public class GalleryPasosActivity extends AppCompatActivity implements GalleryPa
 
     @Override
     public void onClick(int position) {
-        Toast.makeText(getApplicationContext(), "CLICK", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "CLICK - "+LOG_TAG, Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(getApplicationContext(), DetailImageActivity.class);
+        intent.putExtra(intentPosition, position);
+        intent.putExtra(intentImagesPath, listaPasosPaths);
+        startActivity(intent);
     }
 
     @Override

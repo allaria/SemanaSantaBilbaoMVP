@@ -6,6 +6,8 @@ import com.alf.android.semanasantabilbao.ui.detailcofradia.DetailCofradiaActivit
 import com.alf.android.semanasantabilbao.ui.detailcofradia.tabcofradia.DetailCofradiaViewPagerCofradia;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.tabgaleria.DetailCofradiaViewPagerGaleria;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.tabpasos.DetailCofradiaViewPagerPasos;
+import com.alf.android.semanasantabilbao.ui.detailprocesion.tabpasos.DetailProcesionViewPagerPasos;
+import com.alf.android.semanasantabilbao.ui.detailprocesion.tabruta.DetailProcesionViewPagerRuta;
 import com.alf.android.semanasantabilbao.ui.galleryimages.GalleryImagesActivity;
 import com.alf.android.semanasantabilbao.ui.gallerypasos.GalleryPasosActivity;
 import com.alf.android.semanasantabilbao.ui.galleryprocesiones.GalleryProcesionesActivity;
@@ -39,4 +41,8 @@ public interface ApplicationComponent {
     void inject(GalleryProcesionesActivity galleryProcesionesActivity);
 
     void inject(ContactoActivity contratoActivity);
+
+    void inject(DetailProcesionViewPagerPasos viewPagerDetailPasos);
+
+    void inject(DetailProcesionViewPagerRuta viewPagerDetailRuta);
 }

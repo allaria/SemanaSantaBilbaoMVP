@@ -16,6 +16,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by Alberto Laria Fernández on 30/11/2016.
  */
@@ -23,19 +27,24 @@ import java.util.ArrayList;
 public class DetailImageAdapter extends PagerAdapter {
 
     private static final String LOG_TAG = DetailImageAdapter.class.getSimpleName();
-    private Activity _activity;
-    private ArrayList<String> _imagePaths;
+    private DetailImageAdapter.DetailImageClickListener detailImageClickListener;
+    private Activity activity;
+    private ArrayList<String> imagePaths;
     private LayoutInflater inflater;
 
-    public DetailImageAdapter(Activity activity,
-                              ArrayList<String> imagePaths) {
-        this._activity = activity;
-        this._imagePaths = imagePaths;
+    @BindView(R.id.btnClose) ImageButton btnClose;
+    @BindView(R.id.imgDisplay) TouchImageView imgDisplay;
+    @BindView(R.id.detail_image_backward_arrow) ImageButton imgBackwardArrow;
+    @BindView(R.id.detail_image_forward_arrow) ImageButton imgForwardArrow;
+
+    public DetailImageAdapter(Activity activity, ArrayList<String> imagePaths) {
+        this.activity = activity;
+        this.imagePaths = imagePaths;
     }
 
     @Override
     public int getCount() {
-        return this._imagePaths.size();
+        return this.imagePaths.size();
     }
 
     @Override
@@ -45,18 +54,13 @@ public class DetailImageAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        TouchImageView imgDisplay;
-        ImageButton btnClose;
 
-        inflater = (LayoutInflater) _activity
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View viewLayout = inflater.inflate(R.layout.detail_image_content, container,
-                false);
+        inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View viewLayout = inflater.inflate(R.layout.detail_image_content, container, false);
 
-        imgDisplay = (TouchImageView) viewLayout.findViewById(R.id.imgDisplay);
-        btnClose = (ImageButton) viewLayout.findViewById(R.id.btnClose);
+        ButterKnife.bind(this, viewLayout);
 
-        String imgGaleria = _imagePaths.get(position);
+        String imgGaleria = imagePaths.get(position);
         int idDrawableNoImage = container.getContext().getResources().getIdentifier("no_image", "drawable", container.getContext().getPackageName());
         Picasso.with(container.getContext())
                 .load(imgGaleria)
@@ -64,22 +68,48 @@ public class DetailImageAdapter extends PagerAdapter {
                 .error(idDrawableNoImage)
                 .into(imgDisplay);
 
-        // close button click event
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _activity.finish();
-            }
-        });
-
         ((ViewPager) container).addView(viewLayout);
 
+        if (position == 0) {
+            imgBackwardArrow.setVisibility(View.INVISIBLE);
+        }
+
+        if (position == imagePaths.size()-1) {
+            imgForwardArrow.setVisibility(View.INVISIBLE);
+        }
+
         return viewLayout;
+    }
+
+    public DetailImageAdapter.DetailImageClickListener getDetailImageClickListener() {
+        return detailImageClickListener;
+    }
+
+    public void setDetailImageClickListener(DetailImageAdapter.DetailImageClickListener detailImageClickListener) {
+        this.detailImageClickListener = detailImageClickListener;
+    }
+
+    @OnClick(R.id.btnClose)
+    public void onClick(View v) {
+        activity.finish();
+    }
+
+    @OnClick(R.id.detail_image_backward_arrow)
+    public void onClickDetailImageBackward(View v) {
+        getDetailImageClickListener().setViewPagerItem(-1);
+    }
+
+    @OnClick(R.id.detail_image_forward_arrow)
+    public void onClickDetailImageForward(View v) {
+        getDetailImageClickListener().setViewPagerItem(1);
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         ((ViewPager) container).removeView((RelativeLayout) object);
+    }
 
+    public interface DetailImageClickListener {
+        void setViewPagerItem(int i);
     }
 }

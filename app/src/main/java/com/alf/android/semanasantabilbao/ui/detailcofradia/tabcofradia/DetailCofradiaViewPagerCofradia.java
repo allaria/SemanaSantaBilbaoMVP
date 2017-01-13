@@ -33,6 +33,8 @@ public class DetailCofradiaViewPagerCofradia extends View implements DetailCofra
     private Context context;
     private String idCofradia;
 
+    private DetailCofradiaViewPagerCofradia.DetailCofradiaViewPagerCofradiaClickListener detailCofradiaViewPagerCofradiaClickListener;
+
     @Inject DetailCofradiaViewPagerCofradiaContract.DetailCofradiaPresenter procesionPresenter;
     @Inject ProcesionAdapter procesionAdapter;
 
@@ -102,6 +104,20 @@ public class DetailCofradiaViewPagerCofradia extends View implements DetailCofra
 
     @Override
     public void onClickProcesion(int position) {
-        Toast.makeText(context, "CLICK", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "CLICK", Toast.LENGTH_SHORT).show();
+        Procesion procesion = procesionAdapter.getSelectedProcesion(position);
+        detailCofradiaViewPagerCofradiaClickListener.onClickDetailCofradiaViewPagerCofradia(position, procesion);
+    }
+
+    public interface DetailCofradiaViewPagerCofradiaClickListener {
+        void onClickDetailCofradiaViewPagerCofradia(int position, Procesion procesion);
+    }
+
+    public DetailCofradiaViewPagerCofradiaClickListener getDetailCofradiaViewPagerCofradiaClickListener() {
+        return detailCofradiaViewPagerCofradiaClickListener;
+    }
+
+    public void setDetailCofradiaViewPagerCofradiaClickListener(DetailCofradiaViewPagerCofradiaClickListener detailCofradiaViewPagerCofradiaClickListener) {
+        this.detailCofradiaViewPagerCofradiaClickListener = detailCofradiaViewPagerCofradiaClickListener;
     }
 }

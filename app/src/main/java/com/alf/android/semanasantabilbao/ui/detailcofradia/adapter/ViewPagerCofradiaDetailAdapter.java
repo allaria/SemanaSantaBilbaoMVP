@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
-import com.alf.android.semanasantabilbao.ui.detailcofradia.DetailCofradiaActivity;
+import com.alf.android.semanasantabilbao.data.entities.Procesion;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.tabcofradia.DetailCofradiaViewPagerCofradia;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.tabdetalle.DetailCofradiaViewPagerDetalle;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.tabgaleria.DetailCofradiaViewPagerGaleria;
@@ -19,9 +19,9 @@ import com.alf.android.semanasantabilbao.ui.detailcofradia.tabpasos.DetailCofrad
  * Created by Alberto Laría Fernández on 27/04/2016.
  */
 
-public class ViewPagerCofradiaDetailAdapter extends PagerAdapter {
+public class ViewPagerCofradiaDetailAdapter extends PagerAdapter implements DetailCofradiaViewPagerCofradia.DetailCofradiaViewPagerCofradiaClickListener {
 
-    private final String LOG_TAG = DetailCofradiaActivity.class.getSimpleName();
+    private final String LOG_TAG = ViewPagerCofradiaDetailAdapter.class.getSimpleName();
 
     private Context context;
     private Cofradia cofradia;
@@ -30,6 +30,8 @@ public class ViewPagerCofradiaDetailAdapter extends PagerAdapter {
     private DetailCofradiaViewPagerDetalle detailCofradiaViewPagerDetalle;
     private DetailCofradiaViewPagerPasos detailCofradiaViewPagerPasos;
     private DetailCofradiaViewPagerGaleria detailCofradiaViewPagerGaleria;
+
+    private ViewPagerCofradiaDetailAdapter.ViewPagerCofradiaDetailAdapterClickListener viewPagerCofradiaDetailAdapterClickListener;
 
     public ViewPagerCofradiaDetailAdapter(Context context, Cofradia cofradia){
         final String tab1, tab2, tab3, tab4;
@@ -60,6 +62,9 @@ public class ViewPagerCofradiaDetailAdapter extends PagerAdapter {
                 detailCofradiaViewPagerCofradia = new DetailCofradiaViewPagerCofradia(context, contentView);
                 detailCofradiaViewPagerCofradia.showDetailCofradiaInformation (cofradia);
                 collection.addView(contentView);
+
+                detailCofradiaViewPagerCofradia.setDetailCofradiaViewPagerCofradiaClickListener(this);
+
                 return contentView;
             }
             case 1: {
@@ -129,5 +134,23 @@ public class ViewPagerCofradiaDetailAdapter extends PagerAdapter {
                 break;
             }
         }
+    }
+
+    @Override
+    public void onClickDetailCofradiaViewPagerCofradia(int position, Procesion procesion) {
+        //Toast.makeText(context, "CLICK - ViewPagerCofradiaDetailAdapter", Toast.LENGTH_SHORT).show();
+        viewPagerCofradiaDetailAdapterClickListener.onClickDetailCofradiaActivity(position, procesion);
+    }
+
+    public interface ViewPagerCofradiaDetailAdapterClickListener {
+        void onClickDetailCofradiaActivity(int position, Procesion procesion);
+    }
+
+    public ViewPagerCofradiaDetailAdapter.ViewPagerCofradiaDetailAdapterClickListener getViewPagerCofradiaDetailAdapterClickListener() {
+        return viewPagerCofradiaDetailAdapterClickListener;
+    }
+
+    public void setViewPagerCofradiaDetailAdapterClickListener(ViewPagerCofradiaDetailAdapter.ViewPagerCofradiaDetailAdapterClickListener viewPagerCofradiaDetailAdapterClickListener) {
+        this.viewPagerCofradiaDetailAdapterClickListener = viewPagerCofradiaDetailAdapterClickListener;
     }
 }

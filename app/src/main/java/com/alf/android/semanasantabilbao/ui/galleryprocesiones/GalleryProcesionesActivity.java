@@ -1,5 +1,6 @@
 package com.alf.android.semanasantabilbao.ui.galleryprocesiones;
 
+import android.content.Intent;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.graphics.drawable.Drawable;
@@ -16,7 +17,9 @@ import android.widget.Toast;
 
 import com.alf.android.semanasantabilbao.App;
 import com.alf.android.semanasantabilbao.R;
+import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.data.entities.Procesion;
+import com.alf.android.semanasantabilbao.ui.detailcofradia.DetailCofradiaActivity;
 import com.alf.android.semanasantabilbao.ui.galleryprocesiones.adapter.GalleryProcesionesAdapter;
 import com.alf.android.semanasantabilbao.ui.utils.GlobalFunctions;
 
@@ -35,6 +38,7 @@ public class GalleryProcesionesActivity extends AppCompatActivity implements Gal
         GalleryProcesionesAdapter.GalleryProcesionesClickListener {
 
     private static final String LOG_TAG = GalleryProcesionesActivity.class.getSimpleName();
+    private Cofradia cofradia;
     //private GalleryProcesionesAdapter galleryProcesionesAdapter;
     //private GalleryProcesionesContract.GalleryProcesionesPresenter galleryProcesionesPresenter;
 
@@ -47,6 +51,10 @@ public class GalleryProcesionesActivity extends AppCompatActivity implements Gal
     @BindView(R.id.gallery_procesion_recycler_view) RecyclerView mRecyclerView;
 
     @BindString(R.string.firebase_error_gallery_procesiones) String firebaseErrorGalleryProcesiones;
+    @BindString(R.string.COFRADIA) String cofradiaIntent;
+    @BindString(R.string.PROCESION) String procesionIntent;
+    @BindString(R.string.firebase_error_gallery_procesiones_cofradia) String firebaseErrorCofradia;
+
     @BindDrawable(R.drawable.no_image) Drawable idDrawableNoImage;
 
     @Override
@@ -81,6 +89,11 @@ public class GalleryProcesionesActivity extends AppCompatActivity implements Gal
     }
 
     @Override
+    public void setCofraciaFromProcesion(Cofradia Cofradia) {
+        this.cofradia = cofradia;
+    }
+
+    @Override
     public void showErrorGettingGalleryProcesiones(ObservableField<String> mensajeError) {
         Log.d(LOG_TAG, "Toast. Error getting Gallery Procesiones from Firebase. (" + firebaseErrorGalleryProcesiones + ")");
         Toast.makeText(this, firebaseErrorGalleryProcesiones + "(" + mensajeError.get() + ")", Toast.LENGTH_LONG).show();
@@ -100,8 +113,23 @@ public class GalleryProcesionesActivity extends AppCompatActivity implements Gal
     }
 
     @Override
+    public void showErrorGettingCofradia(ObservableField<String> mensajeError) {
+        Log.d(LOG_TAG, "Toast. Error getting Cofradias from Firebase. (" + firebaseErrorCofradia + ")");
+        Toast.makeText(this, firebaseErrorCofradia + "(" + mensajeError.get() + ")", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
     public void onClick(int position) {
-        Toast.makeText(getApplicationContext(), "CLICK", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "CLICK - "+LOG_TAG, Toast.LENGTH_SHORT).show();
+        Log.d(LOG_TAG, "Getting the clicked procesion");
+        Procesion selectedProcesion = galleryProcesionesAdapter.getSelectedGalleryProcesiones(position);
+
+        Log.d(LOG_TAG, "Getting the cofradia of the clicked procesion");
+
+        Intent intent = new Intent(GalleryProcesionesActivity.this, DetailCofradiaActivity.class);
+        intent.putExtra(procesionIntent, selectedProcesion);
+        intent.putExtra(cofradiaIntent, cofradia);
+        startActivity(intent);
     }
 
     @Override

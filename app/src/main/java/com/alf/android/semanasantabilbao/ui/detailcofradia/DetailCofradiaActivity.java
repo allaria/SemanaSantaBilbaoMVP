@@ -22,7 +22,9 @@ import android.widget.Toast;
 import com.alf.android.semanasantabilbao.App;
 import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
+import com.alf.android.semanasantabilbao.data.entities.Procesion;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.adapter.ViewPagerCofradiaDetailAdapter;
+import com.alf.android.semanasantabilbao.ui.detailprocesion.DetailProcesionActivity;
 import com.alf.android.semanasantabilbao.ui.utils.GlobalFunctions;
 import com.squareup.picasso.Picasso;
 
@@ -36,12 +38,15 @@ import butterknife.ButterKnife;
  * Created by Alberto Laría Fernández on 24/10/2016.
  */
 
-public class DetailCofradiaActivity extends AppCompatActivity implements DetailCofradiaContract.DetailCofradiaView{
+public class DetailCofradiaActivity extends AppCompatActivity implements DetailCofradiaContract.DetailCofradiaView,
+        ViewPagerCofradiaDetailAdapter.ViewPagerCofradiaDetailAdapterClickListener {
 
     private final String LOG_TAG = DetailCofradiaActivity.class.getSimpleName();
     private Cofradia cofradia;
     private Boolean cofradiaError;
     private boolean connectionAvailable;
+    private ViewPagerCofradiaDetailAdapter viewPagerDetailAdpter;
+
     //private DetailCofradiaContract.DetailPasosPresenter detailCofradiaPresenter;
 
     @Inject DetailCofradiaContract.DetailCofradiaPresenter detailCofradiaPresenter;
@@ -59,6 +64,8 @@ public class DetailCofradiaActivity extends AppCompatActivity implements DetailC
     @BindString(R.string.back_action) String backAction;
     @BindString(R.string.COFRADIAERROR) String intentCofradiaError;
     @BindString(R.string.firebase_error_cofradias) String firebaseErrorCofradia;
+    @BindString(R.string.COFRADIA) String cofradiaIntent;
+    @BindString(R.string.PROCESION) String procesionIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +73,12 @@ public class DetailCofradiaActivity extends AppCompatActivity implements DetailC
         setContentView(R.layout.detail_cofradia_activity);
         ((App) getApplication()).getApplicationComponent().inject(this);
         ButterKnife.bind(this);
+
         Intent intent = getIntent();
         //cofradia = (Cofradia) intent.getSerializableExtra(getResources().getString(R.string.COFRADIA));
         cofradia = (Cofradia) intent.getSerializableExtra(intentCofradia);
         cofradiaError = (Boolean) intent.getSerializableExtra(intentCofradiaError);
         Log.d(LOG_TAG, "Object Cofradia not completely created: "+cofradiaError);
-        ButterKnife.bind(this);
 
         //toolbar.setLogo(R.drawable.logo);
         setSupportActionBar(toolbar);
@@ -140,8 +147,9 @@ public class DetailCofradiaActivity extends AppCompatActivity implements DetailC
     }
 
     private void loadDetailCofradia() {
-        final ViewPagerCofradiaDetailAdapter viewPagerDetailAdpter = new ViewPagerCofradiaDetailAdapter(this.getApplicationContext(), cofradia);
+        viewPagerDetailAdpter = new ViewPagerCofradiaDetailAdapter(this.getApplicationContext(), cofradia);
         viewPager.setAdapter(viewPagerDetailAdpter);
+        viewPagerDetailAdpter.setViewPagerCofradiaDetailAdapterClickListener(this);
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setupWithViewPager(viewPager);
@@ -179,15 +187,13 @@ public class DetailCofradiaActivity extends AppCompatActivity implements DetailC
         }
     }
 
-/*    @Override
-    public void onClick(int position, ProcesionAdapter mProcesionAdapter) {
+    @Override
+    public void onClickDetailCofradiaActivity(int position, Procesion procesion) {
+        //Toast.makeText(getApplicationContext(), "CLICK - DetailCofradiaActivity", Toast.LENGTH_SHORT).show();
 
-        Toast.makeText(getApplicationContext(), "Selected Date:", Toast.LENGTH_LONG).show();
-
-        Procesion selectedProcesion = mProcesionAdapter.getSelectedProcesion(position);
         Intent intent = new Intent(DetailCofradiaActivity.this, DetailProcesionActivity.class);
-        intent.putExtra(Constants.REFERENCE.PROCESION, selectedProcesion);
-        intent.putExtra(Constants.REFERENCE.COFRADIA, cofradia);
+        intent.putExtra(procesionIntent, procesion);
+        intent.putExtra(cofradiaIntent, cofradia);
         startActivity(intent);
-    }*/
+    }
 }

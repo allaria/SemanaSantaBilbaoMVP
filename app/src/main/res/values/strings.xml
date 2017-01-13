@@ -7,6 +7,7 @@
     <string name="loading_detail_cofradia">Cargando datos de la Cofradía</string>
     <string name="loading_procesiones">Cargando Procesiones</string>
     <string name="loading_pasos">Cargando Pasos</string>
+    <string name="loading_ruta">Cargando Indicaciones</string>
     <string name="loading_contactos">Cargando Contactos</string>
     <string name="loading_gallery_images">Cargando Imágenes de la Galería</string>
     <string name="loading_gallery_pasos">Cargando Pasos de la Galería</string>
@@ -17,8 +18,10 @@
     <string name="image_cofradia_description">Imagen Cofradía</string>
     <string name="logo_cofradia_description">Escudo Cofradía</string>
     <string name="image_paso_description">Imagen Paso</string>
+    <string name="image_indicacion">Imagen Indicación</string>
     <string name="image_gallery_description">Imagen Galería</string>
     <string name="image_pasos_description">Imagen Paso</string>
+    <string name="image_detail_procesion">Imagen Procesión</string>
 
     <!-- Etiquetas elementos del menu de la aplicación -->
     <string name="app_navigation_view_name">Cofradías de Bilbao</string>
@@ -42,6 +45,12 @@
     <string name="tab_detail_cofradia_three">Pasos</string>
     <string name="tab_detail_cofradia_four">Galería</string>
 
+    <!-- Nombre pestañas detalle procesiones -->
+    <string name="tab_detail_procesion_one">Detalle</string>
+    <string name="tab_detail_procesion_two">Pasos</string>
+    <string name="tab_detail_procesion_three">Ruta</string>
+    <string name="tab_detail_procesion_four">Mapa</string>
+
     <!-- Etiquetas detalle Cofradía -->
     <string name="detail_cofradia_vestimenta">Vestimenta:&#x200A;</string>
     <string name="detail_cofradia_fundacion">Fundación:&#x200A;</string>
@@ -55,6 +64,14 @@
     <string name="detail_cofradia_web">Web:&#x200A;</string>
     <string name="detail_cofradia_pasos_title">Pasos</string>
 
+    <!-- Etiquetas detalle Procesion -->
+    <string name="detail_procesion_nombre">Procesión:&#x200A;</string>
+    <string name="detail_procesion_dia">Día:&#x200A;</string>
+    <string name="detail_procesion_fecha">Fecha:&#x200A;</string>
+    <string name="detail_procesion_hora">Hora de inicio:&#x200A;</string>
+    <string name="detail_procesion_inicio">Lugar de inicio:&#x200A;</string>
+    <string name="detail_procesion_pasos">Pasos:&#x200A;</string>
+
     <!-- Reference's name in intents -->
     <string name="COFRADIA">"com.alf.android.semanasantabilbao.cofradia"</string>
     <string name="COFRADIAERROR">"com.alf.android.semanasantabilbao.cofradiaerror"</string>
@@ -63,6 +80,8 @@
     <string name="IMAGENGALERIA">"com.alf.android.semanasantabilbao.galeria"</string>
     <string name="ORIGEN">"com.alf.android.semanasantabilbao.origen"</string>
     <string name="MENU">"com.alf.android.semanasantabilbao.menu"</string>
+    <string name="POSITION">position</string>
+    <string name="IMAGESPATH">imagesPath</string>
 
     <!-- Reference's name whe no image is available -->
     <string name="NO_IMAGE">"no_image"</string>
@@ -85,6 +104,7 @@
 
     <!-- Gallery Procesiones error mmessages text -->
     <string name="firebase_error_gallery_procesiones">"Error al recuperar las imágenes de Procesiones de la galería."</string>
+    <string name="firebase_error_gallery_procesiones_cofradia">"Error al recuperar las Cofradia de la Procesión seleccionada."</string>
 
     <!-- Contactos error mmessages text -->
     <string name="firebase_error_contactos">"Error al recuperar los contactos de las Cofradías."</string>

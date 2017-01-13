@@ -3,6 +3,7 @@ package com.alf.android.semanasantabilbao.di;
 import com.alf.android.semanasantabilbao.business.cofradias.GetCofradiasInteractorImpl;
 import com.alf.android.semanasantabilbao.business.contacto.GetContactoInteractorImpl;
 import com.alf.android.semanasantabilbao.business.detailcofradia.GetDetailCofradiaInteractorImpl;
+import com.alf.android.semanasantabilbao.business.detailprocesion.GetDetailProcesionInteractorImpl;
 import com.alf.android.semanasantabilbao.business.galleryimages.GetGalleryImagesInteractorImpl;
 import com.alf.android.semanasantabilbao.business.gallerypasos.GetGalleryPasosInteractorImpl;
 import com.alf.android.semanasantabilbao.business.galleryprocesiones.GetGalleryProcesionesInteractorImpl;
@@ -23,6 +24,10 @@ import com.alf.android.semanasantabilbao.ui.detailcofradia.tabgaleria.DetailCofr
 import com.alf.android.semanasantabilbao.ui.detailcofradia.tabgaleria.DetailCofradiaViewPagerGaleriaPresenter;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.tabpasos.DetailCofradiaViewPagerPasosContract;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.tabpasos.DetailCofradiaViewPagerPasosPresenter;
+import com.alf.android.semanasantabilbao.ui.detailprocesion.adapter.DetailProcesionPasoAdapter;
+import com.alf.android.semanasantabilbao.ui.detailprocesion.adapter.DetailProcesionRutaAdapter;
+import com.alf.android.semanasantabilbao.ui.detailprocesion.tabpasos.DetailProcesionViewPagerPasosContract;
+import com.alf.android.semanasantabilbao.ui.detailprocesion.tabpasos.DetailProcesionViewPagerPasosPresenter;
 import com.alf.android.semanasantabilbao.ui.galleryimages.GalleryImagesContract;
 import com.alf.android.semanasantabilbao.ui.galleryimages.GalleryImagesPresenter;
 import com.alf.android.semanasantabilbao.ui.galleryimages.adapter.GalleryImagesAdapter;
@@ -163,6 +168,26 @@ public class UiApplicationModule {
     @Singleton
     public ContactoAdapter provideContactoAdapter() {
         return new ContactoAdapter();
+    }
+
+
+    //DetailProcesionViewPagerPasos Dependencies
+    @Provides
+    @Singleton
+    public DetailProcesionViewPagerPasosContract.DetailPasosPresenter provideViewPagerDetailProcesionPasosPresenter(GetDetailProcesionInteractorImpl getDetailProcesionInteractor) {
+        return new DetailProcesionViewPagerPasosPresenter(getDetailProcesionInteractor);
+    }
+
+    @Provides
+    @Singleton
+    public DetailProcesionPasoAdapter provideDetailProcesionPasoAdapter() {
+        return new DetailProcesionPasoAdapter();
+    }
+
+    @Provides
+    @Singleton
+    public DetailProcesionRutaAdapter provideDetailProcesionRutaAdapter() {
+        return new DetailProcesionRutaAdapter();
     }
 }
 

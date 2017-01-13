@@ -8,6 +8,8 @@ import com.alf.android.semanasantabilbao.business.gallerypasos.GetGalleryPasosIn
 import com.alf.android.semanasantabilbao.data.entities.Paso;
 import com.firebase.client.DataSnapshot;
 
+import java.util.ArrayList;
+
 import rx.Subscriber;
 import rx.Subscription;
 
@@ -22,6 +24,7 @@ public class GalleryPasosPresenter implements GalleryPasosContract.GalleryPasosP
     private GetGalleryPasosInteractorImpl getGalleryPasosInteractor;
     private Subscription subscriptionGalleryPasos;
     private ObservableArrayList<Paso> listaGalleryPasos;
+    private ArrayList<String> listaImagesPaths;
     private ObservableField<String> errorMessage;
     private boolean loading;
 
@@ -29,6 +32,7 @@ public class GalleryPasosPresenter implements GalleryPasosContract.GalleryPasosP
 
         this.getGalleryPasosInteractor = getGalleryPasosInteractor;
         listaGalleryPasos = new ObservableArrayList();
+        listaImagesPaths = new ArrayList();
         errorMessage = new ObservableField();
 
         loading = false;
@@ -87,10 +91,15 @@ public class GalleryPasosPresenter implements GalleryPasosContract.GalleryPasosP
             listaGalleryPasos.clear();
             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                 listaGalleryPasos.add(dataSnapshot.getValue(Paso.class));
+
+                //List of the image paths for the DetailImage
+                String path = (String) dataSnapshot.child("imagenPaso").getValue();
+                listaImagesPaths.add(path);
             }
 
             Log.d(LOG_TAG, "Gallery Pasos list generated. Calling printGalleryPasos.");
             galleryPasosView.printGalleryPasos(listaGalleryPasos);
+            galleryPasosView.setPasosPaths(listaImagesPaths);
             loading = false;
             setSpinnerAndLoadindText(loading);
         }

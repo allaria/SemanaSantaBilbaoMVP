@@ -86,9 +86,8 @@ public class DetailCofradiaViewPagerGaleria extends View implements DetailCofrad
         galeriaPresenter.unsuscribeGaleriaSuscription();
     }
 
-
     @Override
     public void onClickImagenGaleria(int position) {
-        Toast.makeText(getContext(), "CLICK", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "CLICK - "+LOG_TAG, Toast.LENGTH_SHORT).show();
     }
 }
