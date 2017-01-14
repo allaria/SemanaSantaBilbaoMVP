@@ -96,6 +96,9 @@
     <string name="firebase_error_cofradias">"Error al recuperar las Cofradias. Generando lista local."</string>
     <string name="share_app_error">"Se ha producido un error al compartir la aplicación."</string>
 
+    <!-- Detail Procesion error messages text -->
+    <string name="indicaciones_error">"Error al recuperar la lista de indicaciones."</string>
+
     <!-- Gallery Images error mmessages text -->
     <string name="firebase_error_gallery_images">"Error al recuperar las imágenes de la galería."</string>
 

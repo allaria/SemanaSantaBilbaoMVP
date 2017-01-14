@@ -1,11 +1,13 @@
 package com.alf.android.semanasantabilbao.ui.detailcofradia.adapter;
 
 import android.content.Context;
+import android.databinding.ObservableArrayList;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
@@ -19,7 +21,9 @@ import com.alf.android.semanasantabilbao.ui.detailcofradia.tabpasos.DetailCofrad
  * Created by Alberto Laría Fernández on 27/04/2016.
  */
 
-public class ViewPagerCofradiaDetailAdapter extends PagerAdapter implements DetailCofradiaViewPagerCofradia.DetailCofradiaViewPagerCofradiaClickListener {
+public class ViewPagerCofradiaDetailAdapter extends PagerAdapter implements DetailCofradiaViewPagerCofradia.DetailCofradiaViewPagerCofradiaClickListener,
+        DetailCofradiaViewPagerPasos.DetailCofradiaViewPagerPasosClickListener,
+        DetailCofradiaViewPagerGaleria.DetailCofradiaViewPagerGaleriaClickListener {
 
     private final String LOG_TAG = ViewPagerCofradiaDetailAdapter.class.getSimpleName();
 
@@ -32,6 +36,7 @@ public class ViewPagerCofradiaDetailAdapter extends PagerAdapter implements Deta
     private DetailCofradiaViewPagerGaleria detailCofradiaViewPagerGaleria;
 
     private ViewPagerCofradiaDetailAdapter.ViewPagerCofradiaDetailAdapterClickListener viewPagerCofradiaDetailAdapterClickListener;
+    private ViewPagerCofradiaDetailAdapter.ViewPagerCofradiaDetailAdapterImagesClickListener viewPagerCofradiaDetailAdapterImagesClickListener;
 
     public ViewPagerCofradiaDetailAdapter(Context context, Cofradia cofradia){
         final String tab1, tab2, tab3, tab4;
@@ -79,6 +84,9 @@ public class ViewPagerCofradiaDetailAdapter extends PagerAdapter implements Deta
                 detailCofradiaViewPagerPasos = new DetailCofradiaViewPagerPasos(context, contentView);
                 detailCofradiaViewPagerPasos.showDetailCofradiaInformationPasos(cofradia);
                 collection.addView(contentView);
+
+                detailCofradiaViewPagerPasos.setDetailCofradiaViewPagerPasosClickListener(this);
+
                 return contentView;
             }
             case 3: {
@@ -86,6 +94,9 @@ public class ViewPagerCofradiaDetailAdapter extends PagerAdapter implements Deta
                 detailCofradiaViewPagerGaleria = new DetailCofradiaViewPagerGaleria(context, contentView);
                 detailCofradiaViewPagerGaleria.showDetailCofradiaInformationGaleria(cofradia);
                 collection.addView(contentView);
+
+                detailCofradiaViewPagerGaleria.setDetailCofradiaViewPagerGaleriaClickListener(this);
+
                 return contentView;
             }
         }
@@ -116,21 +127,28 @@ public class ViewPagerCofradiaDetailAdapter extends PagerAdapter implements Deta
     public void detachViewUnsuscribeSuscription(int position) {
         switch (position){
             case 0: {
-                Log.d(LOG_TAG, "Detach Pasos View & Unsuscribe Procesiones Suscription. "+position);
-                detailCofradiaViewPagerCofradia.detachViewUnsuscribeSuscriptionProcesiones();
+                Log.d(LOG_TAG, "Detach Procesiones View & Unsuscribe Procesiones Suscription. "+position);
+                if (detailCofradiaViewPagerCofradia != null) {
+                    detailCofradiaViewPagerCofradia.detachViewUnsuscribeSuscriptionProcesiones();
+                }
                 break;
             }
             case 1: {
                 //No View or Suscription must be detach or unsuscribe from.
+                break;
             }
             case 2: {
                 Log.d(LOG_TAG, "Detach Pasos View & Unsuscribe Pasos Suscription. "+position);
-                detailCofradiaViewPagerPasos.detachViewUnsuscribeSuscriptionPaso();
+                if (detailCofradiaViewPagerPasos != null) {
+                    detailCofradiaViewPagerPasos.detachViewUnsuscribeSuscriptionPaso();
+                }
                 break;
             }
             case 3: {
                 Log.d(LOG_TAG, "Detach Galeria View & Unsuscribe Galeria Suscription. "+position);
-                detailCofradiaViewPagerGaleria.detachViewUnsuscribeSuscriptionImagenesGaleria();
+                if (detailCofradiaViewPagerGaleria != null) {
+                    detailCofradiaViewPagerGaleria.detachViewUnsuscribeSuscriptionImagenesGaleria();
+                }
                 break;
             }
         }
@@ -152,5 +170,29 @@ public class ViewPagerCofradiaDetailAdapter extends PagerAdapter implements Deta
 
     public void setViewPagerCofradiaDetailAdapterClickListener(ViewPagerCofradiaDetailAdapter.ViewPagerCofradiaDetailAdapterClickListener viewPagerCofradiaDetailAdapterClickListener) {
         this.viewPagerCofradiaDetailAdapterClickListener = viewPagerCofradiaDetailAdapterClickListener;
+    }
+
+    @Override
+    public void onClickDetailCofradiaViewPagerPasos(int position, ObservableArrayList<String> listaPasosPaths) {
+        //Toast.makeText(context, "CLICK - "+LOG_TAG, Toast.LENGTH_SHORT).show();
+        viewPagerCofradiaDetailAdapterImagesClickListener.onClickDetailCofradiaActivityImages(position, listaPasosPaths);
+    }
+
+    @Override
+    public void onClickDetailCofradiaViewPagerGaleria(int position, ObservableArrayList<String> listaGalleryImagesPaths) {
+        //Toast.makeText(context, "CLICK - "+LOG_TAG, Toast.LENGTH_SHORT).show();
+        viewPagerCofradiaDetailAdapterImagesClickListener.onClickDetailCofradiaActivityImages(position, listaGalleryImagesPaths);
+    }
+
+    public interface ViewPagerCofradiaDetailAdapterImagesClickListener {
+        void onClickDetailCofradiaActivityImages(int position, ObservableArrayList<String> listaPasosPaths);
+    }
+
+    public ViewPagerCofradiaDetailAdapter.ViewPagerCofradiaDetailAdapterImagesClickListener getViewPagerCofradiaDetailAdapterImagesClickListener() {
+        return viewPagerCofradiaDetailAdapterImagesClickListener;
+    }
+
+    public void setViewPagerCofradiaDetailAdapterImagesClickListener(ViewPagerCofradiaDetailAdapter.ViewPagerCofradiaDetailAdapterImagesClickListener viewPagerCofradiaDetailAdapterImagesClickListener) {
+        this.viewPagerCofradiaDetailAdapterImagesClickListener = viewPagerCofradiaDetailAdapterImagesClickListener;
     }
 }

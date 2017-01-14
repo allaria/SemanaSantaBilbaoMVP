@@ -1,6 +1,7 @@
 package com.alf.android.semanasantabilbao.ui.detailprocesion.adapter;
 
 import android.content.Context;
+import android.databinding.ObservableArrayList;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.data.entities.Procesion;
+import com.alf.android.semanasantabilbao.ui.detailcofradia.adapter.ViewPagerCofradiaDetailAdapter;
+import com.alf.android.semanasantabilbao.ui.detailcofradia.tabpasos.DetailCofradiaViewPagerPasos;
 import com.alf.android.semanasantabilbao.ui.detailprocesion.tabpasos.DetailProcesionViewPagerPasos;
 import com.alf.android.semanasantabilbao.ui.detailprocesion.tabprocesion.DetailProcesionViewPagerDetalle;
 import com.alf.android.semanasantabilbao.ui.detailprocesion.tabruta.DetailProcesionViewPagerRuta;
@@ -18,7 +21,7 @@ import com.alf.android.semanasantabilbao.ui.detailprocesion.tabruta.DetailProces
  * Created by Alberto Laría Fernández on 27/04/2016.
  */
 
-public class ViewPagerProcesionDetailAdapter extends PagerAdapter {
+public class ViewPagerProcesionDetailAdapter extends PagerAdapter implements DetailProcesionViewPagerPasos.DetailProcesionViewPagerPasosClickListener{
 
     private final String LOG_TAG = ViewPagerProcesionDetailAdapter.class.getSimpleName();
 
@@ -30,7 +33,7 @@ public class ViewPagerProcesionDetailAdapter extends PagerAdapter {
     private DetailProcesionViewPagerPasos detailProcesionViewPagerPasos;
     private DetailProcesionViewPagerRuta detailProcesionViewPagerRuta;
 
-    //private ViewPagerProcesionDetailAdapter.ViewPagerCofradiaDetailAdapterClickListener viewPagerCofradiaDetailAdapterClickListener;
+    private ViewPagerProcesionDetailAdapter.ViewPagerProcesionDetailAdapterClickListener viewPagerProcesionDetailAdapterClickListener;
 
     public ViewPagerProcesionDetailAdapter(Context context, Procesion procesion, Cofradia cofradia){
         final String tab1, tab2, tab3, tab4;
@@ -62,9 +65,6 @@ public class ViewPagerProcesionDetailAdapter extends PagerAdapter {
                 detailProcesionViewPagerDetalle = new DetailProcesionViewPagerDetalle(context, contentView);
                 detailProcesionViewPagerDetalle.showDetailProcesionInformationDetalle (procesion);
                 collection.addView(contentView);
-
-                //detailCofradiaViewPagerCofradia.setDetailCofradiaViewPagerCofradiaClickListener(this);
-
                 return contentView;
             }
             case 1: {
@@ -72,6 +72,9 @@ public class ViewPagerProcesionDetailAdapter extends PagerAdapter {
                 detailProcesionViewPagerPasos = new DetailProcesionViewPagerPasos(context, contentView);
                 detailProcesionViewPagerPasos.showDetailProcesionInformationPasos(procesion, cofradia);
                 collection.addView(contentView);
+
+                detailProcesionViewPagerPasos.setDetailProcesionViewPagerPasosClickListener(this);
+
                 return contentView;
             }
             case 2: {
@@ -117,36 +120,41 @@ public class ViewPagerProcesionDetailAdapter extends PagerAdapter {
         switch (position){
             case 0: {
                 //No View or Suscription must be detach or unsuscribe from.
+                break;
             }
             case 1: {
-                Log.d(LOG_TAG, "Detach Ruta View. "+position);
-                detailProcesionViewPagerPasos.detachViewUnsuscribeSuscriptionPaso();
+                Log.d(LOG_TAG, "Detach Pasos View & Unsuscribe Pasos Suscription. "+position);
+                if (detailProcesionViewPagerPasos != null) {
+                    detailProcesionViewPagerPasos.detachViewUnsuscribeSuscriptionPaso();
+                }
                 break;
             }
             case 2: {
                 //No View or Suscription must be detach or unsuscribe from.
+                break;
             }
             case 3: {
                 //No View or Suscription must be detach or unsuscribe from.
+                break;
             }
         }
     }
 
-/*    @Override
-    public void onClickDetailCofradiaViewPagerCofradia(int position, Procesion procesion) {
+    @Override
+    public void onClickDetailProcesionViewPagerPasos(int position, ObservableArrayList<String> listaPasosPaths) {
         //Toast.makeText(context, "CLICK - ViewPagerCofradiaDetailAdapter", Toast.LENGTH_SHORT).show();
-        viewPagerCofradiaDetailAdapterClickListener.onClickDetailCofradiaActivity(position, procesion);
+        viewPagerProcesionDetailAdapterClickListener.onClickDetailProcesionActivity(position, listaPasosPaths);
     }
 
-    public interface ViewPagerCofradiaDetailAdapterClickListener {
-        void onClickDetailCofradiaActivity(int position, Procesion procesion);
+    public interface ViewPagerProcesionDetailAdapterClickListener {
+        void onClickDetailProcesionActivity(int position, ObservableArrayList<String> listaPasosPaths);
     }
 
-    public ViewPagerProcesionDetailAdapter.ViewPagerCofradiaDetailAdapterClickListener getViewPagerCofradiaDetailAdapterClickListener() {
-        return viewPagerCofradiaDetailAdapterClickListener;
+    public ViewPagerProcesionDetailAdapter.ViewPagerProcesionDetailAdapterClickListener getViewPagerProcesionDetailAdapterClickListener() {
+        return viewPagerProcesionDetailAdapterClickListener;
     }
 
-    public void setViewPagerCofradiaDetailAdapterClickListener(ViewPagerProcesionDetailAdapter.ViewPagerCofradiaDetailAdapterClickListener viewPagerCofradiaDetailAdapterClickListener) {
-        this.viewPagerCofradiaDetailAdapterClickListener = viewPagerCofradiaDetailAdapterClickListener;
-    }*/
+    public void setViewPagerProcesionDetailAdapterClickListener(ViewPagerProcesionDetailAdapter.ViewPagerProcesionDetailAdapterClickListener viewPagerProcesionDetailAdapterClickListener) {
+        this.viewPagerProcesionDetailAdapterClickListener = viewPagerProcesionDetailAdapterClickListener;
+    }
 }

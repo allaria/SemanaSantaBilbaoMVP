@@ -1,6 +1,7 @@
 package com.alf.android.semanasantabilbao.ui.detailprocesion;
 
 import android.content.Intent;
+import android.databinding.ObservableArrayList;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.data.entities.Procesion;
+import com.alf.android.semanasantabilbao.ui.detailcofradia.DetailCofradiaActivity;
+import com.alf.android.semanasantabilbao.ui.detailimage.DetailImageActivity;
 import com.alf.android.semanasantabilbao.ui.detailprocesion.adapter.ViewPagerProcesionDetailAdapter;
 import com.squareup.picasso.Picasso;
 
@@ -25,7 +28,7 @@ import butterknife.ButterKnife;
  * Created by alaria on 10/01/2017.
  */
 
-public class DetailProcesionActivity extends AppCompatActivity {
+public class DetailProcesionActivity extends AppCompatActivity implements ViewPagerProcesionDetailAdapter.ViewPagerProcesionDetailAdapterClickListener {
 
     private final String LOG_TAG = DetailProcesionActivity.class.getSimpleName();
     private Cofradia cofradia;
@@ -39,6 +42,8 @@ public class DetailProcesionActivity extends AppCompatActivity {
     @BindView(R.id.viewpager_detail_procesion) ViewPager viewPager;
     @BindString(R.string.COFRADIA) String intentCofradia;
     @BindString(R.string.PROCESION) String intentProcesion;
+    @BindString(R.string.POSITION) String intentPosition;
+    @BindString(R.string.IMAGESPATH) String intentImagesPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +74,7 @@ public class DetailProcesionActivity extends AppCompatActivity {
     private void loadDetailProcesion() {
         viewPagerProcesionDetailAdpter = new ViewPagerProcesionDetailAdapter(this.getApplicationContext(), procesion, cofradia);
         viewPager.setAdapter(viewPagerProcesionDetailAdpter);
-        //viewPagerProcesionDetailAdpter.setViewPagerCofradiaDetailAdapterClickListener(this);
+        viewPagerProcesionDetailAdpter.setViewPagerProcesionDetailAdapterClickListener(this);
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setupWithViewPager(viewPager);
@@ -107,5 +112,14 @@ public class DetailProcesionActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onClickDetailProcesionActivity(int position, ObservableArrayList<String> listaPasosPaths) {
+        //Toast.makeText(getApplicationContext(), "CLICK PASOS - DetailCofradiaActivity", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(DetailProcesionActivity.this, DetailImageActivity.class);
+        intent.putExtra(intentPosition, position);
+        intent.putExtra(intentImagesPath, listaPasosPaths);
+        startActivity(intent);
     }
 }

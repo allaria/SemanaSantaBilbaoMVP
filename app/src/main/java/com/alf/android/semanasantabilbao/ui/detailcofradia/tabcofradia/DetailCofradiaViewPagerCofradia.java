@@ -32,7 +32,6 @@ public class DetailCofradiaViewPagerCofradia extends View implements DetailCofra
     private static String LOG_TAG = DetailCofradiaViewPagerCofradia.class.getSimpleName();
     private Context context;
     private String idCofradia;
-
     private DetailCofradiaViewPagerCofradia.DetailCofradiaViewPagerCofradiaClickListener detailCofradiaViewPagerCofradiaClickListener;
 
     @Inject DetailCofradiaViewPagerCofradiaContract.DetailCofradiaPresenter procesionPresenter;
@@ -104,7 +103,7 @@ public class DetailCofradiaViewPagerCofradia extends View implements DetailCofra
 
     @Override
     public void onClickProcesion(int position) {
-        //Toast.makeText(context, "CLICK", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "CLICK - "LOG_TAG, Toast.LENGTH_SHORT).show();
         Procesion procesion = procesionAdapter.getSelectedProcesion(position);
         detailCofradiaViewPagerCofradiaClickListener.onClickDetailCofradiaViewPagerCofradia(position, procesion);
     }

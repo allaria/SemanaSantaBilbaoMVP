@@ -17,6 +17,8 @@ public interface DetailCofradiaViewPagerGaleriaContract {
 
         void printImagenGaleria(ObservableArrayList<GalleryImage> listaGalleryImage);
 
+        void setGalleryImagesPaths(ObservableArrayList<String> listaGalleryImagesPaths);
+
         void showErrorGettingImagenesGaleria(ObservableField<String> mensajeError);
     }
 

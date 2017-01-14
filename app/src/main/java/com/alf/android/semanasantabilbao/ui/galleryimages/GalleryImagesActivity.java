@@ -39,7 +39,7 @@ public class GalleryImagesActivity extends AppCompatActivity implements GalleryI
         GalleryImagesAdapter.GalleryImagesClickListener {
 
     private static final String LOG_TAG = GalleryImagesActivity.class.getSimpleName();
-    private ArrayList<String> listaGalleryImagesPaths;
+    private ObservableArrayList<String> listaGalleryImagesPaths;
     //private GalleryImagesAdapter galleryImagesAdapter;
     //private GalleryImagesContract.GalleryImagesPresenter galleryImagesPresenter;
 
@@ -88,7 +88,7 @@ public class GalleryImagesActivity extends AppCompatActivity implements GalleryI
     }
 
     @Override
-    public void setGalleryImagesPaths(ArrayList<String> listaGalleryImagesPaths) {
+    public void setGalleryImagesPaths(ObservableArrayList<String> listaGalleryImagesPaths) {
         this.listaGalleryImagesPaths = listaGalleryImagesPaths;
     }
 

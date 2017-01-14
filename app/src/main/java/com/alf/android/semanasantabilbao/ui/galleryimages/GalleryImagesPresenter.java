@@ -24,7 +24,7 @@ public class GalleryImagesPresenter implements GalleryImagesContract.GalleryImag
     private GetGalleryImagesInteractorImpl getGalleryImagesInteractor;
     private Subscription subscriptionGalleryImages;
     private ObservableArrayList<GalleryImage> listaGalleryImages;
-    private ArrayList<String> listaImagesPaths;
+    private ObservableArrayList<String> listaImagesPaths;
     private ObservableField<String> errorMessage;
     private boolean loading;
 
@@ -32,7 +32,7 @@ public class GalleryImagesPresenter implements GalleryImagesContract.GalleryImag
 
         this.getGalleryImagesInteractor = getGalleryImagesInteractor;
         listaGalleryImages = new ObservableArrayList();
-        listaImagesPaths = new ArrayList();
+        listaImagesPaths = new ObservableArrayList();
         errorMessage = new ObservableField();
 
         loading = false;

@@ -16,7 +16,9 @@ import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.data.entities.Paso;
 import com.alf.android.semanasantabilbao.data.entities.Procesion;
+import com.alf.android.semanasantabilbao.ui.detailcofradia.tabpasos.DetailCofradiaViewPagerPasos;
 import com.alf.android.semanasantabilbao.ui.detailprocesion.adapter.DetailProcesionPasoAdapter;
+import com.alf.android.semanasantabilbao.ui.utils.GlobalFunctions;
 
 import javax.inject.Inject;
 
@@ -32,6 +34,8 @@ public class DetailProcesionViewPagerPasos extends View implements DetailProcesi
 
     private static String LOG_TAG = DetailProcesionViewPagerPasos.class.getSimpleName();
     private String idCofradia;
+    private ObservableArrayList<String> listaPasosPaths;
+    private DetailProcesionViewPagerPasos.DetailProcesionViewPagerPasosClickListener detailProcesionViewPagerPasosClickListener;
 
     @Inject DetailProcesionViewPagerPasosContract.DetailPasosPresenter pasoPresenter;
     @Inject DetailProcesionPasoAdapter detailPasoAdapter;
@@ -59,7 +63,11 @@ public class DetailProcesionViewPagerPasos extends View implements DetailProcesi
 
     private void initRecyclerViewPasos() {
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        if (new GlobalFunctions().getScreenOrientation(getResources().getConfiguration().orientation).equals("Landscrape")) {
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        }else{
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        }
 
         detailPasoAdapter.setPasoClickListener(this);
         mRecyclerView.setAdapter(detailPasoAdapter);
@@ -87,9 +95,26 @@ public class DetailProcesionViewPagerPasos extends View implements DetailProcesi
         pasoPresenter.unsuscribePasosSuscription();
     }
 
+    @Override
+    public void setPasosPaths(ObservableArrayList<String> listaPasosPaths) {
+        this.listaPasosPaths = listaPasosPaths;
+    }
 
     @Override
     public void onClickPaso(int position) {
-        Toast.makeText(getContext(), "CLICK", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "CLICK - "+LOG_TAG, Toast.LENGTH_SHORT).show();
+        detailProcesionViewPagerPasosClickListener.onClickDetailProcesionViewPagerPasos(position, listaPasosPaths);
+    }
+
+    public interface DetailProcesionViewPagerPasosClickListener {
+        void onClickDetailProcesionViewPagerPasos(int position, ObservableArrayList<String> listaPasosPaths);
+    }
+
+    public DetailProcesionViewPagerPasos.DetailProcesionViewPagerPasosClickListener getDetailProcesionViewPagerPasosClickListener() {
+        return detailProcesionViewPagerPasosClickListener;
+    }
+
+    public void setDetailProcesionViewPagerPasosClickListener(DetailProcesionViewPagerPasos.DetailProcesionViewPagerPasosClickListener detailProcesionViewPagerPasosClickListener) {
+        this.detailProcesionViewPagerPasosClickListener = detailProcesionViewPagerPasosClickListener;
     }
 }

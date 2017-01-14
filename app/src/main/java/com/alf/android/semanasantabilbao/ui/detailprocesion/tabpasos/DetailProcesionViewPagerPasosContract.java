@@ -17,6 +17,8 @@ public interface DetailProcesionViewPagerPasosContract {
 
         void printPasos(ObservableArrayList<Paso> listaPasos);
 
+        void setPasosPaths(ObservableArrayList<String> listaPasosPaths);
+
         void showErrorGettingPasos(ObservableField<String> mensajeError);
     }
 

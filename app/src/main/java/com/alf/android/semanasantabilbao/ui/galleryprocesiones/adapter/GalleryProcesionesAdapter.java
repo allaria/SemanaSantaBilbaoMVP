@@ -71,7 +71,7 @@ public class GalleryProcesionesAdapter extends RecyclerView.Adapter<GalleryProce
         notifyDataSetChanged();
     }
 
-    public Procesion getSelectedGalleryProcesiones(int position) {
+    public Procesion getSelectedGalleryProcesion(int position) {
         return mGalleryProcesiones.get(position);
     }
 

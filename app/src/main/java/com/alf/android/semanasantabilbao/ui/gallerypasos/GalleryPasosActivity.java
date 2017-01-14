@@ -39,7 +39,7 @@ public class GalleryPasosActivity extends AppCompatActivity implements GalleryPa
         GalleryPasosAdapter.GalleryPasosClickListener {
 
     private static final String LOG_TAG = GalleryPasosActivity.class.getSimpleName();
-    private ArrayList<String> listaPasosPaths;
+    private ObservableArrayList<String> listaPasosPaths;
     //private GalleryImagesAdapter galleryImagesAdapter;
     //private GalleryImagesContract.GalleryImagesPresenter galleryImagesPresenter;
 
@@ -88,7 +88,7 @@ public class GalleryPasosActivity extends AppCompatActivity implements GalleryPa
     }
 
     @Override
-    public void setPasosPaths(ArrayList<String> listaPasosPaths) {
+    public void setPasosPaths(ObservableArrayList<String> listaPasosPaths) {
         this.listaPasosPaths = listaPasosPaths;
     }
 

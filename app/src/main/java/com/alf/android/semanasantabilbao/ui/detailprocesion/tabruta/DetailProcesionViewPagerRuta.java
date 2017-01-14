@@ -20,6 +20,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -38,6 +39,8 @@ public class DetailProcesionViewPagerRuta extends View implements DetailProcesio
     @BindView(R.id.ruta_detail_loading_text) TextView loadingText;
     @BindView(R.id.ruta_detail_recycler_view) RecyclerView mRecyclerView;
 
+    @BindString(R.string.indicaciones_error) String indicacionesError;
+
     public DetailProcesionViewPagerRuta(Context context, View view) {
         super(context);
         ((App) context).getApplicationComponent().inject(this);
@@ -46,9 +49,7 @@ public class DetailProcesionViewPagerRuta extends View implements DetailProcesio
 
     public void showDetailProcesionInformationRuta(Procesion procesion) {
 
-        //idCofradia = cofradia.getId_cofradia();
-
-        setSpinnerAndLoadingText(false);
+        setSpinnerAndLoadingText(true);
         initRecyclerViewRuta();
 
         printIndicaciones(procesion);
@@ -62,44 +63,33 @@ public class DetailProcesionViewPagerRuta extends View implements DetailProcesio
         mRecyclerView.setAdapter(detailRutaAdapter);
     }
 
-    //@Override
     public void setSpinnerAndLoadingText(boolean loadingSpinner) {
         spinner.setVisibility(loadingSpinner? View.VISIBLE : View.GONE);
         loadingText.setVisibility(loadingSpinner? View.VISIBLE : View.GONE);
     }
 
-/*    @Override
-    public void printIndicaciones(ObservableArrayList<Ruta> mIndicaciones) {
-        Log.d(LOG_TAG, "Number of Indicaciones in the recyclerView: "+mIndicaciones.size());
-        //((DetailProcesionPasoAdapter) mRecyclerView.getAdapter()).addIndicacion(mPasos);
-    }*/
 
     public void printIndicaciones(Procesion procesion) {
 
         List<Ruta> rutaList = procesion.getRuta();
 
-        Log.d(LOG_TAG, "Number of Indicaciones in the recyclerView: "+rutaList.size());
-        //for (int i=0; i< rutaList.size(); i++){
-
+        if (rutaList != null) {
+            Log.d(LOG_TAG, "Number of Indicaciones in the recyclerView: "+rutaList.size());
             ((DetailProcesionRutaAdapter) mRecyclerView.getAdapter()).addIndicaciones(rutaList);
             mRecyclerView.getAdapter().notifyDataSetChanged();
+        } else {
+            showErrorGettingIndicaciones(indicacionesError);
+        }
 
-        //}
+        setSpinnerAndLoadingText(false);
     }
 
-    //@Override
-    public void showErrorGettingIndicaciones(ObservableField<String> mensajeError) {
-
+    public void showErrorGettingIndicaciones(String mensajeError) {
+        Toast.makeText(getContext(), mensajeError, Toast.LENGTH_LONG).show();
     }
-
-/*    public void detachViewUnsuscribeSuscriptionRuta(){
-        rutaPresenter.detachRutaView();
-        rutaPresenter.unsuscribeRutaSuscription();
-    }*/
-
 
     @Override
     public void onClickRuta(int position) {
-        Toast.makeText(getContext(), "CLICK - RUTA", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "CLICK - "+LOG_TAG, Toast.LENGTH_SHORT).show();
     }
 }

@@ -24,7 +24,7 @@ public class GalleryPasosPresenter implements GalleryPasosContract.GalleryPasosP
     private GetGalleryPasosInteractorImpl getGalleryPasosInteractor;
     private Subscription subscriptionGalleryPasos;
     private ObservableArrayList<Paso> listaGalleryPasos;
-    private ArrayList<String> listaImagesPaths;
+    private ObservableArrayList<String> listaImagesPaths;
     private ObservableField<String> errorMessage;
     private boolean loading;
 
@@ -32,7 +32,7 @@ public class GalleryPasosPresenter implements GalleryPasosContract.GalleryPasosP
 
         this.getGalleryPasosInteractor = getGalleryPasosInteractor;
         listaGalleryPasos = new ObservableArrayList();
-        listaImagesPaths = new ArrayList();
+        listaImagesPaths = new ObservableArrayList();
         errorMessage = new ObservableField();
 
         loading = false;

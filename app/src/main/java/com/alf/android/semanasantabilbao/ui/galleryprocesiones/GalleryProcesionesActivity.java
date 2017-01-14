@@ -20,6 +20,7 @@ import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.data.entities.Procesion;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.DetailCofradiaActivity;
+import com.alf.android.semanasantabilbao.ui.detailprocesion.DetailProcesionActivity;
 import com.alf.android.semanasantabilbao.ui.galleryprocesiones.adapter.GalleryProcesionesAdapter;
 import com.alf.android.semanasantabilbao.ui.utils.GlobalFunctions;
 
@@ -38,7 +39,7 @@ public class GalleryProcesionesActivity extends AppCompatActivity implements Gal
         GalleryProcesionesAdapter.GalleryProcesionesClickListener {
 
     private static final String LOG_TAG = GalleryProcesionesActivity.class.getSimpleName();
-    private Cofradia cofradia;
+    Procesion selectedProcesion;
     //private GalleryProcesionesAdapter galleryProcesionesAdapter;
     //private GalleryProcesionesContract.GalleryProcesionesPresenter galleryProcesionesPresenter;
 
@@ -89,8 +90,11 @@ public class GalleryProcesionesActivity extends AppCompatActivity implements Gal
     }
 
     @Override
-    public void setCofraciaFromProcesion(Cofradia Cofradia) {
-        this.cofradia = cofradia;
+    public void executeIntentToDetailProcesion(Cofradia cofradia) {
+        Intent intent = new Intent(GalleryProcesionesActivity.this, DetailProcesionActivity.class);
+        intent.putExtra(procesionIntent, selectedProcesion);
+        intent.putExtra(cofradiaIntent, cofradia);
+        startActivity(intent);
     }
 
     @Override
@@ -121,23 +125,20 @@ public class GalleryProcesionesActivity extends AppCompatActivity implements Gal
     @Override
     public void onClick(int position) {
         //Toast.makeText(getApplicationContext(), "CLICK - "+LOG_TAG, Toast.LENGTH_SHORT).show();
-        Log.d(LOG_TAG, "Getting the clicked procesion");
-        Procesion selectedProcesion = galleryProcesionesAdapter.getSelectedGalleryProcesiones(position);
+        Log.d(LOG_TAG, "Getting the clicked Procesion");
+        selectedProcesion = galleryProcesionesAdapter.getSelectedGalleryProcesion(position);
 
-        Log.d(LOG_TAG, "Getting the cofradia of the clicked procesion");
-
-        Intent intent = new Intent(GalleryProcesionesActivity.this, DetailCofradiaActivity.class);
-        intent.putExtra(procesionIntent, selectedProcesion);
-        intent.putExtra(cofradiaIntent, cofradia);
-        startActivity(intent);
+        Log.d(LOG_TAG, "Getting the Cofradia of the clicked pProcesion");
+        galleryProcesionesPresenter.getCofradiaFromProcesion(selectedProcesion.getId_cofradia());
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         if (isFinishing() && galleryProcesionesPresenter != null) {
-            Log.d(LOG_TAG, "Detach View & Unsuscribe Suscription.");
+            Log.d(LOG_TAG, "Detach View & Unsuscribe Suscriptions.");
             galleryProcesionesPresenter.unsuscribeGalleryProcesionesSuscription();
+            galleryProcesionesPresenter.unsuscribeGalleryCofradiaSuscription();
             galleryProcesionesPresenter.detachGalleryProcesionesView();
         }
     }

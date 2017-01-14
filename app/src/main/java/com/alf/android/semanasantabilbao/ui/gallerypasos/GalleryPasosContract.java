@@ -19,7 +19,7 @@ public interface GalleryPasosContract {
 
         void printGalleryPasos(ObservableArrayList<Paso> listaGalleryPasos);
 
-        void setPasosPaths(ArrayList<String> listaPasosPaths);
+        void setPasosPaths(ObservableArrayList<String> listaPasosPaths);
 
         void showErrorGettingGalleryPasos(ObservableField<String> mensajeError);
     }

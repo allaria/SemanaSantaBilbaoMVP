@@ -16,6 +16,8 @@ import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.data.entities.GalleryImage;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.adapter.GaleriaAdapter;
+import com.alf.android.semanasantabilbao.ui.detailcofradia.tabpasos.DetailCofradiaViewPagerPasos;
+import com.alf.android.semanasantabilbao.ui.utils.GlobalFunctions;
 
 import javax.inject.Inject;
 
@@ -31,6 +33,8 @@ public class DetailCofradiaViewPagerGaleria extends View implements DetailCofrad
 
     private static String LOG_TAG = DetailCofradiaViewPagerGaleria.class.getSimpleName();
     private String idCofradia;
+    private ObservableArrayList<String> listaGalleryImagesPaths;
+    private DetailCofradiaViewPagerGaleria.DetailCofradiaViewPagerGaleriaClickListener detailCofradiaViewPagerGaleriaClickListener;
 
     @Inject DetailCofradiaViewPagerGaleriaContract.DetailGaleriaPresenter galeriaPresenter;
     @Inject GaleriaAdapter galeriaAdapter;
@@ -58,7 +62,11 @@ public class DetailCofradiaViewPagerGaleria extends View implements DetailCofrad
 
     private void initRecyclerViewPasos() {
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        if (new GlobalFunctions().getScreenOrientation(getResources().getConfiguration().orientation).equals("Landscrape")) {
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
+        }else{
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        }
 
         galeriaAdapter.setImagenGaleriaClickListener(this);
         mRecyclerView.setAdapter(galeriaAdapter);
@@ -87,7 +95,25 @@ public class DetailCofradiaViewPagerGaleria extends View implements DetailCofrad
     }
 
     @Override
+    public void setGalleryImagesPaths(ObservableArrayList<String> listaGalleryImagesPaths) {
+        this.listaGalleryImagesPaths = listaGalleryImagesPaths;
+    }
+
+    @Override
     public void onClickImagenGaleria(int position) {
-        Toast.makeText(getContext(), "CLICK - "+LOG_TAG, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "CLICK - "+LOG_TAG, Toast.LENGTH_SHORT).show();
+        detailCofradiaViewPagerGaleriaClickListener.onClickDetailCofradiaViewPagerGaleria(position, listaGalleryImagesPaths);
+    }
+
+    public interface DetailCofradiaViewPagerGaleriaClickListener {
+        void onClickDetailCofradiaViewPagerGaleria(int position, ObservableArrayList<String> listaGalleryImagesPaths);
+    }
+
+    public DetailCofradiaViewPagerGaleria.DetailCofradiaViewPagerGaleriaClickListener getDetailCofradiaViewPagerGaleriaClickListener() {
+        return detailCofradiaViewPagerGaleriaClickListener;
+    }
+
+    public void setDetailCofradiaViewPagerGaleriaClickListener(DetailCofradiaViewPagerGaleria.DetailCofradiaViewPagerGaleriaClickListener detailCofradiaViewPagerGaleriaClickListener) {
+        this.detailCofradiaViewPagerGaleriaClickListener = detailCofradiaViewPagerGaleriaClickListener;
     }
 }

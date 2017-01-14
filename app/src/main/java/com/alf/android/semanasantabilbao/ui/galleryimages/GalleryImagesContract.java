@@ -19,7 +19,7 @@ public interface GalleryImagesContract {
 
         void printGalleryImages(ObservableArrayList<GalleryImage> listaGalleryImages);
 
-        void setGalleryImagesPaths(ArrayList<String> listaGalleryImagesPaths);
+        void setGalleryImagesPaths(ObservableArrayList<String> listaGalleryImagesPaths);
 
         void showErrorGettingGalleryImages(ObservableField<String> mensajeError);
     }

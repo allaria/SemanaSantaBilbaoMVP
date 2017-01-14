@@ -18,7 +18,7 @@ public interface GalleryProcesionesContract {
 
         void printGalleryProcesiones(ObservableArrayList<Procesion> listaGalleryProcesiones);
 
-        void setCofraciaFromProcesion (Cofradia cofradia);
+        void executeIntentToDetailProcesion (Cofradia cofradia);
 
         void showErrorGettingGalleryProcesiones(ObservableField<String> mensajeError);
 
@@ -33,6 +33,10 @@ public interface GalleryProcesionesContract {
 
         void unsuscribeGalleryProcesionesSuscription();
 
+        void unsuscribeGalleryCofradiaSuscription();
+
         void initPresenter();
+
+        void getCofradiaFromProcesion(String idCofradia);
     }
 }

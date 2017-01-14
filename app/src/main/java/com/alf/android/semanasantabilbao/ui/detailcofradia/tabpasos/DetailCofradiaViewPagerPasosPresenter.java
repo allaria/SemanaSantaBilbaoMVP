@@ -22,6 +22,7 @@ public class DetailCofradiaViewPagerPasosPresenter implements DetailCofradiaView
     private GetDetailCofradiaInteractorImpl getDetailCofradiaInteractor;
     private Subscription subscription;
     private ObservableArrayList<Paso> listaPasos;
+    private ObservableArrayList<String> listaImagesPaths;
     private ObservableField<String> errorMessage;
     private boolean loading;
 
@@ -30,6 +31,7 @@ public class DetailCofradiaViewPagerPasosPresenter implements DetailCofradiaView
         //getDetailCofradiaInteractor = new GetDetailCofradiaInteractorImpl();
         this.getDetailCofradiaInteractor = getDetailCofradiaInteractor;
         listaPasos = new ObservableArrayList();
+        listaImagesPaths = new ObservableArrayList();
         errorMessage = new ObservableField();
 
         loading = false;
@@ -59,15 +61,14 @@ public class DetailCofradiaViewPagerPasosPresenter implements DetailCofradiaView
         }
 
         if (!loading && listaPasos.isEmpty()) {
-            Log.d(LOG_TAG, "initPresenter - IF loading"+!loading+" - isEmpty: "+listaPasos.isEmpty());
             loading = true;
             setSpinnerAndLoadindText(loading);
-            Log.d(LOG_TAG, "initPresenter - getImagenesGaleria Firebase");
+            Log.d(LOG_TAG, "Pasos list is empty. Getting Pasos from Firebase");
             subscription = getDetailCofradiaInteractor.getPasos(idCofradia).subscribe(subscriber);
         } else {
             if (detailCofradiaView != null) {
-                Log.d(LOG_TAG, "initPresenter - printPasos CACHE");
-                Log.d(LOG_TAG, "initPresenter - ELSE loading"+!loading+" - isEmpty: "+listaPasos.isEmpty());
+                Log.d(LOG_TAG, "Pasos list not empty. Calling printCofradias and setPasosPaths.");
+                detailCofradiaView.setPasosPaths(listaImagesPaths);
                 detailCofradiaView.printPasos(listaPasos);
             }
         }
@@ -82,32 +83,36 @@ public class DetailCofradiaViewPagerPasosPresenter implements DetailCofradiaView
     private Subscriber subscriber = new Subscriber<DataSnapshot>() {
         @Override
         public void onNext(DataSnapshot snapshot) {
-            Log.d(LOG_TAG, "onNext");
-
+            Log.d(LOG_TAG, "Suscriber Pasos onNext. Adding Pasos ("+ snapshot.getChildrenCount() +") to listaPasos");
             listaPasos.clear();
             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                //Log.d(LOG_TAG, "RECUPERANDO PASOS");
                 listaPasos.add(dataSnapshot.getValue(Paso.class));
+
+                //List of the image paths for the DetailImage
+                String path = (String) dataSnapshot.child("imagenPaso").getValue();
+                listaImagesPaths.add(path);
             }
 
-            Log.d(LOG_TAG, "Subscriber llamada printPasos");
+            Log.d(LOG_TAG, "Images path list generated. Calling setPasosPaths.");
+            detailCofradiaView.setPasosPaths(listaImagesPaths);
+
+            Log.d(LOG_TAG, "Pasos list generated. Calling printPasos.");
             detailCofradiaView.printPasos(listaPasos);
 
-            Log.d(LOG_TAG, "Subscriber llamada setSpinnerAndLoadindText");
             loading = false;
             setSpinnerAndLoadindText(loading);
         }
 
         @Override
         public void onCompleted() {
-            Log.d(LOG_TAG, "onCompleted");
+            Log.d(LOG_TAG, "Suscriber Pasos onCompleted.");
             loading = false;
             setSpinnerAndLoadindText(loading);
         }
 
         @Override
         public void onError(Throwable e) {
-            Log.d(LOG_TAG, "onErrorXX");
+            Log.d(LOG_TAG, "Suscriber Pasos onError. Error while getting Pasos from Firebase. ("+ errorMessage.get() +")");
             setSpinnerAndLoadindText(false);
             errorMessage.set(e.getMessage());
             detailCofradiaView.showErrorGettingPasos(errorMessage);

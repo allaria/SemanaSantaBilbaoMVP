@@ -25,8 +25,8 @@ public class GetGalleryProcesionesInteractorImpl implements GetGalleryProcesione
     }
 
     @Override
-    public Observable<DataSnapshot> getCofradia() {
-        return firebaseAccess.getFirebaseDataSnapshot(Constants.ConfigFireBase.FIREBASE_CHILD_COFRADIAS);
+    public Observable<DataSnapshot> getCofradia(String idCofradia) {
+        return firebaseAccess.getFirebaseDataSnapshot(idCofradia, Constants.ConfigFireBase.FIREBASE_CHILD_COFRADIAS);
     }
 
 }

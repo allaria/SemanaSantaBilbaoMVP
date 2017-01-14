@@ -12,5 +12,5 @@ public interface GetGalleryProcesionesInteractor {
 
     Observable<DataSnapshot> getGalleryProcesiones();
 
-    Observable<DataSnapshot> getCofradia();
+    Observable<DataSnapshot> getCofradia(String idCofradia);
 }

@@ -15,7 +15,10 @@ import com.alf.android.semanasantabilbao.App;
 import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.data.entities.Paso;
+import com.alf.android.semanasantabilbao.data.entities.Procesion;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.adapter.PasoAdapter;
+import com.alf.android.semanasantabilbao.ui.detailcofradia.tabcofradia.DetailCofradiaViewPagerCofradia;
+import com.alf.android.semanasantabilbao.ui.utils.GlobalFunctions;
 
 import javax.inject.Inject;
 
@@ -31,6 +34,8 @@ public class DetailCofradiaViewPagerPasos extends View implements DetailCofradia
 
     private static String LOG_TAG = DetailCofradiaViewPagerPasos.class.getSimpleName();
     private String idCofradia;
+    private ObservableArrayList<String> listaPasosPaths;
+    private DetailCofradiaViewPagerPasos.DetailCofradiaViewPagerPasosClickListener detailCofradiaViewPagerPasosClickListener;
 
     @Inject DetailCofradiaViewPagerPasosContract.DetailPasosPresenter pasoPresenter;
     @Inject PasoAdapter pasoAdapter;
@@ -58,7 +63,11 @@ public class DetailCofradiaViewPagerPasos extends View implements DetailCofradia
 
     private void initRecyclerViewPasos() {
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        if (new GlobalFunctions().getScreenOrientation(getResources().getConfiguration().orientation).equals("Landscrape")) {
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        }else{
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        }
 
         pasoAdapter.setPasoClickListener(this);
         mRecyclerView.setAdapter(pasoAdapter);
@@ -86,9 +95,26 @@ public class DetailCofradiaViewPagerPasos extends View implements DetailCofradia
         pasoPresenter.unsuscribePasosSuscription();
     }
 
+    @Override
+    public void setPasosPaths(ObservableArrayList<String> listaPasosPaths) {
+        this.listaPasosPaths = listaPasosPaths;
+    }
 
     @Override
     public void onClickPaso(int position) {
-        Toast.makeText(getContext(), "CLICK", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "CLICK - "+LOG_TAG, Toast.LENGTH_SHORT).show();
+        detailCofradiaViewPagerPasosClickListener.onClickDetailCofradiaViewPagerPasos(position, listaPasosPaths);
+    }
+
+    public interface DetailCofradiaViewPagerPasosClickListener {
+        void onClickDetailCofradiaViewPagerPasos(int position, ObservableArrayList<String> listaPasosPaths);
+    }
+
+    public DetailCofradiaViewPagerPasos.DetailCofradiaViewPagerPasosClickListener getDetailCofradiaViewPagerPasosClickListener() {
+        return detailCofradiaViewPagerPasosClickListener;
+    }
+
+    public void setDetailCofradiaViewPagerPasosClickListener(DetailCofradiaViewPagerPasos.DetailCofradiaViewPagerPasosClickListener detailCofradiaViewPagerPasosClickListener) {
+        this.detailCofradiaViewPagerPasosClickListener = detailCofradiaViewPagerPasosClickListener;
     }
 }

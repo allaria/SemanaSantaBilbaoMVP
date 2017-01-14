@@ -24,6 +24,7 @@ import com.alf.android.semanasantabilbao.R;
 import com.alf.android.semanasantabilbao.data.entities.Cofradia;
 import com.alf.android.semanasantabilbao.data.entities.Procesion;
 import com.alf.android.semanasantabilbao.ui.detailcofradia.adapter.ViewPagerCofradiaDetailAdapter;
+import com.alf.android.semanasantabilbao.ui.detailimage.DetailImageActivity;
 import com.alf.android.semanasantabilbao.ui.detailprocesion.DetailProcesionActivity;
 import com.alf.android.semanasantabilbao.ui.utils.GlobalFunctions;
 import com.squareup.picasso.Picasso;
@@ -39,7 +40,8 @@ import butterknife.ButterKnife;
  */
 
 public class DetailCofradiaActivity extends AppCompatActivity implements DetailCofradiaContract.DetailCofradiaView,
-        ViewPagerCofradiaDetailAdapter.ViewPagerCofradiaDetailAdapterClickListener {
+        ViewPagerCofradiaDetailAdapter.ViewPagerCofradiaDetailAdapterClickListener,
+        ViewPagerCofradiaDetailAdapter.ViewPagerCofradiaDetailAdapterImagesClickListener {
 
     private final String LOG_TAG = DetailCofradiaActivity.class.getSimpleName();
     private Cofradia cofradia;
@@ -48,7 +50,6 @@ public class DetailCofradiaActivity extends AppCompatActivity implements DetailC
     private ViewPagerCofradiaDetailAdapter viewPagerDetailAdpter;
 
     //private DetailCofradiaContract.DetailPasosPresenter detailCofradiaPresenter;
-
     @Inject DetailCofradiaContract.DetailCofradiaPresenter detailCofradiaPresenter;
 
     @BindView(R.id.detail_cofradia_toolbar) Toolbar toolbar;
@@ -66,6 +67,8 @@ public class DetailCofradiaActivity extends AppCompatActivity implements DetailC
     @BindString(R.string.firebase_error_cofradias) String firebaseErrorCofradia;
     @BindString(R.string.COFRADIA) String cofradiaIntent;
     @BindString(R.string.PROCESION) String procesionIntent;
+    @BindString(R.string.POSITION) String intentPosition;
+    @BindString(R.string.IMAGESPATH) String intentImagesPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +153,7 @@ public class DetailCofradiaActivity extends AppCompatActivity implements DetailC
         viewPagerDetailAdpter = new ViewPagerCofradiaDetailAdapter(this.getApplicationContext(), cofradia);
         viewPager.setAdapter(viewPagerDetailAdpter);
         viewPagerDetailAdpter.setViewPagerCofradiaDetailAdapterClickListener(this);
+        viewPagerDetailAdpter.setViewPagerCofradiaDetailAdapterImagesClickListener(this);
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setupWithViewPager(viewPager);
@@ -189,11 +193,20 @@ public class DetailCofradiaActivity extends AppCompatActivity implements DetailC
 
     @Override
     public void onClickDetailCofradiaActivity(int position, Procesion procesion) {
-        //Toast.makeText(getApplicationContext(), "CLICK - DetailCofradiaActivity", Toast.LENGTH_SHORT).show();
-
+        //Toast.makeText(getApplicationContext(), "CLICK PROCESION - DetailCofradiaActivity", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(DetailCofradiaActivity.this, DetailProcesionActivity.class);
         intent.putExtra(procesionIntent, procesion);
         intent.putExtra(cofradiaIntent, cofradia);
         startActivity(intent);
     }
+
+    @Override
+    public void onClickDetailCofradiaActivityImages(int position, ObservableArrayList<String> listaPasosPaths) {
+        //Toast.makeText(getApplicationContext(), "CLICK PASOS - DetailCofradiaActivity", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(DetailCofradiaActivity.this, DetailImageActivity.class);
+        intent.putExtra(intentPosition, position);
+        intent.putExtra(intentImagesPath, listaPasosPaths);
+        startActivity(intent);
+    }
+
 }

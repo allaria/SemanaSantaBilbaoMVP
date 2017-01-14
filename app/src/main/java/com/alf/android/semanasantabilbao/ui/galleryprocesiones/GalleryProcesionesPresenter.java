@@ -55,18 +55,23 @@ public class GalleryProcesionesPresenter implements GalleryProcesionesContract.G
     }
 
     @Override
+    public void unsuscribeGalleryCofradiaSuscription() {
+        if (!(subscriptionGalleryCofradia.isUnsubscribed() && subscriberGalleryCofradia == null) ) {
+            subscriptionGalleryCofradia.unsubscribe();
+        }
+    }
+
+    @Override
     public void initPresenter() {
         if (loading) {
             setSpinnerAndLoadindText(loading);
         }
 
         if (!loading && listaGalleryProcesiones.isEmpty()) {
-            //Log.d(LOG_TAG, "Procesiones list is empty");
             loading = true;
             setSpinnerAndLoadindText(loading);
             Log.d(LOG_TAG, "Gallery Procesiones list is empty. Getting Gallery Procesiones from Firebase");
             subscriptionGalleryProcesiones = getGalleryProcesionesInteractor.getGalleryProcesiones().subscribe(subscriberGalleryProcesiones);
-            subscriptionGalleryCofradia = getGalleryProcesionesInteractor.getCofradia().subscribe(subscriberGalleryCofradia);
         } else {
             if (galleryProcesionesView != null) {
                 Log.d(LOG_TAG, "Gallery Procesiones list not empty. Calling printGalleryProcesiones.");
@@ -74,6 +79,16 @@ public class GalleryProcesionesPresenter implements GalleryProcesionesContract.G
                 setSpinnerAndLoadindText(loading);
                 galleryProcesionesView.printGalleryProcesiones(listaGalleryProcesiones);
             }
+        }
+    }
+
+    @Override
+    public void getCofradiaFromProcesion(String idCofradia) {
+        if (cofradia == null) {
+            Log.d(LOG_TAG, "Cofradia is empty. Getting Cofradia from Firebase");
+            subscriptionGalleryCofradia = getGalleryProcesionesInteractor.getCofradia(idCofradia).subscribe(subscriberGalleryCofradia);
+        } else {
+            galleryProcesionesView.executeIntentToDetailProcesion(cofradia);
         }
     }
 
@@ -121,23 +136,23 @@ public class GalleryProcesionesPresenter implements GalleryProcesionesContract.G
         public void onNext(DataSnapshot snapshot) {
 
             Log.d(LOG_TAG, "Suscriber Gallery Cofradia");
-            //listaCofradias.clear();
             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                 cofradia = dataSnapshot.getValue(Cofradia.class);
             }
 
-            galleryProcesionesView.setCofraciaFromProcesion(cofradia);
+            galleryProcesionesView.executeIntentToDetailProcesion(cofradia);
         }
 
         @Override
         public void onCompleted() {
             Log.d(LOG_TAG, "Suscriber Gallery Cofradia onCompleted.");
         }
+
         @Override
         public void onError(Throwable e) {
             setSpinnerAndLoadindText(false);
             errorMessage.set(e.getMessage());
-            Log.d(LOG_TAG, "Suscriber Google Play Url onError. Error while getting Gallerry Cofradia from Firebase. ("+ errorMessage.get() +")");
+            Log.d(LOG_TAG, "Suscriber Gallery Cofradia onError. Error while getting Gallerry Cofradia from Firebase. ("+ errorMessage.get() +")");
             galleryProcesionesView.showErrorGettingCofradia(errorMessage);
         }
     };
